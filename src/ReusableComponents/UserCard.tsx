@@ -1,0 +1,43 @@
+import { Link } from "react-router-dom";
+import { User } from "../utils/type";
+
+
+const UserCard = ({user}  : {user : User}) => {
+  return (
+    <div className="flex items-center bg-black text-white  rounded-lg p-4 w-full font-sans">
+      {/* Avatar */}
+      <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
+        <img
+          src={user.photoURL} // Replace with your image URL
+          alt="User Avatar"
+          className="w-full h-full object-cover"
+        />
+
+
+
+      </div>
+      {/* User Info */}
+      <div className="flex-grow">
+        <div className="font-bold flex gap-x-2 items-center"> <Link to={`/user/${user.username}`}> {user.name}</Link>          <span >
+
+          {user.isPremium && 
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#db12ff" className="size-6">
+                <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
+        </svg>}
+
+        </span>  </div>
+        <div className="text-gray-400 text-sm"> <Link to={`/user/${user.username}`} > @{user.username} </Link> </div>
+
+
+
+
+      </div>
+      {/* Follow Button */}
+      <button className=" hidden bg-gray-200 text-black px-4 py-1 rounded-full font-bold text-sm hover:bg-gray-300">
+        Follow
+      </button>
+    </div>
+  );
+};
+
+export default UserCard;
