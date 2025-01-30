@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import OpenAI from "openai"
 import { Message, User2 } from "../utils/type";
 
@@ -45,7 +46,7 @@ function getfullPrompt(profileData: User2) {
 }
 
 
-export const getAiResponse = async (user: User2, question: string, message: Message[])  : Promise<string> => {
+export const getAiResponse = async (user: User2, question: string, message: Message[]): Promise<string> => {
 
 
     const fprompt = getfullPrompt(user);
@@ -58,23 +59,22 @@ export const getAiResponse = async (user: User2, question: string, message: Mess
         ...(message || []).map((msg) => ({
             role: msg.sender === "user" ? "user" : "assistant",
             content: msg.content,
-            name: ""
         })),
         {
             role: "user",
             content: `${question}`,
-            name: ""
         },
     ];
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const completion = await openai.chat.completions.create({
         model: "anthropic/claude-3.5-sonnet",
+        //@ts-expect-error
         messages: formattedMessages,
         temperature: 0.8,
         max_tokens: 2044,
     });
-    
+
     return completion.choices[0].message.content as string
 
 

@@ -1,4 +1,4 @@
-import toast, { useToaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { followuser  , unfollowuser } from "../utils/creationcall";
 import { formatDateTime } from "../utils/date";
