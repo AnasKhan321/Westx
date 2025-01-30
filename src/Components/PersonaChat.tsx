@@ -1,15 +1,13 @@
 import { Link, useParams } from "react-router-dom";
 import { getUserbyUsername } from "../utils/apicalls";
 import { useQuery } from "@tanstack/react-query";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { BsSend } from "react-icons/bs";
 import { useAuth } from "../Context/AuthContext";
 import { ScaleLoader } from "react-spinners";
 import Loader from "../ReusableComponents/Loader";
-interface Message {
-  sender: string;
-  content: string;
-}
+import { Message } from "../utils/type";
+import { getAiResponse } from "../ai";
 
 const PersonaChat = () => {
   const { username } = useParams();
@@ -26,86 +24,22 @@ const PersonaChat = () => {
   const [message, setmessage] = useState("");
   const { user } = useAuth();
   const [loading, setloading] = useState(false);
-
-  const handleStreamRequest = async (message: string) => {
-    const res = await fetch("https://ai.westx.xyz/api/omi/message", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: username,
-        question: message,
-        messages: chats,
-        recenttweets: [],
-      }),
-    });
-
-    setisloading(true);
-
-    if (!res.body) {
-      console.error("No response body");
-      return;
+  const isMounted = useRef(false);
+  const handleStreamRequest = async (question : string) => {
+    if(isloading) return ; 
+    if(data?.data){
+      const response = await getAiResponse(data?.data , question , chats )
+      setchats((prevChats) => {
+        const updatedChats = [...prevChats];
+        updatedChats.push({
+          sender: "assistant",
+          content: response.trim(),
+        });
+        return updatedChats
+      })
+      setisloading(false)
     }
 
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let currentMessage = "";
-
-    let isReading = true;
-
-    while (isReading) {
-      const { done, value } = await reader.read();
-      if (done) {
-        isReading = false;
-        setisloading(false);
-        break;
-      }
-
-      const chunk = decoder.decode(value).split("\n");
-      chunk.forEach((line) => {
-        if (line.startsWith("data: ")) {
-          let jsonData = line.replace("data: ", "").trim();
-          jsonData = jsonData.replace("data: ", "");
-          if (jsonData === "[DONE]") {
-            setisloading(false);
-            isReading = false;
-            return;
-          }
-          if (jsonData === "[END]") {
-            setisloading(false);
-            isReading = false;
-            return;
-          }
-
-          try {
-            const parsedData = JSON.parse(jsonData);
-            const content = parsedData?.choices?.[0]?.delta?.content;
-
-            if (content) {
-              currentMessage += content;
-
-              setchats((prevChats) => {
-                const updatedChats = [...prevChats];
-                if (
-                  updatedChats.length &&
-                  updatedChats[updatedChats.length - 1]?.sender === "assistant"
-                ) {
-                  updatedChats[updatedChats.length - 1].content =
-                    currentMessage.trim();
-                } else {
-                  updatedChats.push({
-                    sender: "assistant",
-                    content: currentMessage.trim(),
-                  });
-                }
-                return updatedChats;
-              });
-            }
-          } catch (error) {
-            console.error("Error parsing JSON:", error);
-          }
-        }
-      });
-    }
   };
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
@@ -125,18 +59,21 @@ const PersonaChat = () => {
   }
 
   useEffect(() => {
-    if (data?.data.username) {
-      const initializeChat = async () => {
-        setloading(true);
-        await handleStreamRequest(
-          `${user?.name}  is here to come and chat with you either roast him or greet him  `
-        );
-        setloading(false);
-      };
+    if (isMounted.current) return; // Skip if already mounted
+    isMounted.current = true;
 
+    const initializeChat = async () => {
+      setloading(true);
+      await handleStreamRequest(
+        `${user?.name} is here to come and chat with you either roast him or greet him`
+      );
+      setloading(false);
+    };
+
+    if (data?.data.username) {
       void initializeChat();
     }
-  }, []);
+  }, [data?.data.username]);
 
   return (
     <>

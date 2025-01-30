@@ -1,5 +1,8 @@
 
-
+export interface Message {
+	sender: string;
+	content: string;
+  }
 export type Tweet = {
 	id: string;
 	type: 'tweet' | 'comment';

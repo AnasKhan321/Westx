@@ -78,9 +78,9 @@ function TodoList() {
       {data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
           {group.data.map((tweet  , index ) => (
-            <Suspense fallback={<div> Loading ... </div>}> 
+            <Suspense key={index } fallback={<div className='text-center my-4 '> <SmallLoader/>  </div>}> 
 
-              <TwetCARD tweet={tweet}  key={index} />
+              <TwetCARD tweet={tweet} />
 
             </Suspense>
             

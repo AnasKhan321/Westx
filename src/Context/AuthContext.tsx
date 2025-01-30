@@ -49,6 +49,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
           }`
         );
         const data = await res.json();
+        console.log(data)
 
         setUser(data.data);
         setIsLoading(false);

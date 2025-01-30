@@ -1,5 +1,5 @@
 import { BookMark, followings, Like, Reply, Repost, Tweet, Tweet2, User, User2 } from "./type";
-
+import axios  from "axios";
 export interface UserResponse{
     success : boolean , 
     data : User
@@ -160,8 +160,7 @@ export const getReplies  = async (tweetid : string) : Promise<ReplyResponsee> =>
 }
 
 export const getUserbyUsername = async(username : string) : Promise<UserbyUsername> =>{
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getuser/v2/${username}`)
-    const data = await res.json() ; 
+    const {data} = await axios.get<UserbyUsername>(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getuser/v2/${username}`)
     return data ; 
 }
 

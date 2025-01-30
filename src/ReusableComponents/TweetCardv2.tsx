@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query"
 import { getBookmarks, getReposts, getTweetLike } from "../utils/apicalls"
 import { BiHeart, BiMessageRounded, BiRepost } from "react-icons/bi"
 import { FaBookmark, FaRegBookmark } from "react-icons/fa"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../Context/AuthContext"
 import { DeleteBookmark, DeleteLike, DeleteRepost } from "../utils/deletioncall"
 import { addLike, CreateBookmark, CreateRepost } from "../utils/creationcall"
@@ -26,9 +26,9 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
 
 
 
-      const [reposts , setreposts]  = useState(repostdata?.data.length)
-      const [likes , setlikes ]  = useState(likedata?.data.length)
-      const [bookmarks , setbookmarks ]  = useState(bookmarkData?.data.length)
+      const [reposts , setreposts]  = useState(repostdata?.data?.length)
+      const [likes , setlikes ]  = useState(likedata?.data?.length)
+      const [bookmarks , setbookmarks ]  = useState(bookmarkData?.data?.length)
     
       const [islike , setislike]  = useState(user?.likes.some((like) => like.tweetid === tweet.id))
       const [isBookmarked , setisBookmarked]  = useState(user?.bookmarks.some((bookmark) => bookmark.tweetid === tweet.id) )
@@ -38,10 +38,15 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
 
       const handleAddBookmark = async () => {
         setisBookmarked(true)
-        if(bookmarks){
+        console.log("this is here")
+     
+        if(bookmarks !== undefined){
           setbookmarks(bookmarks+1)
 
         }
+       
+
+       
         const response = await CreateBookmark({
           userid: user?.id as string,
           tweetid: tweet.id,
@@ -54,8 +59,11 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
     
       const removeBookmark = async () => {
         setisBookmarked(false)
-        if(bookmarks){
+        if(bookmarks != undefined){
           setbookmarks(bookmarks-1)
+          if(bookmarkData?.data?.length){
+            bookmarkData.data.length-=1;
+          }
 
         }
         const response = await  DeleteBookmark({userid : user?.id as string , tweetid : tweet.id})
@@ -68,8 +76,11 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
     
       const AddLike = async () => {
         setislike(true)
-        if(likes){
+        if(likes != undefined){
           setlikes(likes+1)
+          if(likedata?.data?.length){
+            likedata.data.length+=1;
+          }
 
         }
         const response = await addLike({
@@ -89,8 +100,11 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
     
       const removeLike = async () => {
         setislike(false)
-        if(likes){
+        if(likes != undefined){
           setlikes(likes-1)
+          if(likedata?.data?.length){
+            likedata.data.length-=1;
+          }
 
         }
         const response = await DeleteLike({userid : user?.id as string , tweetid : tweet.id})
@@ -103,7 +117,7 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
     
       const addRepost = async () => {
         setisreposted(true)
-        if(reposts){
+        if(reposts!= undefined){
           setreposts(reposts+1)
 
         }
@@ -125,7 +139,7 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
     
       const removeRepost = async()=>{
         setisreposted(false)
-        if(reposts){
+        if(reposts != undefined){
           setreposts(reposts-1)
 
         }
@@ -140,6 +154,32 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
           toast.success("Remove Reposted")
         }
       }
+
+      useEffect(()=>{
+        if(bookmarkData?.data){
+          setbookmarks(bookmarkData.data.length)
+        }
+      },[bookmarkData?.data])
+
+
+
+      useEffect(()=>{
+        if(likedata?.data){
+          setlikes(likedata.data.length)
+        }
+      },[likedata?.data])
+
+
+
+      useEffect(()=>{
+        if(repostdata?.data){
+          setreposts(repostdata.data.length)
+        }
+      },[repostdata?.data])
+
+
+
+
 
   return (
     <div className="bg-black text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
@@ -223,11 +263,12 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
         <> 
                 {isreposted? (
           <div onClick={removeRepost}   className="flex gap-x-1 items-center" >
-           
+                       <span  className="text-sm">{reposts}</span>
             <BiRepost className="text-green-500 transition-all cursor-pointer   hover:bg-green-500/10 p-2 rounded-full text-4xl   " />
           </div>
         ) : (
           <div  onClick={addRepost} className="flex gap-x-1 items-center">
+            <span  className="text-sm">{reposts}</span>
                      
             <BiRepost className="hover:text-green-500 transition-all cursor-pointer   hover:bg-green-500/10 p-2 rounded-full text-4xl   " />
           </div>
@@ -241,12 +282,12 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
             <div className="flex gap-x-1 group hover:text-red-500  transition-all  group items-center">
           {islike ? (
             <div onClick={removeLike}   className="flex gap-x-1 items-center" >
-           
+                       <span  className="text-sm">{likes}</span>
               <BiHeart className=" text-red-500 group-hover:bg-red-500/10  cursor-pointer text-4xl p-2 rounded-full " />
             </div>
           ) : (
             <div onClick={AddLike}   className="flex gap-x-1 items-center" >
-           
+               <span  className="text-sm">{likes}</span>
               <BiHeart className="group-hover:bg-red-500/10  cursor-pointer text-4xl p-2 rounded-full " />
             </div>
           )}
@@ -259,7 +300,7 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
     <> 
         {isBookmarked ? (
             <div onClick={removeBookmark}   className="flex gap-x-1 items-center">
-             
+                  <span  className="text-sm">{bookmarks}</span>
               <FaBookmark className="text-territary cursor-pointer hover:bg-blue-500/10 text-4xl p-2" />
             </div>
           ) : (
@@ -267,6 +308,8 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
               className="flex items-center gap-x-1  text-gray-500"
               onClick={handleAddBookmark}
             >
+                  <span  className="text-sm">{bookmarks}</span>
+
               <FaRegBookmark className="hover:text-territary cursor-pointer hover:bg-blue-500/10 text-4xl p-2" />
             </div>
           )}

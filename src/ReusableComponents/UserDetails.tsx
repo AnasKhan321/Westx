@@ -1,9 +1,9 @@
-import toast from "react-hot-toast";
+import toast, { useToaster } from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { followuser  , unfollowuser } from "../utils/creationcall";
 import { formatDateTime } from "../utils/date";
 import { User2 } from "../utils/type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getTweetbyuserid, getUserFollowerbyuserid, getUserFollowinguserid } from "../utils/apicalls";
@@ -12,6 +12,8 @@ import SmallLoader from "./SmallLoader";
 
 const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const { user  , handleLogout } = useAuth();
+
+  
 
   const {data : usertweets , isLoading : userloding}  = useQuery({queryKey :  [`UserTweets:${profile.username}`] 
      , queryFn : ()=> getTweetbyuserid(profile.id)
@@ -23,26 +25,31 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   })
 
 
-  const {data : userfollower , isLoading : userfollowerloading }  = useQuery({queryKey : [`UserFollowing:${profile.username}`]  , 
+  const {data : userfollower , isLoading : userfollowerloading }  = useQuery({queryKey : [`UserFollower:${profile.username}`]  , 
 
     queryFn : ()=> getUserFollowerbyuserid(profile.id)
   })
 
 
+  const [suserfollowing , setuserfollowing]  = useState(0)  ; 
+  const [suserfollower , setuserfollower]  = useState(0)  ; 
+
   const [following , setfollowings]  = useState(userfollowing?.data.length)
   const [isFollow, setisFollow] = useState(
-    userfollowing?.data.some((following) => following.followerid == user?.id)
+   user?.followers.some((follower)=> follower.followingid == profile.id)
   );
 
   const handleFollow = async () => {
     if(user?.id){
+      setisFollow(true)
       const response = await followuser({
         followerid: user?.id as string,
         followingid: profile.id,
       });
+      setuserfollower(suserfollower+1)
       if (response?.success) {
         toast.success("follow successfully!");
-        setisFollow(true)
+        
         if(following){
           setfollowings(following+1)
 
@@ -52,10 +59,12 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   };
 
   const handleUnfollow = async()=>{
+    setisFollow(false)
       const response = await unfollowuser({followerid : user?.id as string , followingid : profile.id})
+      setuserfollower(suserfollower-1)
       if (response?.success) {
         toast.success("unfollow successfully!");
-        setisFollow(false)
+ 
         if(following){
           setfollowings(following-1)
 
@@ -67,6 +76,24 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     // Logout logic (customize based on your auth setup)
     handleLogout() ; 
   };
+
+
+  useEffect(()=>{
+
+    if(userfollower?.data){
+      setuserfollowing(userfollower.data.length)
+    }
+  },[userfollower?.data])
+
+
+
+  
+  useEffect(()=>{
+
+    if(userfollowing?.data){
+      setuserfollower(userfollowing.data.length)
+    }
+  },[userfollowing?.data])
   return (
     <div className={`w-full  rounded-lg  shadow-md `}>
       {/* Cover Photo */}
@@ -130,7 +157,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         {userfollowingloading  && <SmallLoader/>}
         {userfollowing?.success && 
         <div>
-          <p className="font-bold">{userfollower?.data.length}</p>
+          <p className="font-bold">{suserfollowing}</p>
           <p className="text-xs text-gray-500">Following</p>
         </div>}
 
@@ -138,7 +165,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
         {userfollower?.success && 
         <div>
-          <p className="font-bold">{userfollowing?.data.length}</p>
+          <p className="font-bold">{suserfollower}</p>
           <p className="text-xs text-gray-500">Followers</p>
         </div>}
         <div>
