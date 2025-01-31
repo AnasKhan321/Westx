@@ -12,7 +12,7 @@ const Following = () => {
 
 
     
-    const {data , isLoading , isError}  = useQuery({queryKey : [`USER:FOLLOWING:${username}`]  , 
+    const {data , isLoading }  = useQuery({queryKey : [`USER:FOLLOWING:${username}`]  , 
         queryFn: ()=> getUserFollowing(username as string)
      })
 

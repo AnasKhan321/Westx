@@ -165,7 +165,9 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         </p>
         {/* Follow Button */}
 
-        {user?.username !== profile.username && (
+{!userfollowingloading  && <div> 
+  
+  {user?.username !== profile.username && (
           <>
             {isFollow ? (
               <button
@@ -184,6 +186,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             )}
           </>
         )}
+  </div>}
+
       </div>
 
       {/* Stats */}

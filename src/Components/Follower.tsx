@@ -4,14 +4,14 @@ import { getUserFollower } from "../utils/apicalls"
 import Loader from "../ReusableComponents/Loader"
 import ReuseableTitle from "../ReusableComponents/ReuseableTitle"
 import UserCard from "../ReusableComponents/UserCard"
-import { User } from "firebase/auth"
+
 
 
 const Follower = () => {
     
     const {username} = useParams()
 
-    const {data , isLoading , isError}  = useQuery({queryKey : [`USER:FOLLOWERS:${username}`]  , 
+    const {data , isLoading }  = useQuery({queryKey : [`USER:FOLLOWERS:${username}`]  , 
         queryFn: ()=> getUserFollower(username as string)
      })
   return (
