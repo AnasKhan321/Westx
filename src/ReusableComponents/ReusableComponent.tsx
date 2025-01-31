@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "../Context/AuthContext";
 import { addReply } from "../utils/creationcall";
 import toast from "react-hot-toast";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type ReplyBoxProps = {
   tweetid : string
@@ -10,20 +11,24 @@ type ReplyBoxProps = {
 const ReplyBox: React.FC<ReplyBoxProps> = ({    tweetid }) => {
   const [reply, setReply] = React.useState("");
   const {user}  = useAuth()
+  const queryClient = useQueryClient() 
 
   const handleClick = async()=>{
       const response =  await addReply({tweetid : tweetid , userid : user?.id  as string , text : reply})
       if(response?.success){
         toast.success("Reply added !")
+        
+         queryClient.invalidateQueries({ queryKey: [`Tweet:Reply:${tweetid}`] });
         setReply("")
       }
       
   }
+
   return (
     <div className="border-b border-borderColor  mx-auto">
       <div className="p-4 w-full  mx-auto  grid grid-cols-12 gap-x-2">
     
-        <img src={user?.photoURL} alt="" className="  w-12 h-12 col-span-1 rounded-full" />
+        <img src={user?.photoURL} alt="" className="  w-[100px] col-span-1 rounded-full" />
 
         <input
           value={reply}

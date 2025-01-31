@@ -20,9 +20,9 @@ const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boole
   const [likes , setlikes ]  = useState(tweet.likes.length)
   const [bookmarks , setbookmarks ]  = useState(tweet.bookmarks.length)
 
-  const [islike , setislike]  = useState(user?.likes.some((like) => like.tweetid === tweet.id))
-  const [isBookmarked , setisBookmarked]  = useState(user?.bookmarks.some((bookmark) => bookmark.tweetid === tweet.id) )
-  const [isreposted , setisreposted]  = useState(user?.Repost.some((repost)=> repost.tweetid === tweet.id) )
+  const [islike , setislike]  = useState(tweet.likes.some((tweetl)=> tweetl.userid === user?.id))
+  const [isBookmarked , setisBookmarked]  = useState(tweet.bookmarks.some((tweetB)=> tweetB.userid === user?.id))
+  const [isreposted , setisreposted]  = useState(tweet.repost.some((tweetR)=> tweetR.userid === user?.id) )
 
   const handleAddBookmark = async () => {
     const response = await CreateBookmark({
@@ -161,6 +161,7 @@ const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boole
  
       <div className="flex items-center justify-between w-[70%] mx-auto   mt-5 text-xl text-gray-500">
         <div className="flex gap-x-1 group hover:text-blue-500  transition-all items-center ">
+        <span className="text-sm">{tweet.replies.length == 0? ""  : tweet.replies.length}</span>
           <BiMessageRounded className=" cursor-pointer  rounded-full p-2 group-hover:bg-blue-500/10   text-4xl " />
           {/* <span className="text-sm">27</span> */}
         </div>

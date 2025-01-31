@@ -67,6 +67,12 @@ interface TweetResponselist{
     data : Tweet2[]
 }
 
+export interface TweetResponselist2{
+    success : boolean , 
+    data : Tweet[] , 
+    tweets : number
+}
+
 interface BookmarksREsponse{
     success : boolean , 
     data : BookMark[]
@@ -80,9 +86,9 @@ export const fetchUser = async (username : string) : Promise<UserResponse> => {
 
 
 
-export const fetchTweets = async () : Promise<TweetsData> => {
+export const fetchTweets = async (page : number =1 ) : Promise<TweetsData> => {
 
-    const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/latesttweets/1`);
+    const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/latesttweets/${page}`);
     const data = await response.json();
     return data;
 }
@@ -166,6 +172,14 @@ export const getUserbyUsername = async(username : string) : Promise<UserbyUserna
 
 export const getTweetbyuserid = async(userid : string) : Promise<TweetResponselist> =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweet/${userid}`)
+    const data  = await res.json()  ; 
+    return data 
+}
+
+
+
+export const getTweetbyuseridv2 = async(userid : string) : Promise<TweetResponselist2> =>{
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweet/v2/${userid}/1`)
     const data  = await res.json()  ; 
     return data 
 }

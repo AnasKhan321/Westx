@@ -44,12 +44,11 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       if (currentUser) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const res = await fetch(
-          `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/${
+          `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/v2/${
             user.reloadUserInfo.screenName
           }`
         );
         const data = await res.json();
-        console.log(data)
 
         setUser(data.data);
         setIsLoading(false);

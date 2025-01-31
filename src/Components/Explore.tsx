@@ -14,6 +14,9 @@ const RightSidebar = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["randomuser"],
     queryFn: getrandomuser,
+    staleTime: Infinity, 
+    refetchOnMount: false, 
+    refetchOnWindowFocus: false, 
   });
 
   // Handle search input changes

@@ -20,9 +20,24 @@ import SmallLoader from "./SmallLoader"
 const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
 
     const {user}  =useAuth() 
-    const {data : bookmarkData    , isLoading: bookmarkloading}  = useQuery({queryKey : [`bookmark:${tweet.id}`]   , queryFn : ()=> getBookmarks(tweet.id) })
-    const {data : likedata ,  isLoading:likeloading}  = useQuery({queryKey : [`likes:${tweet.id}`]   , queryFn : ()=> getTweetLike(tweet.id) })
-    const {data : repostdata  , isLoading : repostloading}  = useQuery({queryKey : [`Repost:${tweet.id}`]  , queryFn : ()=> getReposts(tweet.id) } )
+    const {data : bookmarkData    , isLoading: bookmarkloading}  = useQuery({queryKey : [`bookmark:${tweet.id}`]   , queryFn : ()=> getBookmarks(tweet.id)  , 
+
+
+      staleTime: Infinity, 
+      refetchOnMount: false, 
+      refetchOnWindowFocus: false, 
+     })
+    const {data : likedata ,  isLoading:likeloading}  = useQuery({queryKey : [`likes:${tweet.id}`]   , queryFn : ()=> getTweetLike(tweet.id)  , 
+
+      staleTime: Infinity, 
+      refetchOnMount: false, 
+      refetchOnWindowFocus: false, 
+     })
+    const {data : repostdata  , isLoading : repostloading}  = useQuery({queryKey : [`Repost:${tweet.id}`]  , queryFn : ()=> getReposts(tweet.id)  , 
+      staleTime: Infinity, 
+      refetchOnMount: false, 
+      refetchOnWindowFocus: false, 
+     } )
 
 
 

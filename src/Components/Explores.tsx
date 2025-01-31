@@ -10,9 +10,14 @@ const Explores = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["query", query],
     queryFn: () => searchUser(query as string),
+    staleTime: Infinity, 
+    refetchOnMount: false, 
+    refetchOnWindowFocus: false, 
   });
   return (
     <div>
+              <ReuseableTitle title={`Query : ${query}`} />
+
       {isLoading && <Loader />}
       {error && (
         <div className="font-bold text-center text-2xl  mt-8">
@@ -24,7 +29,6 @@ const Explores = () => {
         <>
           {data?.data && (
             <>
-              <ReuseableTitle title={`Query : ${query}`} />
               <div className="mt-16"></div>
 
               {data.data.length == 0 && <div>Not found any user!</div>}

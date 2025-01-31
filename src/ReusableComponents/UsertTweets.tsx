@@ -5,27 +5,26 @@ import { Tweet } from '../utils/type'
 import SmallLoader from '../ReusableComponents/SmallLoader'
 import Loader from '../ReusableComponents/Loader'
 
+const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 
-const TwetCARD =  React.lazy(() => import("../ReusableComponents/TweetCard"));
 interface TweetResponse {
   success: boolean
   data: Tweet[]
   hasMore: boolean // API must return this
 }
 
-const fetchTweets = async ({ pageParam = 1 }) => {
+const fetchTweets = async ({ pageParam = 1, userId }: { pageParam?: number, userId: string }) => {
   const { data } = await axios.get<TweetResponse>(
-    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/latesttweets/${pageParam}`
-  )
+    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweet/v2/${userId}/${pageParam}`
+  );
 
   return {
     data: data.data,
     nextCursor: data.data.length > 0 ? pageParam + 1 : undefined, // Stop pagination when no more data
-  }
-}
+  };
+};
 
-function Tweets() {
-
+function UserTweets({ userId }: { userId: string }) { 
   const {
     data,
     error,
@@ -34,57 +33,48 @@ function Tweets() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['tweets'],
-    queryFn: fetchTweets,
+    queryKey: ['tweets', userId], // Include userId in query key
+    queryFn: ({ pageParam }) => fetchTweets({ pageParam, userId }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 1,
-
-  })
+    enabled: !!userId, // Only run query if userId is available
+  });
 
   // Ref to track the intersection observer
-  const bottomRef = useRef<HTMLDivElement | null>(null)
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!bottomRef.current || !hasNextPage) return
+    if (!bottomRef.current || !hasNextPage) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage() // Automatically load more
+          fetchNextPage(); // Automatically load more
         }
       },
       { threshold: 1.0 } // Trigger when 100% visible
-    )
+    );
 
-    observer.observe(bottomRef.current)
+    observer.observe(bottomRef.current);
 
-    return () => observer.disconnect()
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (status === 'error') return <p>Error: {error.message}</p>
-  if(status == 'pending')  return <Loader/> 
-
-
+  if (status === 'error') return <p>Error: {error.message}</p>;
+  if (status === 'pending') return <Loader />;
 
   return (
     <>
-       <div className=" p-4 bg-black/10 border-b border-white  z-10  flex gap-x-2 top-0 absolute font-bold   backdrop-blur-xl w-[100%]  md:w-[41.5%] ">
-        {" "}
-        <span className="mt-1 cursor-pointer"></span>{" "}
-        <span className="text-base  md:text-xl"> Home </span>{" "}
-      </div>
 
-      <div className="mt-16"></div>
+
+      <div className="mt-2"></div>
 
       {data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
-          {group.data.map((tweet  , index ) => (
-            <Suspense key={index } fallback={<div className='text-center my-4 '> <SmallLoader/>  </div>}> 
-
-           <TwetCARD tweet={tweet} isBookmark={false}/>
-
+          {group.data.map((tweet, index) => (
+            <Suspense key={index} fallback={<div className='text-center my-4'><SmallLoader /></div>}>
+              <TwetCARD tweet={tweet} isBookmark={false} />
             </Suspense>
-            
           ))}
         </React.Fragment>
       ))}
@@ -98,7 +88,7 @@ function Tweets() {
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default Tweets
+export default UserTweets;

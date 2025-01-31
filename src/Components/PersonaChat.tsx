@@ -18,6 +18,9 @@ const PersonaChat = () => {
   } = useQuery({
     queryKey : [`user:${username}`] ,
     queryFn: () => getUserbyUsername(username as string),
+    staleTime: Infinity, 
+    refetchOnMount: false, 
+    refetchOnWindowFocus: false, 
   });
   const [chats, setchats] = useState<Message[]>([]);
   const [isloading, setisloading] = useState(false);

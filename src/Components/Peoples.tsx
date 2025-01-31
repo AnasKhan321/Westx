@@ -10,16 +10,22 @@ import { useAuth } from "../Context/AuthContext";
 
 export default function Peoples(){
 
-    const {isLoading , data , isError} = useQuery({queryKey : ['personas'], queryFn : getPersonas}); 
+    const {isLoading , data , isError} = useQuery({queryKey : ['personas'], queryFn : getPersonas  , 
+
+
+        staleTime: Infinity, 
+        refetchOnMount: false, 
+        refetchOnWindowFocus: false, 
+    }); 
     const {user} = useAuth() ; 
     return(
         <> 
         
-        <div className=" p-4 bg-black/10 border-b border-borderColor  top-0 absolute  backdrop-blur-xl  font-bold   w-[41.5%] "> Personas </div>
+        <ReuseableTitle title="Personas" />
+    
         {isLoading && <Loader />}
         {isError && <div>Error...</div>}
         {data && <div>
-            <ReuseableTitle title="Personas" />
 
             <div className="mt-16">
 
