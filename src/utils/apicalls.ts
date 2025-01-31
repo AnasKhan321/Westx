@@ -11,6 +11,35 @@ interface TweetDetail {
     data : Tweet
 }
 
+interface Followings {
+    id: string,
+    followerid: string,
+    followingid: string,
+    createdAt: Date;
+	updatedAt: Date;
+    following : User
+}
+
+interface Followings2 {
+    id: string,
+    followerid: string,
+    followingid: string,
+    createdAt: Date;
+	updatedAt: Date;
+    follower : User
+}
+
+interface Followingresponse{
+    success : boolean , 
+    data : Followings[]
+}
+
+
+interface Followingresponse2{
+    success : boolean , 
+    data : Followings2[]
+}
+
 
 export interface TweetsData{
     data : Tweet[] ; 
@@ -203,6 +232,19 @@ export const getUserFollowinguserid = async(userid : string) : Promise<FollowerR
 
 export const getUserBookmark = async(userid : string) : Promise<BookmarksREsponse> =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/bookmark/${userid}`)
+    const data  = await res.json()  ; 
+    return data 
+}
+
+
+export const getUserFollowing = async(userid : string) : Promise<Followingresponse> =>{
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/following/${userid}`)
+    const data  = await res.json()  ; 
+    return data 
+}
+
+export const getUserFollower = async(userid : string)  : Promise<Followingresponse2>=>{
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/follower/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }

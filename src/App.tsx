@@ -20,6 +20,8 @@ import { AuthContextProvider } from "./Context/AuthContext";
 import Explores from "./Components/Explores";
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Premium from "./Components/Premium";
+import Follower from "./Components/Follower";
+import Following from "./Components/Following";
 
 
 
@@ -64,6 +66,11 @@ function AppRoutes() {
               element={<TweetDetail />}
               key={"TweetDetail"}
             />
+
+            <Route path="/follower/:username" element={<Follower/>}  key={"follower"}/>
+            <Route path="/following/:username" element={<Following/>}  key={"following"}/>
+
+            
           </Routes>
         </MainLayout>
       )}

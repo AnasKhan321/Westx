@@ -192,7 +192,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         {userfollowing?.success && (
           <div>
             <p className="font-bold">{suserfollowing}</p>
-            <p className="text-xs text-gray-500">Following</p>
+            <Link to={`/following/${profile.id}`}> <p className="text-xs text-gray-500">Following</p> </Link>  
           </div>
         )}
 
@@ -201,7 +201,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         {userfollower?.success && (
           <div>
             <p className="font-bold">{suserfollower}</p>
-            <p className="text-xs text-gray-500">Followers</p>
+        <Link to={`/follower/${profile.id}`}>       <p className="text-xs text-gray-500">Followers</p>  </Link> 
           </div>
         )}
         <div>
