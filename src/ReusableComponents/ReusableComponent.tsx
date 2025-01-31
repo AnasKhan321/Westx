@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "../Context/AuthContext";
 import { addReply } from "../utils/creationcall";
 import toast from "react-hot-toast";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 type ReplyBoxProps = {
   tweetid : string
