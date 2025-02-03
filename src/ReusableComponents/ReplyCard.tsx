@@ -51,7 +51,10 @@ export default function ReplyCard({reply}  : {reply : Reply}){
                 </span>
               </Link>
             </div>
+            <Link to={`/reply/${reply.id}`}> 
             <p>{reply.content}</p>
+            
+            </Link>
           </div>
         </div>
 

@@ -22,6 +22,7 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Premium from "./Components/Premium";
 import Follower from "./Components/Follower";
 import Following from "./Components/Following";
+import Reply from "./Components/Reply";
 
 
 
@@ -69,7 +70,7 @@ function AppRoutes() {
 
             <Route path="/follower/:username" element={<Follower/>}  key={"follower"}/>
             <Route path="/following/:username" element={<Following/>}  key={"following"}/>
-
+            <Route path="/reply/:id" element={<Reply/>}  key={"UserReply"}/>
             
           </Routes>
         </MainLayout>

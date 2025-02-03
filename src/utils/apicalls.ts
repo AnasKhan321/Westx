@@ -107,6 +107,16 @@ interface BookmarksREsponse{
     data : BookMark[]
 }
 
+interface Replydetailss{
+    success : boolean , 
+    data : Reply
+}
+
+interface ReplyofReplys{
+    success : boolean , 
+    data : Reply[]
+}
+
 export const fetchUser = async (username : string) : Promise<UserResponse> => {
     const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/${username}`);
     const data = await response.json();
@@ -196,6 +206,16 @@ export const getReplies  = async (tweetid : string) : Promise<ReplyResponsee> =>
 
 export const getUserbyUsername = async(username : string) : Promise<UserbyUsername> =>{
     const {data} = await axios.get<UserbyUsername>(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getuser/v2/${username}`)
+    return data ; 
+}
+
+export const Replydetail = async(replyid : string)   : Promise<Replydetailss>=>{
+    const {data}  = await axios.get(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/replydetail/${replyid}`)
+    return data ; 
+}
+
+export const getReplyiess = async(parentid : string) : Promise<ReplyofReplys>=>{
+    const {data}  = await axios.get(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply/children/${parentid}`)
     return data ; 
 }
 

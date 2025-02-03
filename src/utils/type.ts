@@ -108,7 +108,9 @@ export interface BookMark{
 }
 
 export interface Reply extends BookMark {
-	content : string
+	content : string,
+	children  : Reply[]  , 
+	parentId : string  | null
 }
 
 export interface Repost{

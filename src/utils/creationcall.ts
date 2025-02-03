@@ -14,6 +14,12 @@ export  interface Replybody extends CreationCall{
     text : string 
 }
 
+
+export  interface ParentBody  {
+    userid : string , 
+    replyid : string,
+    text : string 
+}
 export interface BookmakrResponse{
     success : boolean , 
     bookmark : BookMark
@@ -124,6 +130,26 @@ export const addReply = async(body : Replybody)  : Promise<ReplyResponse | undef
     }
 }
 
+
+
+export const addReplyParent = async(body : ParentBody)  : Promise<ReplyResponse | undefined>=>{
+    try {
+        const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/addreplyonreply`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
 export const followuser = async(body  : Followuser) : Promise<followResponse | undefined> =>{
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/follow`, {

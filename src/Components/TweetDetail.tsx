@@ -16,7 +16,6 @@ export default function TweetDetail(){
     const {id} = useParams();
 
     const {isLoading , data , isError}  = useQuery({queryKey : ['tweet', id], queryFn : ()=>getTweetDetail(id as string)  , 
-
       staleTime: Infinity, 
       refetchOnMount: false, 
       refetchOnWindowFocus: false, 
