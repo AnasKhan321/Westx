@@ -21,7 +21,7 @@ export default function TweetDetail(){
       refetchOnMount: false, 
       refetchOnWindowFocus: false, 
     });
-    console.log(data?.data)
+
 
     const {isLoading:replyloading  , data : replydata  }  = useQuery({queryKey : [`Tweet:Reply:${id}`]   , queryFn : ()=> getReplies(id  as string)})
 

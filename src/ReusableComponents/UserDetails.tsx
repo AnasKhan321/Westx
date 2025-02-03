@@ -21,9 +21,7 @@ interface Tweetcounts {
 }
 
 const GetTweetCount  = async(userid : string)=>{
-  console.log(userid)
   const {data}  = await axios.get<Tweetcounts>(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweetCount/${userid}`)
-  console.log(data)
   return data ; 
 }
 

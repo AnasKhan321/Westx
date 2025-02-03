@@ -16,7 +16,7 @@ const Following = () => {
         queryFn: ()=> getUserFollowing(username as string)
      })
 
-     console.log(data)
+
     
   return (
     <div>
