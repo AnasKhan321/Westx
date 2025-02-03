@@ -18,7 +18,7 @@ const Reply = () => {
     const {data , isLoading , isError}  = useQuery({queryKey : [`Reply:${id}`]  , queryFn : ()=> Replydetail(id as string)})
     const {user}  = useAuth()
     const [reply, setReply]  = useState("")
-    const {data:childrendata , isLoading : childrenloading }  = useQuery({queryKey : [`Reply:Reply:${id}`]  , 
+    const {data:childrendata  }  = useQuery({queryKey : [`Reply:Reply:${id}`]  , 
         queryFn : ()=> getReplyiess(id as string)
     })
     const queryClient = useQueryClient();
