@@ -91,7 +91,7 @@ function Tweets() {
 
       {/* Invisible div to track scrolling and auto-load new data */}
       <div ref={bottomRef} className="h-10" />
-
+      
       {isFetchingNextPage && (
         <div className="flex justify-center w-full">
           <SmallLoader />

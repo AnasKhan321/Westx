@@ -13,7 +13,10 @@ const Following = () => {
 
     
     const {data , isLoading }  = useQuery({queryKey : [`USER:FOLLOWING:${username}`]  , 
-        queryFn: ()=> getUserFollowing(username as string)
+        queryFn: ()=> getUserFollowing(username as string),
+        staleTime: Infinity, 
+        refetchOnMount: false, 
+        refetchOnWindowFocus: false, 
      })
 
 

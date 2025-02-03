@@ -12,7 +12,10 @@ const Follower = () => {
     const {username} = useParams()
 
     const {data , isLoading }  = useQuery({queryKey : [`USER:FOLLOWERS:${username}`]  , 
-        queryFn: ()=> getUserFollower(username as string)
+        queryFn: ()=> getUserFollower(username as string),
+        staleTime: Infinity, 
+        refetchOnMount: false, 
+        refetchOnWindowFocus: false, 
      })
   return (
     <div>

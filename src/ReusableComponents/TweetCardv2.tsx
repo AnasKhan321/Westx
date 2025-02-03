@@ -53,7 +53,6 @@ const TweetCardv2 = ({tweet}  : {tweet : Tweet2}) => {
 
       const handleAddBookmark = async () => {
         setisBookmarked(true)
-        console.log("this is here")
      
         if(bookmarks !== undefined){
           setbookmarks(bookmarks+1)
