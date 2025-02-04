@@ -10,6 +10,7 @@ import { DeleteBookmark, DeleteLike, DeleteRepost } from "../utils/deletioncall"
 import { useState } from "react";
 import { DynamicText } from "./DynamicText";
 import { useQueryClient } from "@tanstack/react-query";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boolean }) => {
   const queryClient = useQueryClient();
 
@@ -141,7 +142,7 @@ const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boole
                 </span>
               </Link>
             </div>
-            <p><DynamicText text={tweet.text  as string}  postedBy="assistant"/></p>
+            <p className="text-sm md:text-base"><DynamicText text={tweet.text  as string}  postedBy="assistant"/></p>
           </div>
         </div>
       </Link>
@@ -149,17 +150,21 @@ const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boole
       {/* Media */}
       {tweet.image && (
         <div className="mt-4 flex items-center justify-center">
-          <img
-            src={tweet.image} // Replace with your image path
-            alt="Tweet Media"
-            className="rounded-lg  h-[200px] md:h-[350px]"
-          />
+  
+  <LazyLoadImage
+      src={tweet.image}
+      alt="Lazy Loaded Image"
+      width={500}
+      height={350}
+      
+             
+    />
         </div>
       )}
 
 {!isBookmark && 
  
-      <div className="flex items-center justify-between w-[70%] mx-auto   mt-5 text-xl text-gray-500">
+      <div className="flex items-center justify-between w-[100%] md:w-[70%] mx-auto   mt-5 text-xl text-gray-500">
         <div className="flex gap-x-1 group hover:text-blue-500  transition-all items-center ">
         <span className="text-sm">{tweet.replies.length == 0? ""  : tweet.replies.length}</span>
           <BiMessageRounded className=" cursor-pointer  rounded-full p-2 group-hover:bg-blue-500/10   text-4xl " />

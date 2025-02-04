@@ -26,7 +26,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({    tweetid }) => {
 
   return (
     <div className="border-b border-borderColor  mx-auto">
-      <div className="p-4 w-full  mx-auto  grid grid-cols-12 gap-x-2">
+      <div className="p-4 w-full  mx-auto  grid grid-cols-12 gap-x-2 flex justify-center items-center">
     
         <img src={user?.photoURL} alt="" className="  w-[100px] col-span-1 rounded-full" />
 

@@ -26,11 +26,11 @@ export default function TweetDetail(){
 
     return(
         <div>
-
+      <ReuseableTitle title="Tweet" />
             {isLoading && <Loader/>}
             {isError && <div>Error...</div>}
             {data && <div>
-               <ReuseableTitle title="Tweet" />
+         
                 <div className="mt-16">
                <TweetCard tweet={data.data}  isBookmark={false}/>
 
