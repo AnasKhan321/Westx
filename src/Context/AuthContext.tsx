@@ -49,13 +49,21 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
           }`
         );
         const data = await res.json();
+        console.log(data)
+        if(data.success){
 
-        setUser(data.data);
-        setIsLoading(false);
-        
-        if(isLoading == false){
-          navigate("/")
+          setUser(data.data);
+          setIsLoading(false);
+          if(isLoading == false){
+            navigate("/")
+          }
+        }else if(data.success == false){
+          setIsLoading(false); 
+          navigate("/login")
         }
+
+        
+
      
        
       } else {
