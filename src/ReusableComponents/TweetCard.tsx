@@ -135,14 +135,14 @@ const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boole
               </Link>
               <Link to={`/user/${tweet.user.username}`}>
                 {" "}
-                <span className="text-sm  text-gray-400 md:text-base ">{tweet.user.username} · </span>
-                <span className="text-sm text-gray-400  md:text-base ">
+                <span className="text-[12px]  text-gray-400 md:text-base ">{tweet.user.username} · </span>
+                <span className="text-[12px] text-gray-400  md:text-base ">
                   {" "}
                   {timeSince(tweet.createdAt)}{" "}
                 </span>
               </Link>
             </div>
-            <p className="text-sm md:text-base"><DynamicText text={tweet.text  as string}  postedBy="assistant"/></p>
+            <p className="text-[12px] md:text-base"><DynamicText text={tweet.text  as string}  postedBy="assistant"/></p>
           </div>
         </div>
       </Link>
@@ -164,7 +164,7 @@ const TweetCard = ({ tweet  , isBookmark }: { tweet: Tweet  , isBookmark : boole
 
 {!isBookmark && 
  
-      <div className="flex items-center justify-between w-[100%] md:w-[70%] mx-auto   mt-5 text-xl text-gray-500">
+      <div className="flex items-center justify-between w-[100%] md:w-[90%] mx-auto   mt-5 text-xl text-gray-500">
         <div className="flex gap-x-1 group hover:text-blue-500  transition-all items-center ">
         <span className="text-sm">{tweet.replies.length == 0? ""  : tweet.replies.length}</span>
           <BiMessageRounded className=" cursor-pointer  rounded-full p-2 group-hover:bg-blue-500/10   text-4xl " />
