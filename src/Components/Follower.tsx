@@ -25,6 +25,9 @@ const Follower = () => {
 
     {data?.data && <div> 
 
+        {data.data.length ==  0 && <> 
+            <div className="text-center font-bold mt-10 text-xl "> He Does not Have Any Follower </div>
+        </> }
         {data.data.map((user)=>{
             return(
                 <UserCard user={user.follower}/>

@@ -27,6 +27,12 @@ const Following = () => {
         <div className="mt-16"></div>
      {isLoading && <Loader/> }
      {   <div> 
+
+        {data?.data.length == 0 && <> 
+            
+            <div className="text-center font-bold mt-10 text-xl "> He Does not Have Any Following </div>
+        </>}
+
         {data?.data.map((data)=>{
             return(
                 <UserCard user={data.following}/>
