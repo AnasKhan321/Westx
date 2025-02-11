@@ -14,6 +14,9 @@ import {
 import SmallLoader from "./SmallLoader";
 import UserTweets from "./UsertTweets";
 import axios from "axios";
+import UserReposts from "./UserReposts";
+import UserLikes from "./UserLikes";
+import UserReplies from "./UserReplies";
 
 interface Tweetcounts {
   success : boolean , 
@@ -28,7 +31,9 @@ const GetTweetCount  = async(userid : string)=>{
 const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const { user, handleLogout } = useAuth();
   const queryClient = useQueryClient() ; 
-
+  const tabs = ["Posts", "Replies", "Likes", "Repost"];
+  const [activeTab, setActiveTab] = useState("Posts");
+ 
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
     queryKey: [`UserFollowing:${profile.username}`],
 
@@ -235,7 +240,52 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       <div className="mt-5">
 
 
+      <div className="w-full  mx-auto mt-5">
+      <div className="flex border-b border-gray-700">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`flex-1 py-2 text-center text-white ${
+              activeTab === tab ? "border-b-2 border-purple-500 font-semibold" : "text-gray-400"
+            }`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      <div className=" text-white">
+        
+          {activeTab == "Posts"  && <> 
         <UserTweets userId={profile.id}/>
+          
+          </>}
+
+
+          {activeTab == "Replies"  && <> 
+            <UserReplies user={profile}/>
+          
+          </>}
+
+
+          {activeTab == "Likes"  && <> 
+             <UserLikes id={profile.id}/>
+          
+          </>}
+
+
+          {activeTab == "Repost"  && <> 
+        <UserReposts id={profile.id}/> 
+          
+          </>}
+
+
+      </div>
+    </div>
+
+
+
 
       </div>
     </div>

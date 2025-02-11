@@ -117,6 +117,21 @@ interface ReplyofReplys{
     data : Reply[]
 }
 
+interface UserLikesResponse{
+    success : boolean , 
+    data : Like[]
+}
+
+interface UserReposts {
+    success : boolean , 
+    data : Repost[]
+}
+
+interface UserReplies {
+    success : boolean , 
+    data : Reply[]
+}
+
 export const fetchUser = async (username : string) : Promise<UserResponse> => {
     const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/${username}`);
     const data = await response.json();
@@ -265,6 +280,28 @@ export const getUserFollowing = async(userid : string) : Promise<Followingrespon
 
 export const getUserFollower = async(userid : string)  : Promise<Followingresponse2>=>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/follower/${userid}`)
+    const data  = await res.json()  ; 
+    return data 
+}
+
+export const getUserLikes  = async(userid : string) : Promise<UserLikesResponse>=>{
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}`)
+    const data  = await res.json()  ; 
+    return data 
+}
+
+
+
+
+export const getUserReposts  = async(userid : string) : Promise<UserReposts>=>{
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreposts/${userid}`)
+    const data  = await res.json()  ; 
+    return data 
+}
+
+
+export const getUserReplies = async(userid : string) : Promise<UserReplies>=>{
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreplies/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }

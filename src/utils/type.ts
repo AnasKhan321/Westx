@@ -107,9 +107,17 @@ export interface BookMark{
 	updatedAt: Date;
 }
 
-export interface Reply extends BookMark {
+export interface Reply  {
+	id  : string , 
+	userid : string , 
+	user : User , 
+	tweetid  : string | null , 
+	tweet : Tweet , 
+	createdAt: Date,
+	updatedAt: Date,
 	content : string,
 	children  : Reply[]  , 
+	parent : Reply, 
 	parentId : string  | null
 }
 

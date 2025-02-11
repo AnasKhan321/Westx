@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import {  Tweet2 } from "../utils/type";
+import {  Tweet } from "../utils/type";
 import { timeSince } from "../utils/date";
 
-export default function TweetDetailTweet({ tweet }: { tweet: Tweet2 }) {
+export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
   return (
     <div className="bg-black text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
       {/* Header */}
@@ -20,13 +20,16 @@ export default function TweetDetailTweet({ tweet }: { tweet: Tweet2 }) {
             <Link to={`/user/${tweet.user.username}`}>
               {" "}
               <span className="text-gray-400">{tweet.user.username} · </span>
-              <span className="text-gray-400">
+              <span className="text-gray-500">
                 {" "}
                 {timeSince(tweet.createdAt)}{" "}
               </span>
             </Link>
           </div>
+          <Link to={`/tweet/${tweet.id}`}>  
           <p>{tweet.text}</p>
+          
+          </Link>
         </div>
       </div>
 

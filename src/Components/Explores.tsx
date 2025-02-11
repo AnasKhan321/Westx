@@ -31,7 +31,7 @@ const Explores = () => {
             <>
               <div className="mt-16"></div>
 
-              {data.data.length == 0 && <div>Not found any user!</div>}
+              {data.data.length == 0 && <div className="text-center font-bold text-xl">Not found any user!</div>}
               {data.data.map((user  , index) => {
                 return <UserCard user={user}  key={index} />;
               })}
