@@ -121,7 +121,7 @@ const TweetCard = ({
   };
 
   return (
-    <div className="bg-black text-white w-full  mx-auto  p-2 rounded-lg border-b border-borderColor ">
+    <div className="bg-black text-white w-full  mx-auto  p-4 rounded-lg border-b border-borderColor ">
       {/* Header */}
 
       <Link to={`/tweet/${tweet.id}`}>

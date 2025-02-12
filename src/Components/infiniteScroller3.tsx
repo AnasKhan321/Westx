@@ -87,7 +87,7 @@ function Tweets() {
                                 </div>
                               }
                             >
-                              <div className="flex  items-center pl-8 py-1 space-x-2 text-gray-500 font-bold  "> <BiRepost className="text-xl "/>  <span className="text-xs">  {tweet.user.name} reposted   </span>  </div>
+                              <div className="flex  items-center pl-8 py-2 space-x-2 text-gray-500 font-bold  "> <BiRepost className="text-xl "/>  <span className="text-xs">  {tweet.user.name} reposted   </span>  </div>
                               <TwetCARD tweet={tweet.originalTweet as Tweet} isBookmark={false} />
                             </Suspense>
             )}
