@@ -3,28 +3,26 @@ export interface Message {
 	sender: string;
 	content: string;
   }
-export type Tweet = {
+  export type Tweet = {
 	id: string;
-	type: 'tweet' | 'comment';
-	tweetId: string;
-	createdBy: string;
 	text: string | null;
-	userLikes: string[];
-	userReplies: number;
-	createdAt: Date;
-	userRetweets: string[];
-	updatedAt: Date | null;
+	userId: string;
+	user: User; // Assuming 'User' is a defined type
 	image: string | null;
-	postedBy: 'user' | 'assistant';
-	parent: { id: string; username: string } | null;
-    user : User;
-	bookmarks  : BookMark[] , 
-	replies : Reply[]  , 
-	repost : Repost[]  , 
-	likes : Like[]
-
-};
-
+	postType: "AI" | "USER"; // Assuming 'PostType' is an enum
+	parentTweetId: string | null;
+	parentTweet: Tweet | null; // Nullable, as it could be a reply
+	replies: Tweet[]; // Array of replies (self-referencing)
+	originalTweetId: string | null;
+	originalTweet: Tweet | null; // Nullable, for reposts
+	reposts: Tweet[]; // Array of reposts (self-referencing)
+	bookmarks: BookMark[]; // Assuming 'BookMark' is a defined type
+	likes: Like[]; // Assuming 'Like' is a defined type
+	tweettype: "TWEET" | "REPLY" | "REPOST"; // Assuming 'PostType2' is an enum
+	createdAt: Date;
+	updatedAt: Date | null;
+  };
+  
 
 export type Tweet2 = {
 	id: string;
@@ -101,8 +99,8 @@ export interface BookMark{
 	id  : string , 
 	userid : string , 
 	user : User , 
-	tweetid  : string , 
-	tweet : Tweet , 
+	tweetid  : string, 
+	tweet : Tweet  , 
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -118,15 +116,20 @@ export interface Reply  {
 	content : string,
 	children  : Reply[]  , 
 	parent : Reply, 
-	parentId : string  | null
+	parentId : string  | null,
+	likes    : Like[]      // Allow likes on replies
+	bookmarks :BookMark[]  // Allow bookmarks on replies
+	reposts  : Repost[]
 }
 
 export interface Repost{
 	id  : string , 
 	userid : string , 
 	user : User , 
-	tweetid  : string , 
-	tweet : Tweet , 
+	tweetid  : string | undefined, 
+	tweet : Tweet | undefined , 
+	replyid : string | undefined , 
+	reply : Reply | undefined
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -136,8 +139,9 @@ export interface Like{
 	id  : string , 
 	userid : string , 
 	user : User , 
-	tweetid  : string , 
-	tweet : Tweet , 
+	tweetid  : string, 
+	tweet : Tweet  , 
+
 	createdAt: Date;
 	updatedAt: Date;
 }

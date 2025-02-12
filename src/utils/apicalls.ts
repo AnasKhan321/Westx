@@ -79,7 +79,7 @@ interface TweetResponse {
 
 interface ReplyResponsee{
     success : boolean , 
-    data : Reply[]
+    data : Tweet[]
 }
 
 interface UserbyUsername {
@@ -124,12 +124,12 @@ interface UserLikesResponse{
 
 interface UserReposts {
     success : boolean , 
-    data : Repost[]
+    data : Tweet[]
 }
 
 interface UserReplies {
     success : boolean , 
-    data : Reply[]
+    data : Tweet[]
 }
 
 export const fetchUser = async (username : string) : Promise<UserResponse> => {

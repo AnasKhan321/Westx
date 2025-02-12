@@ -1,52 +1,57 @@
 import { BookMark, Like, Reply, Repost } from "./type";
 
-export  interface CreationCall {
-    userid : string , 
-    tweetid : string
+export interface CreationCall {
+    userid: string,
+    tweetid: string
 }
 
 export interface Followuser {
-    followerid  : string ,
-     followingid : string
+    followerid: string,
+    followingid: string
 }
 
-export  interface Replybody extends CreationCall{
-    text : string 
-}
-
-
-export  interface ParentBody  {
-    userid : string , 
-    replyid : string,
-    text : string 
-}
-export interface BookmakrResponse{
-    success : boolean , 
-    bookmark : BookMark
+export interface Replybody extends CreationCall {
+    text: string
 }
 
 
-export interface LikeResponse{
-    success : boolean , 
-    like : Like
+export interface ParentBody {
+    userid: string,
+    replyid: string,
+    text: string
 }
-
-export  interface ReplyResponse{
-    reply : Reply , 
-    success : boolean
-}
-
-export  interface RepostResponse {
-    success : boolean , 
-    repost : Repost
+export interface BookmakrResponse {
+    success: boolean,
+    bookmark: BookMark
 }
 
 
-export interface followResponse{
-    success : boolean
+export interface LikeResponse {
+    success: boolean,
+    like: Like
 }
 
-export const CreateBookmark = async (body  : CreationCall)  : Promise<BookmakrResponse | undefined> => {
+export interface ReplyResponse {
+    reply: Reply,
+    success: boolean
+}
+
+export interface RepostResponse {
+    success: boolean,
+    repost: Repost
+}
+
+
+export interface followResponse {
+    success: boolean
+}
+
+export interface CreationCall2 {
+    replyid: string,
+    userid: string
+}
+
+export const CreateBookmark = async (body: CreationCall): Promise<BookmakrResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/bookmark`, {
             method: 'POST',
@@ -58,18 +63,18 @@ export const CreateBookmark = async (body  : CreationCall)  : Promise<BookmakrRe
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const data : BookmakrResponse = await response.json();
+        const data: BookmakrResponse = await response.json();
         return data;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-    
-  
+
+
     }
 };
 
 
 
-export const CreateRepost = async (body  : CreationCall)  : Promise<RepostResponse | undefined> => {
+export const CreateRepost = async (body: CreationCall): Promise<RepostResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/repost`, {
             method: 'POST',
@@ -91,7 +96,7 @@ export const CreateRepost = async (body  : CreationCall)  : Promise<RepostRespon
 
 
 
-export const addLike = async (body  : CreationCall) : Promise<LikeResponse | undefined> => {
+export const addLike = async (body: CreationCall): Promise<LikeResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/like`, {
             method: 'POST',
@@ -111,7 +116,7 @@ export const addLike = async (body  : CreationCall) : Promise<LikeResponse | und
 };
 
 
-export const addReply = async(body : Replybody)  : Promise<ReplyResponse | undefined>=>{
+export const addReply = async (body: Replybody): Promise<ReplyResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply`, {
             method: 'POST',
@@ -132,7 +137,7 @@ export const addReply = async(body : Replybody)  : Promise<ReplyResponse | undef
 
 
 
-export const addReplyParent = async(body : ParentBody)  : Promise<ReplyResponse | undefined>=>{
+export const addReplyParent = async (body: ParentBody): Promise<ReplyResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/addreplyonreply`, {
             method: 'POST',
@@ -150,7 +155,7 @@ export const addReplyParent = async(body : ParentBody)  : Promise<ReplyResponse 
         console.error('There was a problem with the fetch operation:', error);
     }
 }
-export const followuser = async(body  : Followuser) : Promise<followResponse | undefined> =>{
+export const followuser = async (body: Followuser): Promise<followResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/follow`, {
             method: 'POST',
@@ -174,7 +179,7 @@ export const followuser = async(body  : Followuser) : Promise<followResponse | u
 
 
 
-export const unfollowuser  = async(body  : Followuser) : Promise<followResponse | undefined> =>{
+export const unfollowuser = async (body: Followuser): Promise<followResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/unfollow`, {
             method: 'POST',

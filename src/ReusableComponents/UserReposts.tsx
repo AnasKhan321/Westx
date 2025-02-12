@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query"
 import { getUserReposts } from "../utils/apicalls"
 import Loader from "./Loader"
 import TweetDetailTweet from "./TweetCard3"
+import { Tweet } from "../utils/type"
+
 
 
 
@@ -14,6 +16,8 @@ const UserReposts = ({id  }  : {id  : string}) => {
           refetchOnMount: false, 
           refetchOnWindowFocus: false, 
       })
+
+      console.log(data)
   return (
     <div>
       {isLoading && <Loader/> }
@@ -25,7 +29,8 @@ const UserReposts = ({id  }  : {id  : string}) => {
 
           {data.data.map((item)=>{
             return (
-              <TweetDetailTweet tweet={item.tweet}/>
+              
+              <TweetDetailTweet tweet={item.originalTweet as Tweet}/>
             )
           })}
 

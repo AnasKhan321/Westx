@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import {  Tweet } from "../utils/type";
 import { timeSince } from "../utils/date";
-
 export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
+  console.log(tweet)
   return (
     <div className="bg-black text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
       {/* Header */}
@@ -32,6 +32,7 @@ export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
           </Link>
         </div>
       </div>
+
 
       {/* Media */}
       {tweet.image && (

@@ -21,9 +21,11 @@ export default function TweetDetail(){
       refetchOnWindowFocus: false, 
     });
 
+    
+
 
     const {isLoading:replyloading  , data : replydata  }  = useQuery({queryKey : [`Tweet:Reply:${id}`]   , queryFn : ()=> getReplies(id  as string)})
-
+    console.log(replydata)
     return(
         <div>
       <ReuseableTitle title="Tweet" />
@@ -51,8 +53,13 @@ export default function TweetDetail(){
                 </div> }
 
                 {replydata?.data.map((reply  , index)=>(
+
+                  <div className="border-b-2 border-borderColor">
+
+<ReplyCard reply={reply} key={index}/>
+
+                  </div>
                  
-                  <ReplyCard reply={reply} key={index}/>
                  
                 ))}
                 </div>

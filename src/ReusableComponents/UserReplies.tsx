@@ -41,13 +41,13 @@ const UserReplies = ({ user }: { user : User2 }) => {
       {data?.data.map((item) => {
         return (
           <div className="border-b border-gray-700 py-4  ">
-            {item.parentId && <Tweet4 createdAt={item.parent.tweet.createdAt} photoURL={item.parent.user.photoURL} tweetid={item.parent.tweet.id} content={item.parent.content} username={item.parent.user.username} date={""}  name={item.parent.user.name} />  }
-            {item.tweetid && <Tweet4 createdAt={item.tweet.createdAt} photoURL={item.tweet.user.photoURL} tweetid={item.tweet.id} content={item.tweet.text as string} username={item.tweet.user.username} date={""}  name={item.tweet.user.name} />  }
+            {item.parentTweetId && <Tweet4 createdAt={item.parentTweet?.createdAt as Date} photoURL={item.parentTweet?.user.photoURL as string } tweetid={item.parentTweet?.id as string} content={item.parentTweet?.text as string} username={item.parentTweet?.user.username as string} date={""}  name={item.parentTweet?.user.name as string} />  }
+            {/* {item.tweetid && <Tweet4 createdAt={item.tweet.createdAt} photoURL={item.tweet.user.photoURL} tweetid={item.tweet.id} content={item.tweet.text as string} username={item.tweet.user.username} date={""}  name={item.tweet.user.name} />  } */}
             <Reply2
-              content={item.content}
+              content={item.text as string}
               replyid ={item.id}
               username={user.username}
-              date=""
+              date={item.createdAt}
               name={user.name}
               photoURL={user.photoURL}
               createdAt={item.createdAt}

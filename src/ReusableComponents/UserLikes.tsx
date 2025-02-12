@@ -4,6 +4,7 @@ import Loader from "./Loader"
 import TweetDetailTweet from "./TweetCard3"
 
 
+
 const UserLikes = ({id}  : {id : string}) => {
 
     const {isLoading , isError , data }  = useQuery({

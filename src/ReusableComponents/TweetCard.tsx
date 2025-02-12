@@ -26,7 +26,7 @@ const TweetCard = ({
 
   const { user } = useAuth();
 
-  const [reposts, setreposts] = useState(tweet.repost.length);
+  const [reposts, setreposts] = useState(tweet.reposts.length);
   const [likes, setlikes] = useState(tweet.likes.length);
   const [bookmarks, setbookmarks] = useState(tweet.bookmarks.length);
 
@@ -37,7 +37,7 @@ const TweetCard = ({
     tweet.bookmarks.some((tweetB) => tweetB.userid === user?.id)
   );
   const [isreposted, setisreposted] = useState(
-    tweet.repost.some((tweetR) => tweetR.userid === user?.id)
+    tweet.reposts.some((tweetR) => tweetR.userId === user?.id)
   );
 
   const handleAddBookmark = async () => {
@@ -99,6 +99,7 @@ const TweetCard = ({
       tweetid: tweet.id,
       userid: user?.id as string,
     });
+    console.log(response)
     if (response?.success) {
       setisreposted(true);
       setreposts(reposts + 1);
@@ -120,7 +121,7 @@ const TweetCard = ({
   };
 
   return (
-    <div className="bg-black text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
+    <div className="bg-black text-white w-full  mx-auto  p-2 rounded-lg border-b border-borderColor ">
       {/* Header */}
 
       <Link to={`/tweet/${tweet.id}`}>
