@@ -1,69 +1,63 @@
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ReplyBox from "../ReusableComponents/ReusableComponent";
 
 import ReuseableTitle from "../ReusableComponents/ReuseableTitle";
 import Loader from "../ReusableComponents/Loader";
 import { getReplies, getTweetDetail } from "../utils/apicalls";
-import ReplyCard from "../ReusableComponents/ReplyCard";
 
 import SmallLoader from "../ReusableComponents/SmallLoader";
-import TweetCard from "../ReusableComponents/TweetCard";
+import React, { Suspense } from "react";
 
+const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+export default function TweetDetail() {
+  const { id } = useParams();
 
-export default function TweetDetail(){
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ["tweet", id],
+    queryFn: () => getTweetDetail(id as string),
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
 
-    const {id} = useParams();
+  const { isLoading: replyloading, data: replydata } = useQuery({
+    queryKey: [`Tweet:Reply:${id}`],
+    queryFn: () => getReplies(id as string),
+  });
 
-    const {isLoading , data , isError}  = useQuery({queryKey : ['tweet', id], queryFn : ()=>getTweetDetail(id as string)  , 
-      staleTime: Infinity, 
-      refetchOnMount: false, 
-      refetchOnWindowFocus: false, 
-    });
-
-    
-
-
-    const {isLoading:replyloading  , data : replydata  }  = useQuery({queryKey : [`Tweet:Reply:${id}`]   , queryFn : ()=> getReplies(id  as string)})
-    console.log(replydata)
-    return(
-        <div>
+  return (
+    <div>
       <ReuseableTitle title="Tweet" />
-            {isLoading && <Loader/>}
-            {isError && <div>Error...</div>}
-            {data && <div>
-         
-                <div className="mt-16">
-               <TweetCard tweet={data.data}  isBookmark={false}/>
+      {isLoading && <Loader />}
+      {isError && <div>Error...</div>}
+      {data && (
+        <div>
+          <div className="mt-16">
+            <Suspense fallback={<Loader />}>
+              <TwetCARD tweet={data.data} isBookmark={false} />
+            </Suspense>
 
-       
+            <div className="w-full">
+              <ReplyBox tweetid={data.data.id} />
+            </div>
 
+            {replyloading && (
+              <div className="flex text-center items-center justify-center">
+                <SmallLoader />
+              </div>
+            )}
 
-
-
-                <div className="w-full">
-                <ReplyBox   tweetid={data.data.id } />
-
-                </div>
-
-                {replyloading && <div className="flex text-center items-center justify-center"> 
-
-                    <SmallLoader/>
-
-                </div> }
-
-                {replydata?.data.map((reply  , index)=>(
-
-                  <div className="border-b-2 border-borderColor">
-
-<ReplyCard reply={reply} key={index}/>
-
-                  </div>
-                 
-                 
-                ))}
-                </div>
-            </div> }
+            {replydata?.data.map((reply, index) => (
+              <div key={index} className="border-b-2 border-borderColor">
+                <Suspense fallback={<Loader />}>
+                  <TwetCARD tweet={reply} isBookmark={false} />
+                </Suspense>
+              </div>
+            ))}
+          </div>
         </div>
-    )
+      )}
+    </div>
+  );
 }

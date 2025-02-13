@@ -78,36 +78,27 @@ function FollowingTweets() {
     ) : (
       data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
-          {group.data.map((tweet, index) => (
+          {group.data.map((tweet) => (
+          <Suspense
+          key={tweet.id}  // ✅ Key should be on Suspense, not inside it
+          fallback={
+            <div className="text-center my-4">
+              <SmallLoader />
+            </div>
+          }
+        >
+          {tweet.tweettype === "REPOST" ? (
             <>
-            {tweet.tweettype == "REPOST"   && (
-                              <Suspense
-                              key={index}
-                              fallback={
-                                <div className="text-center my-4 ">
-                                  {" "}
-                                  <SmallLoader />{" "}
-                                </div>
-                              }
-                            >
-                              <div className="flex  items-center pl-8 space-x-2 text-gray-500 font-bold  "> <BiRepost className="text-xl "/>  <span className="text-xs">  {tweet.user.name} reposted   </span>  </div>
-                              <TwetCARD tweet={tweet.originalTweet as Tweet} isBookmark={false} />
-                            </Suspense>
-            )}
-              {tweet.tweettype == "TWEET" && (
-                <Suspense
-                  key={index}
-                  fallback={
-                    <div className="text-center my-4 ">
-                      {" "}
-                      <SmallLoader />{" "}
-                    </div>
-                  }
-                >
-                  <TwetCARD tweet={tweet} isBookmark={false} />
-                </Suspense>
-              )}
+              <div className="flex items-center pl-8 py-2 space-x-2 text-gray-500 font-bold">
+                <BiRepost className="text-xl" />
+                <span className="text-xs">{tweet.user.name} reposted</span>
+              </div>
+              <TwetCARD tweet={tweet.originalTweet as Tweet} isBookmark={false} />
             </>
+          ) : (
+            <TwetCARD tweet={tweet} isBookmark={false} />
+          )}
+        </Suspense>
           ))}
         </React.Fragment>
       ))

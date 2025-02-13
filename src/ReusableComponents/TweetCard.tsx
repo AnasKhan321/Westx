@@ -15,6 +15,7 @@ import { useState } from "react";
 import { DynamicText } from "./DynamicText";
 import { useQueryClient } from "@tanstack/react-query";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const TweetCard = ({
   tweet,
   isBookmark,
@@ -99,7 +100,6 @@ const TweetCard = ({
       tweetid: tweet.id,
       userid: user?.id as string,
     });
-    console.log(response)
     if (response?.success) {
       setisreposted(true);
       setreposts(reposts + 1);
@@ -175,20 +175,21 @@ const TweetCard = ({
         </div>
       </Link>
 
-      {/* Media */}
       {tweet.image && (
-        <div className="mt-4 flex items-center justify-center">
+        <div className="mt-4 flex items-center   justify-center">
           <LazyLoadImage
             src={tweet.image}
             alt="Lazy Loaded Image"
             width={500}
             height={350}
+            effect="blur"
+            className="rounded-xl "
           />
         </div>
       )}
 
       {!isBookmark && (
-        <div className="flex items-center justify-between w-[100%] md:w-[90%] mx-auto   mt-5 text-xl text-gray-500">
+        <div className="flex items-center justify-between w-[100%] md:w-[90%] mx-auto   mt-5  text-xl text-gray-500">
           <Link to={`/tweet/${tweet.id}`}>
             <div className="flex gap-x-1 group hover:text-blue-500  transition-all items-center ">
               <span className="text-sm">

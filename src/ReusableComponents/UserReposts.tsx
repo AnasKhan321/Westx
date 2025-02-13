@@ -17,7 +17,6 @@ const UserReposts = ({id  }  : {id  : string}) => {
           refetchOnWindowFocus: false, 
       })
 
-      console.log(data)
   return (
     <div>
       {isLoading && <Loader/> }
@@ -27,10 +26,10 @@ const UserReposts = ({id  }  : {id  : string}) => {
       {data?.success && <div> 
         {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl "> He doesn't Have any Reposts !  </div>}
 
-          {data.data.map((item)=>{
+          {data.data.map((item  , index )=>{
             return (
               
-              <TweetDetailTweet tweet={item.originalTweet as Tweet}/>
+              <TweetDetailTweet key={index} tweet={item.originalTweet as Tweet}/>
             )
           })}
 

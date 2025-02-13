@@ -33,9 +33,9 @@ const Following = () => {
             <div className="text-center font-bold mt-10 text-xl "> He Does not Have Any Following </div>
         </>}
 
-        {data?.data.map((data)=>{
+        {data?.data.map((data  , index)=>{
             return(
-                <UserCard user={data.following}/>
+                <UserCard user={data.following} key={index}/>
 
             )
         })}

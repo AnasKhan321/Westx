@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../Context/AuthContext";
 import ReuseableTitle from "../ReusableComponents/ReuseableTitle";
-import TweetCard from "../ReusableComponents/TweetCard";
 import { getUserBookmark } from "../utils/apicalls";
 import Loader from "../ReusableComponents/Loader";
+import TweetCardBookmark from "../ReusableComponents/TweetCardBookmark";
 
 
 
@@ -37,7 +37,7 @@ You Don't Have any bookmark
       
         {data.data.map((bookmark)=>{
           return(
-            <TweetCard tweet={bookmark.tweet} isBookmark={true} key={bookmark.id}/>
+            <TweetCardBookmark key={bookmark.id} tweet={bookmark.tweet}/> 
           )
         })}
       

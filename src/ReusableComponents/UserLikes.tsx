@@ -22,9 +22,9 @@ const UserLikes = ({id}  : {id : string}) => {
       {data?.success && <div> 
         {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl "> He doesn't Have any Liked Post !  </div>}
 
-            {data.data.map((item)=> {
+            {data.data.map((item , index)=> {
                 return(
-                    <TweetDetailTweet tweet={item.tweet}/>
+                    <TweetDetailTweet key={index} tweet={item.tweet}/>
                 )
             })}
         </div>}

@@ -113,9 +113,9 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
 
 
     return(
-        <div>
+        <div className="w-full">
   
-        <div className="flex items-start space-x-3 p-4 w-full  ">
+        <div className="flex items-start space-x-3 p-4   ">
           <img
             src={reply.user.photoURL}
             alt={reply.user.name}
