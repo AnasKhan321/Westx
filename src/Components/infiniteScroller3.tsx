@@ -80,6 +80,7 @@ function Tweets() {
             key={tweet.id}  // ✅ Key should be on Suspense, not inside it
             fallback={
               <div className="text-center my-4">
+                
                 <SmallLoader />
               </div>
             }
@@ -105,7 +106,7 @@ function Tweets() {
       <div ref={bottomRef} className="h-10" />
 
       {isFetchingNextPage && (
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full my-4 ">
           <SmallLoader />
         </div>
       )}

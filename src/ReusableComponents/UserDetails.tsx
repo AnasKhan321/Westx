@@ -160,6 +160,15 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             Logout
           </button>
         )}
+
+{user?.username === profile.username && !profile.isPremium && (
+  <button
+    className="absolute top-3 right-[100px] px-4 py-2 bg-yellow-500 text-white text-sm font-semibold rounded-full shadow-md hover:bg-yellow-600 transition duration-200"
+  >
+    Upgrade
+  </button>
+)}
+
         {/* Name and Username */}
         <h2 className="text-xl font-bold mt-2">{profile.name}</h2>
         <p className="text-sm text-gray-500">
