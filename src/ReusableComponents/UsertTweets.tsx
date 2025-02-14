@@ -73,6 +73,7 @@ function UserTweets({ userId }: { userId: string }) {
 
       {data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
+          {group.data.length == 0  && <> <div className='py-8 text-center font-bold text-xl'> No more Posts </div>  </> }
           {group.data.map((tweet, index) => (
             <Suspense key={index} fallback={<div className='text-center my-4'><SmallLoader /></div>}>
               <TwetCARD tweet={tweet} isBookmark={false} />
@@ -81,7 +82,7 @@ function UserTweets({ userId }: { userId: string }) {
         </React.Fragment>
       ))}
 
-      {data.pages.length === 1 && <div className="text-center font-bold p-4 py-12 text-xl "> He doesn't Have any Posts !  </div>}
+
 
       {/* Invisible div to track scrolling and auto-load new data */}
       <div ref={bottomRef} className="h-10" />

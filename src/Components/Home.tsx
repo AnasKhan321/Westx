@@ -1,11 +1,12 @@
 import React, { Suspense, useState } from "react";
 import Loader from "../ReusableComponents/Loader";
 import FollowingTweet from "./FollowingTweet";
+import ForYouTweets from "./infiniteScroller5"
 const MyComponent = React.lazy(() => import("./infiniteScroller3"));
 
 export default function Home() {
-  const tabs = ["For You", "Following"];
-  const [activeTab, setActiveTab] = useState("For You");
+  const tabs = [ "Latest Tweets" ,  "For You", "Following"];
+  const [activeTab, setActiveTab] = useState("Latest Tweets");
   return (
     <>
 
@@ -30,10 +31,19 @@ export default function Home() {
 
       </div> 
 
-      {activeTab  == "For You"   && <> 
+      {activeTab  == "Latest Tweets"   && <> 
       
         <MyComponent />
       </>}
+
+
+      {activeTab === "For You"   && <> 
+          <div className="mt-16">
+            
+          </div>
+
+          <ForYouTweets/> 
+      </> }
 
       {activeTab == "Following"   && <> 
       

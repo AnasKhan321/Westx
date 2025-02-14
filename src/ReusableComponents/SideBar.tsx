@@ -35,7 +35,7 @@ const Sidebar = () => {
               <AiOutlineHome size={24} />
             )}
 
-            <span className="font-medium text-xl">Home</span>
+            <span className="font-medium text-xl font-roboto">Home</span>
           </Link>
 
           <Link
@@ -48,7 +48,7 @@ const Sidebar = () => {
               <FaRegBookmark size={22} />
             )}
 
-            <span className="font-medium text-xl">Bookmarks</span>
+            <span className="font-medium text-xl  font-roboto ">Bookmarks</span>
           </Link>
 
           <Link
@@ -58,7 +58,7 @@ const Sidebar = () => {
 
             {location.pathname == '/premium' ? (  <PiShoppingCartFill size={23} />)  : ( <PiShoppingCartLight size={23}/> )}
            
-            <span className="font-medium text-xl">Premium</span>
+            <span className="font-medium text-xl  font-roboto">Premium</span>
           </Link>
           <Link
             to="/personas"
@@ -69,7 +69,7 @@ const Sidebar = () => {
             ) : (
               <PiUsersThree size={23} />
             )}
-            <span className="font-medium text-xl">Personas</span>
+            <span className="font-medium text-xl  font-roboto">Personas</span>
           </Link>
 
           <Link
@@ -81,7 +81,7 @@ const Sidebar = () => {
             ) : (
               <IoPersonOutline size={23} />
             )}
-            <span className="font-medium text-xl">Profile</span>
+            <span className="font-medium text-xl font-roboto">Profile</span>
           </Link>
 
    

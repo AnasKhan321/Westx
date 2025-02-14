@@ -159,7 +159,7 @@ const TweetCard = ({
               </Link>
               <Link to={`/user/${tweet.user.username}`}>
                 {" "}
-                <span className="text-[12px]  text-gray-400 md:text-base ">
+                <span className="text-[12px]  text-gray-400 md:text-base  ">
                   {tweet.user.username} ·{" "}
                 </span>
                 <span className="text-[12px] text-gray-400  md:text-base ">
@@ -168,8 +168,8 @@ const TweetCard = ({
                 </span>
               </Link>
             </div>
-            <p className="text-[12px] md:text-base">
-              <DynamicText text={tweet.text as string} postedBy="assistant" />
+            <p className="text-[12px] md:text-base ">
+              <DynamicText text={tweet.text as string} postedBy={tweet.postType} />
             </p>
           </div>
         </div>

@@ -92,6 +92,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         if (following) {
           setfollowings(following + 1);
         }
+      }else if(response?.success == false){
+        toast.error("Something went wrong")
       }
     }
   };
@@ -112,12 +114,14 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       if (following) {
         setfollowings(following - 1);
       }
+    }else if(response?.success == false){
+      toast.error("Something went wrong")
     }
   };
 
   const handleLogoutfn = () => {
-    // Logout logic (customize based on your auth setup)
     handleLogout();
+    toast.success("Logout Successfully !")
   };
 
   useEffect(() => {

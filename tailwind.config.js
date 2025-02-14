@@ -11,7 +11,11 @@ export default {
         secondary: 'white'  , 
         borderColor : "#2e2e2d"  , 
         territary : "#9915eb"
-      }
+      },
+      fontFamily: {
+        roboto: ['roboto', 'sans-serif'],
+        poppins : ['poppins'  , 'sans-serif' ]
+      },
     },
   },
   plugins: [],
