@@ -24,7 +24,7 @@ const UserReposts = ({id  }  : {id  : string}) => {
       {isError && <div> Something Went Wrong ! </div> }
       
       {data?.success && <div> 
-        {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl "> He doesn't Have any Reposts !  </div>}
+        {data.data.length == 0  && <div className="text-center font-bold p-4 py-12 text-xl "> He doesn't Have any Reposts !  </div>}
 
           {data.data.map((item  , index )=>{
             return (

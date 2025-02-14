@@ -29,7 +29,7 @@ const UserReplies = ({ user }: { user : User2 }) => {
       {data?.success && (
         <>
           {data.data.length == 0 && (
-            <div className="text-center font-bold text-xl text-white p-4 ">
+            <div className="text-center font-bold text-xl text-white p-4 py-12  ">
               {" "}
               He doesn't Have any Replies{" "}
             </div>

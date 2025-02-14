@@ -19,6 +19,7 @@ export default function UserDetail() {
     refetchOnMount: false, 
     refetchOnWindowFocus: false, 
    })
+   console.log(userdata)
   return (
     <div>
           <ReuseableTitle title={username as string} />
@@ -32,6 +33,11 @@ export default function UserDetail() {
             <Profile profile={userdata?.data} />
           </div>
         </>
+      )}
+      {userdata?.success == false && (
+          <div className="mt-16">
+          <div className="text-center font-bold text-xl mt-4"> User not Found !</div>
+        </div>
       )}
     </div>
   );

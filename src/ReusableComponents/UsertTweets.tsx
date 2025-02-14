@@ -62,12 +62,14 @@ function UserTweets({ userId }: { userId: string }) {
 
   if (status === 'error') return <p>Error: {error.message}</p>;
   if (status === 'pending') return <Loader />;
+  console.log(data)
 
   return (
     <>
 
 
       <div className="mt-2"></div>
+
 
       {data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
@@ -78,6 +80,8 @@ function UserTweets({ userId }: { userId: string }) {
           ))}
         </React.Fragment>
       ))}
+
+      {data.pages.length === 1 && <div className="text-center font-bold p-4 py-12 text-xl "> He doesn't Have any Posts !  </div>}
 
       {/* Invisible div to track scrolling and auto-load new data */}
       <div ref={bottomRef} className="h-10" />

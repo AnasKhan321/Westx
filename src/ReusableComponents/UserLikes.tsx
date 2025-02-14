@@ -20,7 +20,7 @@ const UserLikes = ({id}  : {id : string}) => {
       {isError && <div className="text-center mt-5 font-bold"> Something Went Wrong !  </div> }
 
       {data?.success && <div> 
-        {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl "> He doesn't Have any Liked Post !  </div>}
+        {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl py-12 "> He doesn't Have any Liked Post !  </div>}
 
             {data.data.map((item , index)=> {
                 return(

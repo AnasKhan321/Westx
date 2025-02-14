@@ -10,13 +10,13 @@ const Explores = () => {
   const { data, error, isLoading } = useQuery({
     queryKey: ["query", query],
     queryFn: () => searchUser(query as string),
-    staleTime: Infinity, 
-    refetchOnMount: false, 
-    refetchOnWindowFocus: false, 
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
   return (
     <div>
-              <ReuseableTitle title={`Query : ${query}`} />
+      <ReuseableTitle title={`Query : ${query}`} />
 
       {isLoading && <Loader />}
       {error && (
@@ -31,9 +31,13 @@ const Explores = () => {
             <>
               <div className="mt-16"></div>
 
-              {data.data.length == 0 && <div className="text-center font-bold text-xl">Not found any user!</div>}
-              {data.data.map((user  , index) => {
-                return <UserCard user={user}  key={index} />;
+              {data.data.length == 0 && (
+                <div className="text-center font-bold text-xl">
+                  Not found any user!
+                </div>
+              )}
+              {data.data.map((user, index) => {
+                return <UserCard user={user} key={index} />;
               })}
             </>
           )}

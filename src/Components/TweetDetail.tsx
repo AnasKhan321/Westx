@@ -21,6 +21,7 @@ export default function TweetDetail() {
     refetchOnWindowFocus: false,
   });
 
+
   const { isLoading: replyloading, data: replydata } = useQuery({
     queryKey: [`Tweet:Reply:${id}`],
     queryFn: () => getReplies(id as string),
@@ -31,7 +32,7 @@ export default function TweetDetail() {
       <ReuseableTitle title="Tweet" />
       {isLoading && <Loader />}
       {isError && <div>Error...</div>}
-      {data && (
+      {data?.success && (
         <div>
           <div className="mt-16">
             <Suspense fallback={<Loader />}>
@@ -56,6 +57,13 @@ export default function TweetDetail() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {data?.success == false && (
+        <div>
+          <div className="mt-16"> </div> 
+          <div className="text-center font-bold text-xl mt-5  "> Tweet Not found ! </div> 
         </div>
       )}
     </div>
