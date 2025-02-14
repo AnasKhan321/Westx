@@ -4,11 +4,10 @@ import ReplyBox from "../ReusableComponents/ReusableComponent";
 
 import ReuseableTitle from "../ReusableComponents/ReuseableTitle";
 import Loader from "../ReusableComponents/Loader";
-import { getReplies, getTweetDetail } from "../utils/apicalls";
+import { getTweetDetail } from "../utils/apicalls";
 
-import SmallLoader from "../ReusableComponents/SmallLoader";
 import React, { Suspense } from "react";
-
+import TweetReply from "./ReplyScroller";
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 export default function TweetDetail() {
   const { id } = useParams();
@@ -22,10 +21,7 @@ export default function TweetDetail() {
   });
 
 
-  const { isLoading: replyloading, data: replydata } = useQuery({
-    queryKey: [`Tweet:Reply:${id}`],
-    queryFn: () => getReplies(id as string),
-  });
+
 
   return (
     <div>
@@ -42,20 +38,8 @@ export default function TweetDetail() {
             <div className="w-full">
               <ReplyBox tweetid={data.data.id} />
             </div>
+            <TweetReply tweetid={id as string}/> 
 
-            {replyloading && (
-              <div className="flex text-center items-center justify-center">
-                <SmallLoader />
-              </div>
-            )}
-
-            {replydata?.data.map((reply, index) => (
-              <div key={index} className="border-b-2 border-borderColor">
-                <Suspense fallback={<Loader />}>
-                  <TwetCARD tweet={reply} isBookmark={false} />
-                </Suspense>
-              </div>
-            ))}
           </div>
         </div>
       )}

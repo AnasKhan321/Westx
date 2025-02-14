@@ -266,7 +266,7 @@ export const getUserFollowinguserid = async(userid : string) : Promise<FollowerR
 }
 
 export const getUserBookmark = async(userid : string) : Promise<BookmarksREsponse> =>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/bookmark/${userid}`)
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/bookmark/${userid}/1`)
     const data  = await res.json()  ; 
     return data 
 }

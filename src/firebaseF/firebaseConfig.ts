@@ -1,4 +1,3 @@
-// src/firebase.ts
 import { initializeApp } from "firebase/app";
 import { getAuth, TwitterAuthProvider, signInWithPopup } from "firebase/auth";
 
