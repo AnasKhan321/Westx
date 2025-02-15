@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState, ChangeEvent, KeyboardEvent } from "react";
 import { FaSearch } from "react-icons/fa";
-import { getrandomuser } from "../utils/apicalls";
-import UserCard from "../ReusableComponents/UserCard";
+import {  getTrending } from "../utils/apicalls";
+
 import { useNavigate } from "react-router-dom";
+import TrendingSection from "./TrendingSection";
 import SmallLoader from "../ReusableComponents/SmallLoader";
 
 const RightSidebar = () => {
@@ -11,13 +12,17 @@ const RightSidebar = () => {
   const navigate = useNavigate();
 
   // Fetch random user data
-  const { data, isLoading } = useQuery({
-    queryKey: ["randomuser"],
-    queryFn: getrandomuser,
+
+
+  const {data : trendingdata , isLoading  : trendingLoading} = useQuery({
+    queryKey: ["TRENDING:WESTX"],
+    queryFn: getTrending,
     staleTime: Infinity, 
     refetchOnMount: false, 
     refetchOnWindowFocus: false, 
   });
+
+  console.log(trendingdata)
 
   // Handle search input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);
@@ -47,7 +52,7 @@ const RightSidebar = () => {
       </div>
 
       {/* Who to Follow Section */}
-      <div className="bg-gray-900 p-4 rounded-lg">
+      {/* <div className="bg-gray-900 p-4 rounded-lg">
         <h2 className="text-lg font-bold mb-4">Top Tokens</h2>
         {isLoading ? (
           <div className="flex justify-center items-center">
@@ -62,7 +67,14 @@ const RightSidebar = () => {
             </div>
           )
         )}
-      </div>
+      </div> */}
+      {trendingLoading  && <div> <SmallLoader/>  </div> }
+
+        {trendingdata?.data &&  <> 
+        
+      <TrendingSection  trendingTweets={trendingdata.data.trendingTweets} trendingKeywords={trendingdata.data.trendingKeywords }/>
+        
+        </>  }
 
       {/* Footer */}
       <footer className="text-gray-400 text-xs mt-auto space-y-1 text-center">

@@ -132,6 +132,16 @@ interface UserReplies {
     data : Tweet[]
 }
 
+
+interface TrendingRespnse {
+    success : boolean , 
+    data : {
+        trendingKeywords : string[] , 
+        trendingTweets : Tweet[] , 
+        trendingReposts : Tweet[] 
+    }
+}
+
 export const fetchUser = async (username : string) : Promise<UserResponse> => {
     const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/${username}`);
     const data = await response.json();
@@ -304,4 +314,10 @@ export const getUserReplies = async(userid : string) : Promise<UserReplies>=>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreplies/${userid}`)
     const data  = await res.json()  ; 
     return data 
+}
+
+export const getTrending = async() : Promise<TrendingRespnse> =>{
+    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/trending`)
+    const data = await res.json() ; 
+    return  data  ;
 }
