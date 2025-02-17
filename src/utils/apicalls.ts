@@ -1,4 +1,4 @@
-import { BookMark, followings, Like, Reply, Repost, Tweet, Tweet2, User, User2 } from "./type";
+import { followings, Like, Tweet, User, User2 } from "./type";
 import axios  from "axios";
 export interface UserResponse{
     success : boolean , 
@@ -57,30 +57,8 @@ interface userresponse {
 }
 
 
-interface LikeResponse{
-    success : boolean , 
-    data : Like[]
-}
 
-interface BookmarkResponse{
-    success : boolean , 
-    data : BookMark[]
-}
 
-interface RepostResponse{
-    success : boolean , 
-    data : Repost[]
-}
-
-interface TweetResponse {
-    success : boolean , 
-    tweet : Tweet2
-}
-
-interface ReplyResponsee{
-    success : boolean , 
-    data : Tweet[]
-}
 
 interface UserbyUsername {
     success : boolean , 
@@ -91,10 +69,7 @@ interface FollowerResponse {
     data : followings[]
 }
 
-interface TweetResponselist{
-    success : boolean , 
-    data : Tweet2[]
-}
+
 
 export interface TweetResponselist2{
     success : boolean , 
@@ -102,20 +77,9 @@ export interface TweetResponselist2{
     tweets : number
 }
 
-interface BookmarksREsponse{
-    success : boolean , 
-    data : BookMark[]
-}
 
-interface Replydetailss{
-    success : boolean , 
-    data : Reply
-}
 
-interface ReplyofReplys{
-    success : boolean , 
-    data : Reply[]
-}
+
 
 interface UserLikesResponse{
     success : boolean , 
@@ -142,25 +106,10 @@ interface TrendingRespnse {
     }
 }
 
-export const fetchUser = async (username : string) : Promise<UserResponse> => {
-    const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/${username}`);
-    const data = await response.json();
-    return data;
-}
 
 
 
-export const fetchTweets = async (page : number =1 ) : Promise<TweetsData> => {
-
-    const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/latesttweets/${page}`);
-    const data = await response.json();
-    return data;
-}
-
-
-
-
-
+//using
 export const getPersonas = async () => {
 
     const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allusers`) ; 
@@ -175,7 +124,7 @@ export const getPersonas = async () => {
 
 
 
-
+//using
 export const getTweetDetail  = async(id : string) : Promise<TweetDetail> => {
     const res = await  fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/gettweet/${id}`)
     const data = await res.json();
@@ -184,13 +133,8 @@ export const getTweetDetail  = async(id : string) : Promise<TweetDetail> => {
 }
 
 
-export const getrandomuser = async()  : Promise<userresponse>=>{
-    const res = await  fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/randomuser`)
-    const data = await res.json();
 
-    return data ; 
-}
-
+//using
 export const searchUser = async(query : string) : Promise<userresponse>  =>{
     const res = await  fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/search/${query}`)
     const data = await res.json()
@@ -199,67 +143,17 @@ export const searchUser = async(query : string) : Promise<userresponse>  =>{
 
 
 
-export const getTweetLike = async (tweetid : string) : Promise<LikeResponse> =>{
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/likes/${tweetid}`)
-    const data = await res.json() ; 
-    return data 
-}
 
-export const getBookmarks = async(tweetid : string) : Promise<BookmarkResponse> =>{
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/bookmark/${tweetid}`) 
-    const data = await res.json()
-    return data ; 
-}
 
-export const getReposts = async(tweetid : string) : Promise<RepostResponse> =>{
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/repost/${tweetid}`) 
-    const data = await res.json()
-    return data ;  
-}
-
-export const getTweetByIdv2 = async(tweetid : string) : Promise<TweetResponse>  =>{
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/gettweet/v2/${tweetid}`) 
-    const data = await res.json() ; 
-    return data ; 
-}
-
-export const getReplies  = async (tweetid : string) : Promise<ReplyResponsee> =>{
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply/${tweetid}`)
-    const data = await res.json() ; 
-    return data ; 
-}
-
+// using
 export const getUserbyUsername = async(username : string) : Promise<UserbyUsername> =>{
     const {data} = await axios.get<UserbyUsername>(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getuser/v2/${username}`)
     return data ; 
 }
 
-export const Replydetail = async(replyid : string)   : Promise<Replydetailss>=>{
-    const {data}  = await axios.get(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/replydetail/${replyid}`)
-    return data ; 
-}
-
-export const getReplyiess = async(parentid : string) : Promise<ReplyofReplys>=>{
-    const {data}  = await axios.get(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply/children/${parentid}`)
-    return data ; 
-}
-
-export const getTweetbyuserid = async(userid : string) : Promise<TweetResponselist> =>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweet/${userid}`)
-    const data  = await res.json()  ; 
-    return data 
-}
 
 
-
-export const getTweetbyuseridv2 = async(userid : string) : Promise<TweetResponselist2> =>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweet/v2/${userid}/1`)
-    const data  = await res.json()  ; 
-    return data 
-}
-
-
-
+//using
 export const getUserFollowerbyuserid = async(userid : string) : Promise<FollowerResponse> =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/followers/${userid}`)
     const data  = await res.json()  ; 
@@ -268,32 +162,31 @@ export const getUserFollowerbyuserid = async(userid : string) : Promise<Follower
 
 
 
-
+//using
 export const getUserFollowinguserid = async(userid : string) : Promise<FollowerResponse>  =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/following/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }
 
-export const getUserBookmark = async(userid : string) : Promise<BookmarksREsponse> =>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/bookmark/${userid}/1`)
-    const data  = await res.json()  ; 
-    return data 
-}
 
 
+//using
 export const getUserFollowing = async(userid : string) : Promise<Followingresponse> =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/following/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }
 
+//using
 export const getUserFollower = async(userid : string)  : Promise<Followingresponse2>=>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/follower/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }
 
+
+//using
 export const getUserLikes  = async(userid : string) : Promise<UserLikesResponse>=>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}`)
     const data  = await res.json()  ; 
@@ -302,6 +195,7 @@ export const getUserLikes  = async(userid : string) : Promise<UserLikesResponse>
 
 
 
+//using
 
 export const getUserReposts  = async(userid : string) : Promise<UserReposts>=>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreposts/${userid}`)
@@ -309,12 +203,15 @@ export const getUserReposts  = async(userid : string) : Promise<UserReposts>=>{
     return data 
 }
 
+//using
 
 export const getUserReplies = async(userid : string) : Promise<UserReplies>=>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreplies/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }
+
+//using
 
 export const getTrending = async() : Promise<TrendingRespnse> =>{
     const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/trending`)

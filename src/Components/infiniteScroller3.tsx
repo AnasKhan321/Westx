@@ -38,6 +38,9 @@ function Tweets() {
     queryFn: fetchTweets,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 1,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   // Ref to track the intersection observer
@@ -49,10 +52,10 @@ function Tweets() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage(); // Automatically load more
+          fetchNextPage(); 
         }
       },
-      { threshold: 1.0 } // Trigger when 100% visible
+      { threshold: 1.0 }
     );
 
     observer.observe(bottomRef.current);

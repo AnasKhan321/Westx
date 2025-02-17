@@ -12,6 +12,7 @@ interface BookMarkResponse {
 }
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+
 const fetchReply = async ({ pageParam = 1   , tweetid}  : {pageParam : number , tweetid : string | undefined}) => {
   const { data } = await axios.get<BookMarkResponse>(
     `${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply/${tweetid}/${pageParam}`

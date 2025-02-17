@@ -62,7 +62,7 @@ function UserTweets({ userId }: { userId: string }) {
 
   if (status === 'error') return <p>Error: {error.message}</p>;
   if (status === 'pending') return <Loader />;
-  console.log(data)
+
 
   return (
     <>

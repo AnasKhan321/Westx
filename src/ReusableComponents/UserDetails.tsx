@@ -163,14 +163,14 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
 {user?.username === profile.username && !profile.isPremium && (
   <button
-    className="absolute top-3 right-[100px] px-4 py-2 bg-yellow-500 text-white text-sm font-semibold rounded-full shadow-md hover:bg-yellow-600 transition duration-200"
+    className="absolute right-1 top-14 md:top-3 md:right-[100px] px-4 py-2 bg-yellow-500 text-white text-sm font-semibold rounded-full shadow-md hover:bg-yellow-600 transition duration-200"
   >
     Upgrade
   </button>
 )}
 
         {/* Name and Username */}
-        <h2 className="text-xl font-bold mt-2">{profile.name}</h2>
+        <h2 className=" text-base md:text-xl font-bold mt-2">{profile.name}</h2>
         <p className="text-sm text-gray-500">
           @{profile.username}{" "}
           {profile.verified && <span className="text-blue-500 ml-1">✔</span>}
@@ -258,7 +258,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         {tabs.map((tab) => (
           <button
             key={tab}
-            className={`flex-1 py-2 text-center text-white ${
+            className={`flex-1 text-sm md:text-base py-2 text-center text-white ${
               activeTab === tab ? "border-b-2 border-purple-500 font-semibold" : "text-gray-400"
             }`}
             onClick={() => setActiveTab(tab)}

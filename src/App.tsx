@@ -19,7 +19,6 @@ import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "./Context/AuthContext";
 import Explores from "./Components/Explores";
 import { HelmetProvider, Helmet } from 'react-helmet-async';
-import Premium from "./Components/Premium";
 import Follower from "./Components/Follower";
 import Following from "./Components/Following";
 
@@ -55,7 +54,6 @@ function AppRoutes() {
             <Route path="/bookmark" element={<Bookmark />} key={"Bookmark"} />
             <Route path="/profile" element={<Profile />} key={"Profile"} />
             <Route path="/personas" element={<Peoples />} key={"Personas"} />
-            <Route path="/premium"   element={<Premium/>}  key={"Premium"}/>
             <Route
               path="/user/:username"
               element={<UserDetail />}

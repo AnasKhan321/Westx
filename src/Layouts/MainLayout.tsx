@@ -12,7 +12,7 @@ export default function MainLayout({
       <div className=" hidden md:block  md:col-span-3 bg text-white max-h-screen min-h-screen border-r border-borderColor">
         <Sidebar />
       </div>
-      <div className=" col-span-12  md:col-span-5 max-h-screen min-h-screen overflow-y-scroll scroll-smooth">
+      <div className=" col-span-12  md:col-span-5 max-h-[94vh] min-h-[94vh]  md:max-h-screen md:min-h-screen overflow-y-scroll scroll-smooth">
         {children}
 
         <div className="block h-[7vh]  md:hidden w-full  absolute bottom-0 bg-black  border-t border-borderColor">

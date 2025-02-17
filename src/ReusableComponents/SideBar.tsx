@@ -51,15 +51,7 @@ const Sidebar = () => {
             <span className="font-medium text-xl  font-roboto ">Bookmarks</span>
           </Link>
 
-          <Link
-            to="/premium"
-            className="flex items-center space-x-3  transition-all hover:text-territary"
-          >
 
-            {location.pathname == '/premium' ? (  <PiShoppingCartFill size={23} />)  : ( <PiShoppingCartLight size={23}/> )}
-           
-            <span className="font-medium text-xl  font-roboto">Premium</span>
-          </Link>
           <Link
             to="/personas"
             className="flex items-center space-x-3  transition-all hover:text-territary"
@@ -88,7 +80,8 @@ const Sidebar = () => {
         </nav>
 
         {user?.username && (
-          <div className="mt-auto flex items-end space-x-3 absolute bottom-5">
+       
+          <Link to={`/profile`} className="mt-auto flex items-end space-x-3 absolute bottom-5  ">
             <img
               src={user?.photoURL as string} // Replace with the user profile image path
               alt="User Profile"
@@ -98,7 +91,7 @@ const Sidebar = () => {
               <p className="font-semibold">{user?.name} </p>
               <p className="text-gray-400 text-sm">{user?.username}</p>
             </div>
-          </div>
+          </Link>
         )}
       </div>
     </div>

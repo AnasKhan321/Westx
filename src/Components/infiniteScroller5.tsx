@@ -38,8 +38,11 @@ function ForYouTweets() {
   } = useInfiniteQuery({
     queryKey: [`foryou:tweets:${user?.username}`], // Include userid in the query key to refetch when it changes
     queryFn: ({ pageParam }) => fetchTweets({ pageParam, userid: user?.username }), // Pass pageParam and userid properly
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Ensure no extra fetch
     initialPageParam: 1,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   // Ref to track the intersection observer

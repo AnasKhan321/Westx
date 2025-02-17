@@ -17,7 +17,7 @@ export default function Home() {
       {tabs.map((tab) => (
   <button
     key={tab}
-    className={`relative flex-1 py-4 text-center transition-all duration-300 
+    className={`relative  text-sm md:text-base flex-1 py-4 text-center transition-all duration-300 
                 ${
                   activeTab === tab
                     ? "text-white font-bold before:absolute before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:w-2/4 before:h-1 before:bg-purple-500 before:rounded-full"

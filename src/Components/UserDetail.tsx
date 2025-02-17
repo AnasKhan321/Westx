@@ -19,7 +19,6 @@ export default function UserDetail() {
     refetchOnMount: false, 
     refetchOnWindowFocus: false, 
    })
-   console.log(userdata)
   return (
     <div>
           <ReuseableTitle title={username as string} />

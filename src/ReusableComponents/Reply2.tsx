@@ -31,13 +31,13 @@ const Reply2: React.FC<ReplyProps> = ({ name, username, content  , photoURL  , c
         <div className="w-full">
           {/* Header */}
           <div className="flex items-center space-x-2">
-            <span className="font-bold">{name}</span>
-            <Link  to={`/user/${username}`}><span className="text-gray-500">@{username} · </span> </Link> 
-            <span className="text-gray-500"> {timeSince(createdAt)} </span>
+            <span className= " text-sm  md:text-base font-bold">{name}</span>
+            <Link  to={`/user/${username}`}><span className=" text-sm  md:text-base text-gray-500">@{username} · </span> </Link> 
+            <span className=" text-sm md:text-base text-gray-500"> {timeSince(createdAt)} </span>
           </div>
 
           {/* Content */}
-         <Link to={`/reply/${replyid}`}>  <p className="text-white mt-1">{content}</p> </Link>
+         <Link to={`/reply/${replyid}`}>  <p className=" text-sm md:text-base text-white mt-1">{content}</p> </Link>
 
 
         </div>

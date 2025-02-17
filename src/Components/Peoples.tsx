@@ -30,7 +30,7 @@ export default function Peoples(){
             <div className="mt-16">
 
             {data.data.map((userd  , index ) => (
-                <> 
+               <div key={index}> 
                 {user?.username === userd.username? ( <div> </div> )  : (
 
                     <>
@@ -40,7 +40,7 @@ export default function Peoples(){
              
                 
                 
-                </>
+                </div>
                     
             ))}    
             </div>

@@ -11,7 +11,7 @@ const RightSidebar = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  // Fetch random user data
+
 
 
   const {data  , isLoading  } = useQuery({
@@ -22,7 +22,6 @@ const RightSidebar = () => {
     refetchOnWindowFocus: false, 
   });
 
-  console.log(data)
 
   // Handle search input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);

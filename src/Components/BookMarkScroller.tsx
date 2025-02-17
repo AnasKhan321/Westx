@@ -16,8 +16,6 @@ const fetchBookMarks = async ({ pageParam = 1   , userid}  : {pageParam : number
   const { data } = await axios.get<BookMarkResponse>(
     `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/bookmark/${userid}/${pageParam}`
   )
-  console.log(    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/bookmark/${userid}/${pageParam}`)
-  console.log(data)
 
   return {
     data: data.data,
@@ -39,6 +37,9 @@ function BookMarks() {
     queryFn: ({ pageParam }) => fetchBookMarks({ pageParam, userid: user?.id }), // Pass pageParam and userid properly
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 1,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
   // Ref to track the intersection observer
