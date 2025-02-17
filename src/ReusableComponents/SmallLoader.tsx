@@ -2,7 +2,7 @@ import { ColorRing } from 'react-loader-spinner'
 
 const SmallLoader = () => {
   return (
-    <div>
+    <div className='w-full mx-auto'>
       <ColorRing
                         visible={true}
                         height="30"

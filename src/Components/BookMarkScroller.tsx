@@ -35,7 +35,7 @@ function BookMarks() {
   } = useInfiniteQuery({
     queryKey: [`foryou:tweets:${user?.id}`], // Include userid in the query key to refetch when it changes
     queryFn: ({ pageParam }) => fetchBookMarks({ pageParam, userid: user?.id }), // Pass pageParam and userid properly
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     initialPageParam: 1,
     staleTime: Infinity,
     refetchOnMount: false,
@@ -54,7 +54,7 @@ function BookMarks() {
           fetchNextPage() // Automatically load more
         }
       },
-      { threshold: 1.0 } // Trigger when 100% visible
+      { threshold: 0.1 } // Trigger when 100% visible
     )
 
     observer.observe(bottomRef.current)

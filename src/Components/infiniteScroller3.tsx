@@ -21,7 +21,7 @@ const fetchTweets = async ({ pageParam = 1 }) => {
 
   return {
     data: data.data,
-    nextCursor: data.data.length > 0 ? pageParam + 1 : undefined, // Stop pagination when no more data
+    nextCursor: data.hasMore ? pageParam + 1 : undefined, // ✅ Only increment if hasMore is true
   };
 };
 

@@ -21,6 +21,7 @@ import Explores from "./Components/Explores";
 import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Follower from "./Components/Follower";
 import Following from "./Components/Following";
+import Aiworld from "./Components/Aiworld";
 
 
 
@@ -44,10 +45,12 @@ function AppRoutes() {
             element={<PersonaChat />}
             key={"Chat"}
           />
+          
         </Routes>
       ) : (
         <MainLayout>
           <Routes>
+          <Route path="/aiworld"  element={<Aiworld/> }  key={"Aiworld"}/> 
             
             <Route path="/" element={<Home />} key={"Home"} />
             <Route path="/explore/:query" element={<Explores />} key={"Explore"} />

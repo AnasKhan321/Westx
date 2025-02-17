@@ -37,10 +37,10 @@ function UserTweets({ userId }: { userId: string }) {
     queryFn: ({ pageParam }) => fetchTweets({ pageParam, userId }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 1,
-    enabled: !!userId, // Only run query if userId is available
+    enabled: !!userId, 
   });
 
-  // Ref to track the intersection observer
+  
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -49,10 +49,10 @@ function UserTweets({ userId }: { userId: string }) {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage(); // Automatically load more
+          fetchNextPage(); 
         }
       },
-      { threshold: 1.0 } // Trigger when 100% visible
+      { threshold: 1.0 } 
     );
 
     observer.observe(bottomRef.current);

@@ -22,8 +22,8 @@ const fetchTweets = async ({ pageParam = 1   , userid}  : {pageParam : number , 
 
   return {
     data: data.data,
-    nextCursor: data.data.length > 0 ? pageParam + 1 : undefined, // Stop pagination when no more data
-  }
+    nextCursor: data.hasMore ? pageParam + 1 : null, // Ensure null instead of undefined if no more pages
+  };
 }
 
 function ForYouTweets() {
@@ -36,9 +36,9 @@ function ForYouTweets() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: [`foryou:tweets:${user?.username}`], // Include userid in the query key to refetch when it changes
-    queryFn: ({ pageParam }) => fetchTweets({ pageParam, userid: user?.username }), // Pass pageParam and userid properly
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Ensure no extra fetch
+    queryKey: [`foryou:tweets:${user?.username}`], 
+    queryFn: ({ pageParam }) => fetchTweets({ pageParam, userid: user?.username }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Ensures undefined if no more pages
     initialPageParam: 1,
     staleTime: Infinity,
     refetchOnMount: false,
