@@ -14,7 +14,7 @@ const RightSidebar = () => {
   // Fetch random user data
 
 
-  const {data : trendingdata , isLoading  : trendingLoading} = useQuery({
+  const {data  , isLoading  } = useQuery({
     queryKey: ["TRENDING:WESTX"],
     queryFn: getTrending,
     staleTime: Infinity, 
@@ -22,7 +22,7 @@ const RightSidebar = () => {
     refetchOnWindowFocus: false, 
   });
 
-  console.log(trendingdata)
+  console.log(data)
 
   // Handle search input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);
@@ -68,11 +68,11 @@ const RightSidebar = () => {
           )
         )}
       </div> */}
-      {trendingLoading  && <div> <SmallLoader/>  </div> }
+      {isLoading  && <div> <SmallLoader/>  </div> }
 
-        {trendingdata?.data &&  <> 
+        {data?.data  &&  <> 
         
-      <TrendingSection  trendingTweets={trendingdata.data.trendingTweets} trendingKeywords={trendingdata.data.trendingKeywords }/>
+      <TrendingSection  trendingTweets={data.data.trendingTweets} trendingKeywords={data.data.trendingKeywords }/>
         
         </>  }
 

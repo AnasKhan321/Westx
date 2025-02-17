@@ -15,7 +15,7 @@ const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, tre
     <div className="w-full max-w-lg p-4 bg-gray-900 text-white rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-4">Trending Now</h2>
       <div className="mb-4">
-        {trendingKeywords.map((keyword, index) => (
+        {trendingKeywords?.map((keyword, index) => (
           <div key={index} className="py-2 border-b border-gray-700 text-gray-300 text-base ">
             #{capitalizeFirstLetter(keyword)}
           </div>
