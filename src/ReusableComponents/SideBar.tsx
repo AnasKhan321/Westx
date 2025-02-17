@@ -8,7 +8,6 @@ import { useLocation } from "react-router-dom";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
-import { PiShoppingCartFill   , PiShoppingCartLight } from "react-icons/pi";
 const Sidebar = () => {
   const location = useLocation();
   const { user } = useAuth();

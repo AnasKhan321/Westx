@@ -7,14 +7,13 @@ interface TweetProps {
   username: string;
   date: string;
   content: string;
-  mentions?: string[];
   photoURL : string
   createdAt : Date | null
   tweetid : string
 
 }
 
-const Tweet4: React.FC<TweetProps> = ({ name, username, date, content, mentions = [], photoURL  , createdAt  , tweetid }) => {
+const Tweet4: React.FC<TweetProps> = ({ name, username, date, content, photoURL  , createdAt  , tweetid }) => {
   return (
     <div className=" p-4">
       <div className="flex items-start space-x-3">
