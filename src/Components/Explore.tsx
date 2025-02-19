@@ -23,10 +23,8 @@ const RightSidebar = () => {
   });
 
 
-  // Handle search input changes
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);
 
-  // Handle Enter key press for search
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && search.trim()) {
       navigate(`/explore/${search}`);
@@ -35,7 +33,6 @@ const RightSidebar = () => {
 
   return (
     <div className="h-screen w-full bg-black text-white flex flex-col px-4 py-6 space-y-6">
-      {/* Search Bar */}
       <div className="flex items-center">
         <div className="bg-gray-800 p-3 rounded-l-full">
           <FaSearch className="text-gray-400" />
@@ -50,23 +47,6 @@ const RightSidebar = () => {
         />
       </div>
 
-      {/* Who to Follow Section */}
-      {/* <div className="bg-gray-900 p-4 rounded-lg">
-        <h2 className="text-lg font-bold mb-4">Top Tokens</h2>
-        {isLoading ? (
-          <div className="flex justify-center items-center">
-            <SmallLoader />
-          </div>
-        ) : (
-          data?.success && (
-            <div className="space-y-4">
-              {data.data.map((user, index) => (
-                <UserCard user={user} key={index} />
-              ))}
-            </div>
-          )
-        )}
-      </div> */}
       {isLoading  && <div> <SmallLoader/>  </div> }
 
         {data?.data  &&  <> 
@@ -75,8 +55,7 @@ const RightSidebar = () => {
         
         </>  }
 
-      {/* Footer */}
-      <footer className="text-gray-400 text-xs mt-auto space-y-1 text-center">
+      <footer className="text-gray-400 text-xs mt-auto space-y-1 text-center  ">
         <p>
           Terms of Service <span className="mx-1">•</span> Privacy Policy <span className="mx-1">•</span> Cookie Policy
         </p>

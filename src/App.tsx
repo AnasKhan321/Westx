@@ -22,6 +22,8 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Follower from "./Components/Follower";
 import Following from "./Components/Following";
 import Aiworld from "./Components/Aiworld";
+import RoastShow from "./Components/TheRoastShow";
+import { SocketProvider } from "./Context/SocketContext";
 
 
 
@@ -29,7 +31,7 @@ const queryClient = new QueryClient();
 
 function AppRoutes() {
   const location = useLocation();
-  const noLayoutRoutes = ["/login", "/chat/:username"]; // Define paths that don't need MainLayout
+  const noLayoutRoutes = ["/login", "/chat/:username"  , "/roastshow"]; // Define paths that don't need MainLayout
 
   const isNoLayout = noLayoutRoutes.some((path) =>
     location.pathname.startsWith(path.split(":")[0])
@@ -45,6 +47,7 @@ function AppRoutes() {
             element={<PersonaChat />}
             key={"Chat"}
           />
+          <Route path="/roastshow"  element={<RoastShow/>} key={"RoastShow"} />
           
         </Routes>
       ) : (
@@ -93,7 +96,9 @@ function App() {
         <Toaster />
         <Router>
           <AuthContextProvider>
+            <SocketProvider> 
             <AppRoutes />
+            </SocketProvider>
           </AuthContextProvider>
         </Router>
       </QueryClientProvider>

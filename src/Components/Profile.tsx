@@ -6,7 +6,6 @@ import Profile from "../ReusableComponents/UserDetails";
 import { User } from "../utils/type";
 
 
-
 const ProfileDetail = () => {
 
   const {user}  = useAuth()

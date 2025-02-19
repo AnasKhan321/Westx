@@ -19,7 +19,7 @@ export default function MainLayout({
           <HorizontalBar />
         </div>
       </div>
-      <div className="col-span-4  hidden md:block max-h-screen min-h-screen border-l border-borderColor">
+      <div className="col-span-4  hidden md:block max-h-screen overflow-y-scroll   border-l border-borderColor">
         <RightSidebar />
       </div>
     </div>
