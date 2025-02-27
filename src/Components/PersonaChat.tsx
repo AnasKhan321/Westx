@@ -89,7 +89,7 @@ const PersonaChat = () => {
         user?.username as string,
         username as string
       );
-      console.log(chatResponse)
+ 
 
       if (chatResponse.success) {
         setchats(chatResponse.messages);

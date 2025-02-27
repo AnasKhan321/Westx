@@ -53,9 +53,9 @@ function ForYouTweets() {
   
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log("Observed:", entries[0].isIntersecting);  // 🔍 Debug log
+
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          console.log("Fetching next page...");  // ✅ Should log when fetching
+
           fetchNextPage();
         }
       },
