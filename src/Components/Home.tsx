@@ -54,7 +54,7 @@ export default function Home() {
                           setActiveTab(tab);
                           setIsOpen(false);
                         }}
-                        className="w-full text-left px-4 py-2 hover:bg-secondaryColor"
+                        className="w-full text-left px-4 py-2 bg-black hover:bg-secondaryColor"
                       >
                         {tab}
                       </button>
