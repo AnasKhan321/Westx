@@ -38,7 +38,7 @@ export default function Home() {
               <div className="relative md:hidden">
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="w-full  text-white px-4 py-4 mt-5  rounded-lg flex justify-between items-center"
+                  className="w-full  bg-black text-white px-4 py-4 mt-5  rounded-lg flex justify-between items-center"
                 >
                   {activeTab}
                   <span className="ml-2">&#9662;</span> {/* Down arrow */}
