@@ -48,7 +48,7 @@ export default function Peoples(){
                 {user?.username === userd.username? ( <div> </div> )  : (
 
                     <>
-                    <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={userd}  /></Suspense>;
+                    <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={userd}  /></Suspense>
                     </>
                 )}
              

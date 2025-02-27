@@ -45,7 +45,7 @@ const UserCard = ({user}  : {user : User}) => {
             <IoChatboxOutline className="text-xl "/> 
       </button></Link>
     </div>
-  );
+  )
 };
 
 export default UserCard;
