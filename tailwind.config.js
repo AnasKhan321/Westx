@@ -10,12 +10,31 @@ export default {
         primary: '#000000',
         secondary: 'white'  , 
         borderColor : "#2e2e2d"  , 
-        territary : "#9915eb"
+        territary : "#9915eb",
+        primaryColor : "#0A0A0A" , 
+        secondaryColor : "#1A1A1A"
       },
       fontFamily: {
         roboto: ['roboto', 'sans-serif'],
         poppins : ['poppins'  , 'sans-serif' ]
       },
+      gridTemplateColumns: {
+        14: "repeat(14, minmax(0, 1fr))", 
+        16: "repeat(16, minmax(0, 1fr))", 
+        18: "repeat(18, minmax(0, 1fr))", 
+
+
+        
+      },
+      gridColumn: {
+        'span-13': 'span 13 / span 13',
+        'span-14': 'span 14 / span 14',
+        'span-15': 'span 15 / span 15',
+        'span-16': 'span 16 / span 16',
+        'span-17': 'span 17 / span 17',
+        'span-18': 'span 18 / span 18',
+
+      }
     },
   },
   plugins: [],

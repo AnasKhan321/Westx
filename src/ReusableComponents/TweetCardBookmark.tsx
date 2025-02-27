@@ -5,69 +5,67 @@ import { DynamicText } from "./DynamicText";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
   return (
-    <div className="bg-black text-white w-full  mx-auto  p-4 rounded-lg border-b border-borderColor ">
-      <Link to={`/tweet/${tweet.id}`}>
-        <div className="flex items-start space-x-3">
+    <div>
+      <div className="  text-white w-full  md:w-[96%] grid grid-cols-12  mx-auto   p-4  border-b border-white/20   ">
+        <div className=" col-span-2  md:col-span-1">
           <img
             src={tweet.user.photoURL}
             alt={tweet.user.name}
             width={48}
             height={48}
-            className="rounded-full"
+            className="rounded-full "
           />
-          <div>
-            <div className="flex items-center space-x-2">
-              <Link to={`/user/${tweet.user.username}`}>
+        </div>
+        <div className=" col-span-10  md:col-span-11">
+          <div className="flex items-center space-x-2 ">
+            <Link to={`/user/${tweet.user.username}`}>
+              {" "}
+              <div className="flex items-center gap-x-2">
+                <span className=" text-sm md:text-base font-bold  hover:underline">
+                  {tweet.user.name}
+                </span>{" "}
+                {tweet.user.isPremium && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="#db12ff"
+                    className="size-6"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </div>
+            </Link>
+            <Link to={`/user/${tweet.user.username}`}>
+              {" "}
+              <span className="text-[12px]  text-gray-400 md:text-base ">
+                {tweet.user.username} ·{" "}
+              </span>
+              <span className="text-[12px] text-gray-400  md:text-base ">
                 {" "}
-                <div className="flex items-center gap-x-2">
-                  <span className=" text-sm md:text-base font-bold  hover:underline">
-                    {tweet.user.name}
-                  </span>{" "}
-                  {tweet.user.isPremium && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="#db12ff"
-                      className="size-6"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  )}
-                </div>
-              </Link>
-              <Link to={`/user/${tweet.user.username}`}>
-                {" "}
-                <span className="text-[12px]  text-gray-400 md:text-base ">
-                  {tweet.user.username} ·{" "}
-                </span>
-                <span className="text-[12px] text-gray-400  md:text-base ">
-                  {" "}
-                  {timeSince(tweet.createdAt)}{" "}
-                </span>
-              </Link>
-            </div>
-            <p className="text-[12px] md:text-base">
-              <DynamicText text={tweet.text as string} postedBy="assistant" />
-            </p>
+                {timeSince(tweet.createdAt)}{" "}
+              </span>
+            </Link>
           </div>
-        </div>
-      </Link>
+          <Link to={`/tweet/${tweet.id}`} className="text-[12px] md:text-base">
+            <DynamicText text={tweet.text as string} postedBy="assistant" />
+          </Link>
 
-      {/* Media */}
-      {tweet.image && (
-        <div className="mt-4 flex items-center justify-center">
-          <LazyLoadImage
-            src={tweet.image}
-            alt="Lazy Loaded Image"
-            width={500}
-            height={350}
-          />
+          {tweet.image && (
+            <div className="mt-4 w-full">
+              <LazyLoadImage
+                src={tweet.image}
+                alt="Lazy Loaded Image"
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };

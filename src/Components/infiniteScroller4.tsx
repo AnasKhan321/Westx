@@ -3,9 +3,9 @@ import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { Tweet } from '../utils/type'
 import SmallLoader from '../ReusableComponents/SmallLoader'
-import Loader from '../ReusableComponents/Loader'
 import { useAuth } from '../Context/AuthContext'
 import { BiRepost } from 'react-icons/bi'
+import TweetSkeleton, { TwitterSkeletonComponent } from '../ReusableComponents/TweetSkeleton'
 
 
 const TwetCARD =  React.lazy(() => import("../ReusableComponents/TweetCard"));
@@ -67,7 +67,11 @@ function FollowingTweets() {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage])
 
   if (status === 'error') return <p>Error: {error.message}</p>
-  if(status == 'pending')  return <Loader/> 
+  if(status == 'pending')  return <div className="mt-8">
+  <TweetSkeleton/>
+  
+    </div>  
+
 
 
 
@@ -75,20 +79,23 @@ function FollowingTweets() {
     <>
 
 
-      <div className="mt-16"></div>
+      <div className=" mt-8 md:mt-16"></div>
 
-      {data?.pages?.length === 0 || data?.pages?.every(page => page.data.length === 0) ? (
+      {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
       <p className="text-center text-gray-200 my-4 font-bold text-xl  ">No tweets to show.</p>
     ) : (
       data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
-          {group.data.map((tweet) => (
+          {group?.data?.map((tweet) => (
           <Suspense
           key={tweet.id}  // ✅ Key should be on Suspense, not inside it
           fallback={
-            <div className="text-center my-4">
-              <SmallLoader />
-            </div>
+         
+                  <div className="text-white p-4 md:w-[96%] w-full mx-auto">
+                    
+                    <TwitterSkeletonComponent/>
+                  </div>
+            
           }
         >
           {tweet.tweettype === "REPOST" ? (

@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { Tweet } from '../utils/type'
 import SmallLoader from '../ReusableComponents/SmallLoader'
-import Loader from '../ReusableComponents/Loader'
+import TweetSkeleton from './TweetSkeleton'
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 
@@ -27,7 +27,7 @@ const fetchTweets = async ({ pageParam = 1, userId }: { pageParam?: number, user
 function UserTweets({ userId }: { userId: string }) { 
   const {
     data,
-    error,
+
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -60,8 +60,8 @@ function UserTweets({ userId }: { userId: string }) {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (status === 'error') return <p>Error: {error.message}</p>;
-  if (status === 'pending') return <Loader />;
+  if (status === 'error') return  <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
+  if (status === 'pending') return  <TweetSkeleton/> 
 
 
   return (

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { getUserLikes } from "../utils/apicalls"
-import Loader from "./Loader"
 import TweetDetailTweet from "./TweetCard3"
+import TweetSkeleton from "./TweetSkeleton"
 
 
 
@@ -16,8 +16,10 @@ const UserLikes = ({id}  : {id : string}) => {
     })
   return (
     <div>
-      {isLoading && <Loader/>}
-      {isError && <div className="text-center mt-5 font-bold"> Something Went Wrong !  </div> }
+      {isLoading && 
+       <TweetSkeleton/>
+    }
+      {isError &&  <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>}
 
       {data?.success && <div> 
         {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl py-12 "> He doesn't Have any Liked Post !  </div>}

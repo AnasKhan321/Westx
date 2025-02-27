@@ -4,7 +4,7 @@ import { timeSince } from "../utils/date";
 export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
 
   return (
-    <div className="bg-black text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
+    <div className=" text-white  py-4   w-[93%]   mx-auto  rounded-lg border-b border-borderColor ">
       {/* Header */}
       <div className="flex items-start space-x-3">
         <img

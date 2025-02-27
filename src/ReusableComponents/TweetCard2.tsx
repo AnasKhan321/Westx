@@ -6,6 +6,7 @@ import { FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { timeSince } from "../utils/date";
 
+
 const TweetCardforuserTweet = ({
   tweet,
   user,
@@ -15,7 +16,7 @@ const TweetCardforuserTweet = ({
 }) => {
   return (
     <Link to={`/tweet/${tweet.id}`}>
-      <div className="bg-black text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
+      <div className="bg-primaryColor text-white w-full  mx-auto p-4 rounded-lg border-b border-borderColor ">
         {/* Header */}
         <div className="flex items-start space-x-3">
           <img

@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { Tweet } from '../utils/type'
 import SmallLoader from '../ReusableComponents/SmallLoader'
-import Loader from '../ReusableComponents/Loader'
+import TweetSkeleton from '../ReusableComponents/TweetSkeleton'
 
 interface BookMarkResponse {
   success: boolean
@@ -29,7 +29,6 @@ function TweetReply({tweetid }  : {tweetid : string}) {
 
   const {
     data,
-    error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -61,8 +60,8 @@ function TweetReply({tweetid }  : {tweetid : string}) {
     return () => observer.disconnect()
   }, [fetchNextPage, hasNextPage, isFetchingNextPage])
 
-  if (status === 'error') return <p>Error: {error.message}</p>
-  if(status == 'pending')  return <Loader/> 
+  if (status === 'error') return <p className='font-bold text-center mt-4 '>Internal Server Error </p>
+  if(status == 'pending')  return <TweetSkeleton/>
 
 
 
@@ -70,12 +69,12 @@ function TweetReply({tweetid }  : {tweetid : string}) {
     <>
 
 
-      {data?.pages?.length === 0 || data?.pages?.every(page => page.data.length === 0) ? (
+      {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
       <p className="text-center text-gray-200 my-4 font-bold text-xl  "></p>
     ) : (
       data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
-          {group.data.map((tweet) => (
+          {group?.data?.map((tweet) => (
           <Suspense
           key={tweet.id}  // ✅ Key should be on Suspense, not inside it
           fallback={

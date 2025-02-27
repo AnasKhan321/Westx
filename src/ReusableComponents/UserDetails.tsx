@@ -4,7 +4,7 @@ import { followuser, unfollowuser } from "../utils/creationcall";
 import { formatDateTime } from "../utils/date";
 import { User2 } from "../utils/type";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getUserFollowerbyuserid,
@@ -17,6 +17,8 @@ import axios from "axios";
 import UserReposts from "./UserReposts";
 import UserLikes from "./UserLikes";
 import UserReplies from "./UserReplies";
+import { ColorRing } from "react-loader-spinner";
+import { IoCaretBack } from "react-icons/io5";
 
 interface Tweetcounts {
   success : boolean , 
@@ -29,15 +31,20 @@ const GetTweetCount  = async(userid : string)=>{
 }
 
 const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
-  const { user, handleLogout } = useAuth();
+  const { user } = useAuth();
   const queryClient = useQueryClient() ; 
   const tabs = ["Posts", "Replies", "Likes", "Repost"];
   const [activeTab, setActiveTab] = useState("Posts");
+
+  const [ isfollower , setisfollower]  = useState(false)
  
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
     queryKey: [`UserFollowing:${profile.username}`],
 
     queryFn: () => getUserFollowinguserid(profile.id),
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
 
   });
 
@@ -47,12 +54,18 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     queryKey: [`UserFollower:${profile.username}`],
 
     queryFn: () => getUserFollowerbyuserid(profile.id),
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   });
 
 
   const {data : usertweetscount , isLoading : usertweetloading }  = useQuery({
     queryKey : [`tweetCount:${profile.username}`] , 
-    queryFn : ()=> GetTweetCount(profile.id)
+    queryFn : ()=> GetTweetCount(profile.id),
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
 
   const [suserfollowing, setuserfollowing] = useState(0);
@@ -75,23 +88,30 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   },[userfollower?.data])
 
   const handleFollow = async () => {
+    if(isfollower){
+      return ; 
+    }
     if (user?.id) {
-      setisFollow(true);
+
+      setisfollower(true)
       const response = await followuser({
         followerid: user?.id as string,
         followingid: profile.id,
       });
+      setisFollow(true);
       setuserfollower(suserfollower + 1);
       if (response?.success) {
         toast.success("follow successfully!");
-        queryClient.invalidateQueries({ queryKey: [`UserFollowing:${profile.username}`] });
+        queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWERS:${profile.username}`] });
+        queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWING:${profile.username}`] });
+        queryClient.invalidateQueries({ queryKey: [`UserFollower:${profile.username}`] });
 
-        queryClient.invalidateQueries({ queryKey: [`UserFollower:${user?.username}`]});
-        queryClient.invalidateQueries({ queryKey: [`UserFollowing:${user?.username}`]});
+
 
         if (following) {
           setfollowings(following + 1);
         }
+      setisfollower(false)
       }else if(response?.success == false){
         toast.error("Something went wrong")
       }
@@ -99,30 +119,31 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   };
 
   const handleUnfollow = async () => {
-    setisFollow(false);
+    if(isfollower){
+      return ; 
+    }
+
+    setisfollower(true)
     const response = await unfollowuser({
       followerid: user?.id as string,
       followingid: profile.id,
     });
+    setisFollow(false);
     setuserfollower(suserfollower - 1);
     if (response?.success) {
       toast.success("unfollow successfully!");
-      queryClient.invalidateQueries({ queryKey: [`UserFollowing:${profile.username}`] });
-      queryClient.invalidateQueries({ queryKey: [`UserFollower:${user?.username}`]});
-      queryClient.invalidateQueries({ queryKey: [`UserFollowing:${user?.username}`]});
-
+      queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWERS:${profile.username}`] });
+      queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWING:${profile.username}`] });
+      queryClient.invalidateQueries({ queryKey: [`UserFollower:${profile.username}`] });
       if (following) {
         setfollowings(following - 1);
       }
+      setisfollower(false)
     }else if(response?.success == false){
       toast.error("Something went wrong")
     }
   };
 
-  const handleLogoutfn = () => {
-    handleLogout();
-    toast.success("Logout Successfully !")
-  };
 
   useEffect(() => {
     if (userfollower?.data) {
@@ -135,173 +156,147 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       setuserfollower(userfollowing.data.length);
     }
   }, [userfollowing?.data]);
+
+  const navigate = useNavigate() 
+
+  const handleClick = ()=>{
+    navigate(-1);
+}
   return (
-    <div className={`w-full  rounded-lg  shadow-md `}>
-      {/* Cover Photo */}
-      <div
-        className="h-40 bg-cover bg-center"
-        style={{ backgroundImage: `url(${profile?.coverPhotoURL})` }}
-      ></div>
+    <div className="w-ful border border-white/10 h-screen   md:min-h-[96vh]  overflow-y-scroll  md:max-h-[96vh]  md:my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  md:rounded-xl overflow-hidden  ">
 
-      {/* Profile Info */}
-      <div className="p-4 text-center relative">
-        {/* Profile Picture */}
+    <div className="">
+      <div className="relative">
         <img
-          src={profile.photoURL}
-          alt={`${profile.name} profile`}
-          className="w-24 h-24 mx-auto rounded-full border-4"
-          style={{ borderColor: profile.accent || "purple" }}
+          src={profile.coverPhotoURL as string}
+          alt="Cover"
+          className="w-full h-48 object-cover"
         />
-        {user?.username == profile.username && (
-          <button
-            onClick={handleLogoutfn}
-            className="absolute top-3 right-3 px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-full shadow-md hover:bg-red-600 transition duration-200"
-          >
-            Logout
-          </button>
-        )}
-
-{user?.username === profile.username && !profile.isPremium && (
-  <button
-    className="absolute right-1 top-14 md:top-3 md:right-[100px] px-4 py-2 bg-yellow-500 text-white text-sm font-semibold rounded-full shadow-md hover:bg-yellow-600 transition duration-200"
-  >
-    Upgrade
-  </button>
-)}
-
-        {/* Name and Username */}
-        <h2 className=" text-base md:text-xl font-bold mt-2">{profile.name}</h2>
-        <p className="text-sm text-gray-500">
-          @{profile.username}{" "}
-          {profile.verified && <span className="text-blue-500 ml-1">✔</span>}
-        </p>
-        <p className="text-sm mt-2">{profile.location}</p>
-        <p className="text-xs text-gray-400">
-          Joined {formatDateTime(profile.createdAt)}
-        </p>
-        {/* Follow Button */}
-
-{!userfollowingloading  && <div> 
-  
-  {user?.username !== profile.username && (
-          <>
-            {isFollow ? (
-              <button
-                onClick={handleUnfollow}
-                className="mt-4 px-4 py-2 text-black bg-white   text-sm  text-center me-2 mb-2 font-medium rounded-full shadow  transition duration-200"
-              >
-                unfollow
-              </button>
-            ) : (
-              <button
-                onClick={handleFollow}
-                className="mt-4 px-4 py-2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800  text-sm  text-center me-2 mb-2 font-medium rounded-full shadow  transition duration-200"
-              >
-                Follow
-              </button>
-            )}
-          </>
-        )}
-  </div>}
+            <div className="absolute flex items-center  space-x-2 top-4 left-4 text-white text-lg font-semibold">
+              <IoCaretBack className="cursor-pointer" onClick={handleClick}/> 
+              <span>
+              {profile.name}
+              </span>
+              
+            </div>
 
       </div>
+    </div>
 
-      {/* Stats */}
-      <div className="flex justify-around border-y py-2 text-center border-borderColor">
-        {userfollowingloading && <SmallLoader />}
-        {userfollowing?.success && (
-          <div>
-            <p className="font-bold">{suserfollowing}</p>
-            <Link to={`/following/${profile.id}`}> <p className="text-xs text-gray-500">Following</p> </Link>  
-          </div>
-        )}
+  
 
-        {userfollowerloading && <SmallLoader />}
+    <div className="grid grid-cols-18 pb-10 border-b border-white/40 w-[95%]  mx-auto ">
+      <div className="relative flex flex-col  items-start col-span-16  md:col-span-7    -mt-12">
+        <img
+          src={profile.photoURL as string}
+          alt="user"
+          className=" w-20 h-20  md:w-24 md:h-24 rounded-full border  border-white"
+        />
+        <h2 className=" text-base  md:text-xl font-semibold mt-2">{profile.name}</h2>
+        <p className="text-white/60 text-sm mt-2 ">
+          @{profile.username}         <span className="text-white/40">
+        • Joined {formatDateTime(profile.createdAt)}  
+        </span>
+        </p>
 
-        {userfollower?.success && (
-          <div>
-            <p className="font-bold">{suserfollower}</p>
-        <Link to={`/follower/${profile.id}`}>       <p className="text-xs text-gray-500">Followers</p>  </Link> 
-          </div>
-        )}
-        <div>
-        {usertweetloading && <SmallLoader />}
-          {usertweetscount?.success && (
-            <div>
-              <p className="font-bold">{usertweetscount.data}</p>
-              <p className="text-xs text-gray-500">Tweets</p>
-            </div>
-          )}
+
+        <div className="flex items-center space-x-4  mt-6  mb-2 ">
+          {isFollow ?        <button onClick={handleUnfollow} className="py-2  px-6  bg-white text-black hover:bg-gradient-to-br  hover:text-white hover:bg-black transition-all border border-black hover:border-white  rounded-full ">
+
+
+          {isfollower?      <ColorRing
+                        visible={true}
+                        height="20"
+                        width="20"
+                        ariaLabel="color-ring-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
+                      />: "unFollow"}
+          </button> : 
+          <button onClick={handleFollow} className="py-2  px-6  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br   rounded-full ">
+            
+            {isfollower?   <ColorRing
+                        visible={true}
+                        height="20"
+                        width="20"
+                        ariaLabel="color-ring-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={["#FFFFFF"  ,  "#FFFFFF" , "#FFFFFF" , "#FFFFFF" , "#FFFFFF"]}
+                      />: "Follow"}
+            </button>}
+
+          <Link  to={`/chat/${profile.username}`} className="py-2  px-4  bg-black text-white border border-white hover:bg-white hover:text-black transition-all   rounded-full  ">Talk to Persona</Link>
         </div>
       </div>
 
-      {user?.username !== profile.username && (
+      <div className=" col-span-18 md:col-span-11 flex mt-10 md:mt-0  justify-between  md:justify-around items-center mx-2">
+        <div className="text-center">
+        <Link to={`/following/${profile.id}`}> <p className="text-white/60 text-sm mb-2">Following</p></Link> 
+            {userfollowingloading? <SmallLoader/> : 
+          <p className="text-lg font-semibold ">{suserfollowing}</p>}
+        </div>
+        <div className="text-center">
+        <Link to={`/follower/${profile.id}`}> <p className="text-white/60 text-sm mb-2">Follower</p></Link> 
+        {userfollowerloading? <SmallLoader/> : 
+          <p className="text-lg font-semibold ">{suserfollower}</p>}
+        </div>
+        <div className="text-center">
+        <p className="text-white/60 text-sm mb-2">Tweets</p>
+            {usertweetloading? <SmallLoader/> : 
+          <p className="text-lg font-semibold ">{usertweetscount?.data}</p>}
+        </div>
+      </div>
+    </div>
+
+    <div className="     w-[95%]  mx-auto  mt-4">
+      <div className=" w-full  md:w-[50%] flex justify-between   ">
+      {tabs.map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveTab(tab)}
+          className={` ${
+            activeTab === tab
+              ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
+              : " py-2 text-white/60 hover:text-white   transition-all"
+          }`}
+        >
+          {tab}
+        </button>
+      ))}
+      </div>
+
+    </div>
+
+
+
+    <div className=" text-white">
+      {activeTab == "Posts" && (
         <>
-          {profile.username !== "ANASKHA96399553" && (
-            <div className="flex items-center justify-center p-6 bg-black border-b border-borderColor">
-              <Link
-                to={`/chat/${profile.username}`}
-                className="px-6 py-2 text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800  text-sm  text-center me-2 mb-2 font-medium rounded-full shadow  transition duration-200"
-              >
-                Talk to {profile.name}
-              </Link>
-            </div>
-          )}
+          <UserTweets userId={profile.id} />
         </>
       )}
 
-      <div className="mt-5">
+      {activeTab == "Replies" && (
+        <>
+          <UserReplies user={profile} />
+        </>
+      )}
 
+      {activeTab == "Likes" && (
+        <>
+          <UserLikes id={profile.id} />
+        </>
+      )}
 
-      <div className="w-full  mx-auto mt-5">
-      <div className="flex border-b border-gray-700">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            className={`flex-1 text-sm md:text-base py-2 text-center text-white ${
-              activeTab === tab ? "border-b-2 border-purple-500 font-semibold" : "text-gray-400"
-            }`}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-
-      <div className=" text-white">
-        
-          {activeTab == "Posts"  && <> 
-        <UserTweets userId={profile.id}/>
-          
-          </>}
-
-
-          {activeTab == "Replies"  && <> 
-            <UserReplies user={profile}/>
-          
-          </>}
-
-
-          {activeTab == "Likes"  && <> 
-             <UserLikes id={profile.id}/>
-          
-          </>}
-
-
-          {activeTab == "Repost"  && <> 
-        <UserReposts id={profile.id}/> 
-          
-          </>}
-
-
-      </div>
+      {activeTab == "Repost" && (
+        <>
+          <UserReposts id={profile.id} />
+        </>
+      )}
     </div>
-
-
-
-
-      </div>
-    </div>
+  </div>
   );
 };
 

@@ -17,7 +17,6 @@ const Profile2: React.FC<{ profile: User }> = ({ profile }) => {
     <div
       className="w-full max-w-2xl mx-auto mt-10 bg-black rounded-lg shadow-lg overflow-hidden border border-borderColor"
     >
-      {/* Cover Photo */}
       <div
         className="h-48 bg-cover bg-center relative"
         style={{ backgroundImage: `url(${profile.coverPhotoURL})` }}
@@ -32,16 +31,15 @@ const Profile2: React.FC<{ profile: User }> = ({ profile }) => {
         </button>}
       </div>
 
-      {/* Profile Info */}
       <div className="p-6 text-center">
-        {/* Profile Picture */}
+   
         <img
           src={profile.photoURL}
           alt={`${profile.name} profile`}
           className="w-28 h-28 mx-auto rounded-full border-4 mb-4"
           style={{ borderColor: profile.accent || "purple" }}
         />
-        {/* Name and Username */}
+
         <h2 className="text-2xl font-bold text-white">{profile.name}</h2>
         <p className="text-sm text-gray-500">
           @{profile.username}{" "}
@@ -54,11 +52,11 @@ const Profile2: React.FC<{ profile: User }> = ({ profile }) => {
           Joined{formatDateTime(profile.createdAt)}
 
         </p>
-        {/* Follow Button */}
+   
 
       </div>
 
-      {/* Stats */}
+
       <div className="flex justify-around border-y py-4 text-center border-borderColor bg-black ">
         <div>
           <p className="font-bold">{profile.followings.length}</p>

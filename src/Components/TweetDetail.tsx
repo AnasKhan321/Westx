@@ -1,13 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import ReplyBox from "../ReusableComponents/ReusableComponent";
-
-import ReuseableTitle from "../ReusableComponents/ReuseableTitle";
 import Loader from "../ReusableComponents/Loader";
 import { getTweetDetail } from "../utils/apicalls";
 
 import React, { Suspense } from "react";
 import TweetReply from "./ReplyScroller";
+import { IoCaretBack } from "react-icons/io5";
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 export default function TweetDetail() {
   const { id } = useParams();
@@ -20,12 +19,20 @@ export default function TweetDetail() {
     refetchOnWindowFocus: false,
   });
 
-
+  const navigate = useNavigate();
+  const handleClick = ()=>{
+          navigate(-1);
+  }
 
 
   return (
-    <div>
-      <ReuseableTitle title="Tweet" />
+    <div  className=" min-h-screen max-h-screen  md:max-h-[96vh] md:min-h-[96vh]  border border-white/10  md:my-[2vh]  w-full bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-xl   ">
+
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl  w-full  bg-secondaryColor/20  md:w-[50%] rounded-xl font-bold   "> 
+            <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
+            <span>Tweet</span>
+           </div>
+
       {isLoading && <Loader />}
       {isError && <div>Error...</div>}
       {data?.success && (

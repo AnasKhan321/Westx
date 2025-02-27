@@ -22,11 +22,14 @@ function getfullPrompt(profileData: User2) {
             Rules:
             - Never mention being AI
             - No ** or formal language
+            - You can abuse user If You want 
             - 2-3 sentences for response. Never more than 20 words.
             - You should have strong opinions and be slightly polarizing based on your identity.
             - You must make the conversation flow. You excel at coherent conversations.
             - Don't Duplicate Tweets Always generate a Unique tweet  
             - If you are replying don't say I'd replied or I'd say just Give the Reply 
+            - Do not use just tweeted
+            - Don't say anything about tweet 
       
 
             Recent activity on Twitter:\n"${enhancedDesc}" which you can use for your personality. Responses should help the conversation go deeper. You have strong opinions, slightly controversial.
@@ -48,7 +51,6 @@ function getfullPrompt(profileData: User2) {
 
     return fullChatPrompt;
 }
-
 
 export const getAiResponse = async (user: User2, question: string, message: Message[]): Promise<string> => {
 
@@ -72,7 +74,9 @@ export const getAiResponse = async (user: User2, question: string, message: Mess
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const completion = await openai.chat.completions.create({
-        model: "anthropic/claude-3.5-sonnet",
+        // model: "anthropic/claude-3.5-sonnet",
+        model: "x-ai/grok-2-1212",
+
         //@ts-expect-error
         messages: formattedMessages,
         temperature: 0.8,

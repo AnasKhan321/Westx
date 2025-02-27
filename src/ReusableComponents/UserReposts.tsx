@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import { getUserReposts } from "../utils/apicalls"
-import Loader from "./Loader"
 import TweetDetailTweet from "./TweetCard3"
 import { Tweet } from "../utils/type"
+import TweetSkeleton from "./TweetSkeleton"
 
 
 
@@ -19,9 +19,11 @@ const UserReposts = ({id  }  : {id  : string}) => {
 
   return (
     <div>
-      {isLoading && <Loader/> }
+      {isLoading && 
+          <TweetSkeleton/>
+    }
 
-      {isError && <div> Something Went Wrong ! </div> }
+      {isError && <p className="font-bold text-center mt-5">Internal Server Error Try Again</p> }
       
       {data?.success && <div> 
         {data.data.length == 0  && <div className="text-center font-bold p-4 py-12 text-xl "> He doesn't Have any Reposts !  </div>}

@@ -148,7 +148,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   // Show loading state
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex justify-center flex-col items-center bg-black">
+      <div className="w-screen h-screen flex justify-center flex-col items-center bg-primaryColor">
         <img
           src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
           alt="Profile Logo"

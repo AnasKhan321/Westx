@@ -3,9 +3,8 @@ import axios from "axios";
 import React, { Suspense, useEffect, useRef } from "react";
 import { Tweet } from "../utils/type";
 import SmallLoader from "../ReusableComponents/SmallLoader";
-import Loader from "../ReusableComponents/Loader";
 import { BiRepost } from "react-icons/bi";
-
+import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 interface TweetResponse {
@@ -70,21 +69,26 @@ function Tweets() {
         <p>Error: {error.message}</p>
       </>
     );
-  if (status == "pending") return <Loader />;
+  if (status == "pending") return <div className="mt-8">
+<TweetSkeleton/>
+
+  </div>  
 
   return (
     <>
-      <div className="mt-16"></div>
+      <div className=" mt-8 md:mt-16"></div>
 
       {data?.pages?.map((group, i) => (
-      <React.Fragment key={i}>  {/* ✅ Add key here */}
-        {group.data.map((tweet) => (
+      <React.Fragment key={i}> 
+
+       
+        {group?.data?.map((tweet) => (
           <Suspense
             key={tweet.id}  // ✅ Key should be on Suspense, not inside it
             fallback={
-              <div className="text-center my-4">
+              <div className="text-white p-4 md:w-[96%] w-full mx-auto">
                 
-                <SmallLoader />
+                <TwitterSkeletonComponent/>
               </div>
             }
           >
@@ -109,7 +113,7 @@ function Tweets() {
       <div ref={bottomRef} className="h-10" />
 
       {isFetchingNextPage && (
-        <div className="flex justify-center w-full my-4 ">
+        <div className="flex justify-center w-full  ">
           <SmallLoader />
         </div>
       )}

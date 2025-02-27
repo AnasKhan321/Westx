@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { User } from "../utils/type";
+import { IoChatboxOutline } from "react-icons/io5";
 
 
 const UserCard = ({user}  : {user : User}) => {
   return (
-    <div className="flex items-center bg-black text-white  rounded-lg p-4 w-full font-sans">
+    <div className="flex items-center p-4   text-white  rounded-lg w-full  font-roboto">
       {/* Avatar */}
       <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
         <img
@@ -32,10 +33,17 @@ const UserCard = ({user}  : {user : User}) => {
 
 
       </div>
-      {/* Follow Button */}
-      <button className=" hidden bg-gray-200 text-black px-4 py-1 rounded-full font-bold text-sm hover:bg-gray-300">
-        Follow
-      </button>
+     <Link to={`/chat/${user.username}`}> 
+      <button className=" md:block hidden  bg-primaryColor/50 border-white border  transition-all    text-white p-4  rounded-full font-bold text-sm hover:bg-white hover:text-black">
+        Talk to Persona
+      </button></Link>
+
+
+
+      <Link to={`/chat/${user.username}`}> 
+      <button className=" md:hidden  block  bg-primaryColor/50  transition-all    text-white  rounded-full font-bold text-sm hover:bg-white hover:text-black">
+            <IoChatboxOutline className="text-xl "/> 
+      </button></Link>
     </div>
   );
 };

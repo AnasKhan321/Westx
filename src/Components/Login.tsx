@@ -1,46 +1,41 @@
 import React from "react";
 import { useAuth } from "../Context/AuthContext";
 import { ColorRing } from "react-loader-spinner";
+import { Link } from "react-router-dom";
+
+import { ReactTyped } from 'react-typed';
 
 const Login: React.FC = () => {
-  const { handleTwitterLogin  , islogin } = useAuth();
+  const { handleTwitterLogin, islogin } = useAuth();
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-primary via-territary to-black text-secondary">
-      <div className="bg-secondary shadow-2xl rounded-lg max-w-[22rem]  p-5  md:p-10  md:max-w-lg w-full text-center border border-borderColor">
-        <div className="flex flex-col items-center">
+    <div className="min-h-screen max-h-screen flex  w-full flex-col  overflow-y-hidden md:flex-row">
+      <div className=" h-[51vh] md:h-screen w-full  md:w-[50%]">
+        <img
+          src="/login.jpg"
+          alt="Login Image"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className=" rounded-t-3xl absolute top-[48vh] md:p-0 p-8    h-[52vh] md:relative md:top-0 bg-primaryColor w-full md:rounded-t-none  md:w-[50%] md:h-screen ">
+        <div className=" w-[85%] md:w-[60%]  mx-auto justify-start  flex flex-col md:justify-center h-[90vh]">
           <img
-            src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png"
-            alt="WestX Logo"
-            className=" w-[75px]  h-[75px] md:w-[150px] md:h-[150px] mb-6"
+            src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
+            alt="Profile Logo"
+            className=" hidden md:block md:w-32  md:h-32 rounded-full my-4 "
           />
-          <h1 className=" text-xl  md:text-4xl font-bold text-primary mb-2">
-            Welcome to WestX
-          </h1>
-          <p className=" text-base md:text-lg text-territary font-medium mb-8">
-            The world's first AI social media
-          </p>
-        </div>
-        <p className="text-gray-600 text-sm mb-10">
-          Revolutionize the way you connect with the world. Join the community
-          powered by artificial intelligence.
-        </p>
-        <button
-          onClick={handleTwitterLogin}
-          className="flex items-center justify-center w-full py-3 px-6 bg-territary hover:bg-purple-800 text-white font-medium rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-3"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M22.46 6.11c-.83.37-1.73.62-2.67.73a4.65 4.65 0 0 0 2.04-2.57 9.31 9.31 0 0 1-2.94 1.13 4.65 4.65 0 0 0-7.92 4.24 13.2 13.2 0 0 1-9.58-4.85 4.66 4.66 0 0 0 1.44 6.2c-.73-.02-1.43-.22-2.03-.56v.05c0 2.22 1.58 4.08 3.68 4.51-.38.1-.78.15-1.19.15-.29 0-.57-.03-.84-.08a4.65 4.65 0 0 0 4.34 3.22A9.34 9.34 0 0 1 2 19.47a13.17 13.17 0 0 0 7.13 2.09c8.56 0 13.24-7.09 13.24-13.24v-.6a9.46 9.46 0 0 0 2.33-2.41c-.86.38-1.8.64-2.79.76z" />
-          </svg>
-          Continue with X
-        </button>
 
-        {islogin && <div className="flex text-center mt-2  justify-center items-center">          <ColorRing
+          <h2 className="text-white text-3xl  font-bold ">Welcome to  <span className="text-purple-400">   <ReactTyped strings={['WestX']} typeSpeed={40}/>   </span>  </h2>
+
+          <p className="text-purple-400 my-4 ">The world's first AI social media </p>
+          <p className="text-gray-500 my-4 ">Revolutionize the way you connect with the world. Join the community powered by artificial intelligence</p>
+
+          
+
+          <button onClick={handleTwitterLogin} className=" font-bold  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-purple-300  text-white py-2 rounded-lg  "> Connect with X </button>
+
+
+           {islogin && <div className="flex text-center my-2  justify-center items-center">          <ColorRing
                   visible={true}
                   height="30"
                   width="30"
@@ -49,18 +44,15 @@ const Login: React.FC = () => {
                   wrapperClass="color-ring-wrapper"
                   colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
                 />  </div> }
-        <p className="text-sm text-gray-500 mt-6">
-          By continuing, you agree to our{" "}
-          <a href="/terms" className="text-territary hover:underline">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="/privacy" className="text-territary hover:underline">
-            Privacy Policy
-          </a>.
-        </p>
+
+          <p className="my-4 text-gray-100">  
+          By continuing, you agree to our <Link to="#" className="text-purple-400"> Terms of Services </Link>  and  
+          
+          
+          <Link to="#" className="text-purple-400"> Privacy Policy</Link>  
+             </p>
+        </div>
       </div>
-   
     </div>
   );
 };

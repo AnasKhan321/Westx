@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUserReplies } from "../utils/apicalls";
-import Loader from "./Loader";
-
 import Reply2 from "./Reply2";
 import Tweet4 from "./TweetCard4";
 import { User2 } from "../utils/type";
+import TweetSkeleton from "./TweetSkeleton";
 
 const UserReplies = ({ user }: { user : User2 }) => {
   const { isLoading, data, isError } = useQuery({
@@ -21,11 +20,12 @@ const UserReplies = ({ user }: { user : User2 }) => {
     <div>
       {isError && (
         <div className="p-4 text-xl font-bold text-center">
-          {" "}
-          Something Went Wrong !{" "}
+ <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>
         </div>
       )}
-      {isLoading && <Loader />}
+      {isLoading && 
+         <TweetSkeleton/>
+    }
       {data?.success && (
         <>
           {data.data.length == 0 && (
@@ -37,9 +37,9 @@ const UserReplies = ({ user }: { user : User2 }) => {
 
         </>
       )}
-      {data?.data.map((item  , index) => {
+      {data?.data?.map((item  , index) => {
         return (
-          <div className="border-b border-gray-700 py-4  " key={index}>
+          <div className="border-b border-white/20  py-4  " key={index}>
             {item.parentTweetId && <Tweet4 createdAt={item.parentTweet?.createdAt as Date} photoURL={item.parentTweet?.user.photoURL as string } tweetid={item.parentTweet?.id as string} content={item.parentTweet?.text as string} username={item.parentTweet?.user.username as string} date={""}  name={item.parentTweet?.user.name as string} />  }
         
             <Reply2

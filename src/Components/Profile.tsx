@@ -1,34 +1,17 @@
+import { useAuth } from "../Context/AuthContext";
 
-import { useAuth } from "../Context/AuthContext"
-import ReuseableTitle from "../ReusableComponents/ReuseableTitle" ; 
-
-import Profile from "../ReusableComponents/UserDetails";
 import { User } from "../utils/type";
-
+import ProfilePage from "./Profile2";
 
 const ProfileDetail = () => {
-
-  const {user}  = useAuth()
-
-
-  
-
-
-
+  const { user } = useAuth();
 
   return (
-    <> 
-      <ReuseableTitle title="Profile" />
-      
-      
-      <div className="mt-16"> 
-        
-        
-                  <Profile profile={user as User } />
-          </div>
+    <>
+
+      <ProfilePage  user={user as User}/> 
     </>
+  );
+};
 
-  )
-}
-
-export default ProfileDetail
+export default ProfileDetail;

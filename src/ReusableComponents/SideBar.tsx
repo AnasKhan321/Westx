@@ -1,23 +1,21 @@
-import {
-  FaBookmark,
-  FaRegBookmark,
-} from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
+import { AiOutlineFire  , AiFillFire } from "react-icons/ai";
 const Sidebar = () => {
   const location = useLocation();
   const { user } = useAuth();
   return (
-    <div className="h-screen w-64 bg-black text-white flex flex-col items-center  px-4 py-6 space-y-6 ">
+    <div className="h-screen w-64 bg-primaryColor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
       {/* Profile Section */}
       <div className="flex items-center space-x-3">
         <img
           src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
-          alt="Profile Logo"
+          alt="WestX Logo"
           className="w-20 h-20 rounded-full"
         />
       </div>
@@ -26,15 +24,15 @@ const Sidebar = () => {
         <nav className="space-y-8   ">
           <Link
             to="/"
-            className="flex items-center space-x-3   transition-all hover:text-territary"
+            className="flex items-center space-x-3  transition-all hover:text-territary"
           >
             {location.pathname == "/" ? (
-              <AiFillHome size={24} />
+              <AiFillHome size={22} />
             ) : (
-              <AiOutlineHome size={24} />
+              <AiOutlineHome size={22} />
             )}
 
-            <span className="font-medium text-xl font-roboto">Home</span>
+            <span className="font-medium text-xl  font-roboto ">Home</span>
           </Link>
 
           <Link
@@ -49,7 +47,6 @@ const Sidebar = () => {
 
             <span className="font-medium text-xl  font-roboto ">Bookmarks</span>
           </Link>
-
 
           <Link
             to="/personas"
@@ -75,12 +72,26 @@ const Sidebar = () => {
             <span className="font-medium text-xl font-roboto">Profile</span>
           </Link>
 
-   
+
+          <Link
+            to="/roastshow"
+            className="flex items-center space-x-3  transition-all hover:text-territary"
+          >
+            {location.pathname == "/roastshow" ? (
+              <AiFillFire size={22} />
+            ) : (
+              <AiOutlineFire size={22} />
+            )}
+
+            <span className="font-medium text-xl  font-roboto ">Roast Show</span>
+          </Link>
         </nav>
 
         {user?.username && (
-       
-          <Link to={`/profile`} className="mt-auto flex items-end space-x-3 absolute bottom-5  ">
+          <Link
+            to={`/profile`}
+            className="mt-auto flex items-end space-x-3 absolute bottom-5  "
+          >
             <img
               src={user?.photoURL as string} // Replace with the user profile image path
               alt="User Profile"

@@ -18,20 +18,20 @@ import Login from "./Components/Login";
 import { Toaster } from "react-hot-toast";
 import { AuthContextProvider } from "./Context/AuthContext";
 import Explores from "./Components/Explores";
-import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { HelmetProvider, Helmet } from "react-helmet-async";
 import Follower from "./Components/Follower";
 import Following from "./Components/Following";
 import Aiworld from "./Components/Aiworld";
 import RoastShow from "./Components/TheRoastShow";
 import { SocketProvider } from "./Context/SocketContext";
-
-
+import Search from "./Components/Search";
+import PreviousRoast from "./Components/PreviousRoast";
 
 const queryClient = new QueryClient();
 
 function AppRoutes() {
   const location = useLocation();
-  const noLayoutRoutes = ["/login", "/chat/:username"  , "/roastshow"]; // Define paths that don't need MainLayout
+  const noLayoutRoutes = ["/login", "/chat/:username"]; // Define paths that don't need MainLayout
 
   const isNoLayout = noLayoutRoutes.some((path) =>
     location.pathname.startsWith(path.split(":")[0])
@@ -47,16 +47,18 @@ function AppRoutes() {
             element={<PersonaChat />}
             key={"Chat"}
           />
-          <Route path="/roastshow"  element={<RoastShow/>} key={"RoastShow"} />
-          
         </Routes>
       ) : (
         <MainLayout>
           <Routes>
-          <Route path="/aiworld"  element={<Aiworld/> }  key={"Aiworld"}/> 
-            
+            <Route path="/aiworld" element={<Aiworld />} key={"Aiworld"} />
+
             <Route path="/" element={<Home />} key={"Home"} />
-            <Route path="/explore/:query" element={<Explores />} key={"Explore"} />
+            <Route
+              path="/explore/:query"
+              element={<Explores />}
+              key={"Explore"}
+            />
             <Route path="/bookmark" element={<Bookmark />} key={"Bookmark"} />
             <Route path="/profile" element={<Profile />} key={"Profile"} />
             <Route path="/personas" element={<Peoples />} key={"Personas"} />
@@ -70,10 +72,27 @@ function AppRoutes() {
               element={<TweetDetail />}
               key={"TweetDetail"}
             />
-
-            <Route path="/follower/:username" element={<Follower/>}  key={"follower"}/>
-            <Route path="/following/:username" element={<Following/>}  key={"following"}/>
-            
+            <Route
+              path="/roastshow"
+              element={<RoastShow />}
+              key={"RoastShow"}
+            />
+            <Route
+              path="/roastshow/previous"
+              element={<PreviousRoast/> }
+              key={"PreviousRoastShow"}
+            />
+            <Route
+              path="/follower/:username"
+              element={<Follower />}
+              key={"follower"}
+            />
+            <Route
+              path="/following/:username"
+              element={<Following />}
+              key={"following"}
+            />
+            <Route path="/search" element={<Search />} key={"search"} />
           </Routes>
         </MainLayout>
       )}
@@ -85,23 +104,28 @@ function App() {
   return (
     <>
       <HelmetProvider>
-    <Helmet>
-      <title>WestX - The First Ai Social media Network 
-      </title>
-      <meta name="description" content="The first ai socila media platform where user can come and interact with the Ai personas they
-      can buy tokens and a lot more" />
-      <meta name="keywords" content="WestX , westx  , ai social media , AI PERSONAS" />
-    </Helmet>
-      <QueryClientProvider client={queryClient}>
-        <Toaster />
-        <Router>
-          <AuthContextProvider>
-            <SocketProvider> 
-            <AppRoutes />
-            </SocketProvider>
-          </AuthContextProvider>
-        </Router>
-      </QueryClientProvider>
+        <Helmet>
+          <title>WestX - The First Ai Social media Network</title>
+          <meta
+            name="description"
+            content="The first ai socila media platform where user can come and interact with the Ai personas they
+      can buy tokens and a lot more"
+          />
+          <meta
+            name="keywords"
+            content="WestX , westx  , ai social media , AI PERSONAS"
+          />
+        </Helmet>
+        <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <Router>
+            <AuthContextProvider>
+              <SocketProvider>
+                <AppRoutes />
+              </SocketProvider>
+            </AuthContextProvider>
+          </Router>
+        </QueryClientProvider>
       </HelmetProvider>
     </>
   );

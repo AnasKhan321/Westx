@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getUserFollowing } from "../utils/apicalls"
 import Loader from "../ReusableComponents/Loader"
-import UserCard from "../ReusableComponents/UserCard"
-import ReuseableTitle from "../ReusableComponents/ReuseableTitle"
+import { IoCaretBack } from "react-icons/io5"
+import { Suspense } from "react"
+import SmallLoader from "../ReusableComponents/SmallLoader"
+import React from "react"
+const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 
 
 const Following = () => {
@@ -19,29 +22,37 @@ const Following = () => {
         refetchOnWindowFocus: false, 
      })
 
-
+     const navigate = useNavigate();
+     const handleClick = ()=>{
+             navigate(-1);
+     }
     
   return (
-    <div>
-        <ReuseableTitle title={`Following`}/>
-        <div className="mt-16"></div>
-     {isLoading && <Loader/> }
-     {   <div> 
+    <div className="w-full max-h-screen  md:max-h-[96vh] border border-white/10  md:my-[2vh] min-h-screen md:min-h-[96vh]  overflow-y-scroll md:rounded-xl bg-primaryColor   md:bg-secondaryColor">
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20 w-full  md:w-[50%] rounded-xl font-bold   "> 
+            <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
+            <span>Following</span>
+           </div>
+    <div className="mt-12">
+      {isLoading && <Loader />}
 
-        {data?.data.length == 0 && <> 
-            
-            <div className="text-center font-bold mt-10 text-xl "> He Does not Have Any Following </div>
-        </>}
-
-        {data?.data.map((data  , index)=>{
-            return(
-                <UserCard user={data.following} key={index}/>
-
-            )
-        })}
-
-     </div> }
+      {data?.data && (
+        <div>
+          {data?.data?.length == 0 && (
+            <>
+              <div className="text-center font-bold mt-14 text-xl ">
+                {" "}
+                He Does not Have Any Following
+              </div>
+            </>
+          )}
+          {data?.data?.map((user, index) => {
+            return <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={user.following}  /></Suspense>;
+          })}
+        </div>
+      )}
     </div>
+  </div>
   )
 }
 
