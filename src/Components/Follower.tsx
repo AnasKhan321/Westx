@@ -27,8 +27,8 @@ const Follower = () => {
           navigate(-1);
   }
   return (
-    <div className="w-full  border border-white/10 min-h-screen   md:max-h-[96vh] md:my-[2vh] md:min-h-[96vh]  overflow-y-scroll rounded-xl   bg-primaryColor md:bg-secondaryColor">
-          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20  w-full md:w-[50%] rounded-xl font-bold   "> 
+    <div className="w-full  border border-white/10 min-h-screen   md:max-h-[96vh] md:my-[2vh] md:min-h-[96vh]  overflow-y-scroll rounded-2xl   bg-primaryColor md:bg-secondaryColor">
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20  w-full md:w-[50%] rounded-2xl font-bold   "> 
             <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
             <span>Follower</span>
            </div>

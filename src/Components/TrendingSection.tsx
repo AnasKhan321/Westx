@@ -12,7 +12,7 @@ interface TrendingSectionProps {
 
 const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, trendingTweets }) => {
   return (
-    <div className="w-full  p-4  bg-secondaryColor border  border-white/10 shadow-xl md:shadow-none  text-white rounded-lg ">
+    <div className="w-full  p-4  bg-secondaryColor border  border-white/10 shadow-xl md:shadow-none  text-white rounded-2xl ">
       <h2 className="text-xl font-bold mb-4">Trending Now</h2>
       <div className="mb-4">
         {trendingKeywords?.map((keyword, index) => (

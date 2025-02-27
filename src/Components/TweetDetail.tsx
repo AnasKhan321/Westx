@@ -26,9 +26,9 @@ export default function TweetDetail() {
 
 
   return (
-    <div  className=" min-h-screen max-h-screen  md:max-h-[96vh] md:min-h-[96vh]  border border-white/10  md:my-[2vh]  w-full bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-xl   ">
+    <div  className=" min-h-screen max-h-screen  md:max-h-[96vh] md:min-h-[96vh]  border border-white/10  md:my-[2vh]  w-full bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-2xl   ">
 
-          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl  w-full  bg-secondaryColor/20  md:w-[50%] rounded-xl font-bold   "> 
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl  w-full  bg-secondaryColor/20  md:w-[50%] rounded-2xl font-bold   "> 
             <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
             <span>Tweet</span>
            </div>

@@ -144,7 +144,7 @@ const PersonaChat = () => {
               />{" "}
             </Link>
           </div>
-          <div className="  border-white/10 md:border col-span-16  min-h-screen max-h-screen  md:col-span-10 bg-primaryColor md:bg-secondaryColor  md:max-h-[96vh]    md:min-h-[96vh]  md:my-[2vh] md:rounded-xl ">
+          <div className="  border-white/10 md:border col-span-16  min-h-screen max-h-screen  md:col-span-10 bg-primaryColor md:bg-secondaryColor  md:max-h-[96vh]    md:min-h-[96vh]  md:my-[2vh] md:rounded-2xl ">
             <div className="w-[97%] mx-auto">
               <div className="pt-2 pb-4 border-b border-white/20 flex space-x-4 items-center    ">
                 <IoCaretBack

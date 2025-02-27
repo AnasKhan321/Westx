@@ -82,7 +82,7 @@ function BookMarks() {
   if (status === "error") return <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
   if (status == "pending")
     return (
-      <div className="w-full min-h-[96vh] max-h-[96vh] overflow-y-scroll my-[2vh]    bg-primaryColor md:bg-secondaryColor rounded-xl ">
+      <div className="w-full min-h-[96vh] max-h-[96vh] overflow-y-scroll my-[2vh]    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
         <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
           <IoCaretBack
             className="text-xl cursor-pointer"

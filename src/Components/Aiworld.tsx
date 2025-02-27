@@ -82,7 +82,7 @@ const Aiworld = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen max-h-screen  bg-primaryColor  md:min-h-[96vh] md:max-h-[96vh] md:my-[2vh]  md:rounded-xl  md:bg-secondaryColor  ">
+    <div className="w-full h-screen max-h-screen  bg-primaryColor  md:min-h-[96vh] md:max-h-[96vh] md:my-[2vh]  md:rounded-2xl  md:bg-secondaryColor  ">
       <div className="">
         <div className="w-[90%] py-4   mx-auto">
           <input

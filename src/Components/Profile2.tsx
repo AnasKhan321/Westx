@@ -72,11 +72,14 @@ const ProfilePage = ({ user }: { user: User }) => {
 
           <div className="">
             <div className="relative">
-              <img
-                src={user.coverPhotoURL || "/back.jpeg"} // Fallback image
-                alt="Cover"
-                className="w-full h-48 object-cover"
-              />
+            <div className="relative w-full h-48">
+            <img
+              src={user.coverPhotoURL || "/back.jpeg"}
+              alt="Cover"
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#000000b1] mix-blend-multiply"></div>
+          </div>
 
               <div className="absolute flex items-center  space-x-2 top-4 left-4 text-white text-lg font-semibold">
                 <IoCaretBack className="cursor-pointer" onClick={handleClick} />

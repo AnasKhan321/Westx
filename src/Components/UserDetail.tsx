@@ -24,7 +24,7 @@ export default function UserDetail() {
    })
   return (
     <div>
-      {userLoading &&  <div className="bg-secondaryColor rounded-xl min-h-[96vh]  my-[2vh] ">
+      {userLoading &&  <div className="bg-secondaryColor rounded-2xl min-h-[96vh]  my-[2vh] ">
         <Loader/> 
       </div> }
       {usererror && <div>Error...</div>}
