@@ -66,7 +66,7 @@ const Aiworld = () => {
           username: twitteruser.profile,
         }
       );
-      console.log(data);
+    
 
       setuserLoading(false);
       if (data.success) {

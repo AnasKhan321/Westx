@@ -79,7 +79,7 @@ function FollowingTweets() {
     <>
 
 
-      <div className=" mt-8 md:mt-16"></div>
+      <div className=" mt-16 md:mt-16"></div>
 
       {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
       <p className="text-center text-gray-200 my-4 font-bold text-xl  ">No tweets to show.</p>

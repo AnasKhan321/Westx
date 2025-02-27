@@ -76,7 +76,7 @@ function Tweets() {
 
   return (
     <>
-      <div className=" mt-8 md:mt-16"></div>
+      <div className=" mt-16 md:mt-16"></div>
 
       {data?.pages?.map((group, i) => (
       <React.Fragment key={i}> 
@@ -110,7 +110,7 @@ function Tweets() {
 
 
       {/* Invisible div to track scrolling and auto-load new data */}
-      <div ref={bottomRef} className="h-10" />
+      <div ref={bottomRef} className="h-5" />
 
       {isFetchingNextPage && (
         <div className="flex justify-center w-full  ">

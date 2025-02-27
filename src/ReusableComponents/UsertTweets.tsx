@@ -89,7 +89,7 @@ function UserTweets({ userId }: { userId: string }) {
 
       {isFetchingNextPage && (
         <div className="flex justify-center w-full">
-          <SmallLoader />
+          <SmallLoader/>
         </div>
       )}
     </>

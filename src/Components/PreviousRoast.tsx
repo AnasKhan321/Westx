@@ -18,9 +18,9 @@ interface Response {
 }
 
 const fetchPreviousShow = async() : Promise<Response> =>  {
-    console.log("calling")
+   
     const {data}   = await axios.get<Response>(`${import.meta.env.VITE_PUBLIC_BACKEND_URL}/previousshow`)
-    console.log(data)
+
     return data ; 
 }
 

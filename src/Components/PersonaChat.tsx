@@ -82,7 +82,7 @@ const PersonaChat = () => {
     
     if (isMounted.current) return; // Prevent multiple executions
     isMounted.current = true;
-    console.log("running")
+  
     const initializeChat = async () => {
       // Fetch previous chat
       const chatResponse = await getChat(

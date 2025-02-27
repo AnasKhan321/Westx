@@ -3,20 +3,20 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  width: 1px;  /* Adjust the width of the scrollbar */
-  height: 1px; /* For horizontal scrollbars */
+  width: 2px;  /* Adjust the width of the scrollbar */
+  height: 2px; /* For horizontal scrollbars */
 }
 
 /* Style the scrollbar track (the background area) */
 ::-webkit-scrollbar-track {
   background-color: #000000; /* Light gray background */
-  border-radius: 0px;
+  border-radius: 10px;
 }
 
 /* Style the scrollbar thumb (the draggable part) */
 ::-webkit-scrollbar-thumb {
   background-color: #2e2e2d; /* Darker gray */
-  border-radius: 0px;
+  border-radius: 10px;
 }
 
 /* Style the scrollbar thumb when hovered */

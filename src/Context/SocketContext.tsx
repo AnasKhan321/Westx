@@ -48,7 +48,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       });
 
       socket.on("USER2:MESSAGE"  , (data)=>{
-        console.log(data)
+   
         const d = JSON.parse(data)
 
         setchats((prevChats) => [

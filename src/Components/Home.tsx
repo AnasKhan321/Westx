@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <div className=" bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-xl overflow-y-scroll ">
+      <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-xl overflow-y-scroll ">
         <Suspense fallback={<Loader />}>
           <div
             className={`md:flex justify-between w-[50%]  hidden  backdrop-blur-xl   rounded-xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}

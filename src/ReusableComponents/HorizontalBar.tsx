@@ -4,11 +4,9 @@ import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { IoSearchOutline  , IoSearchSharp  } from "react-icons/io5";
-import { useSocket } from "../Context/SocketContext";
 const HorizontalBar = () => {
   const location = useLocation();
-  const {live}  = useSocket()
-  console.log(live)
+
   return (
     <>
     

@@ -118,7 +118,7 @@ const TweetCard = ({
       setislike(true);
       setlikes(likes + 1);
     }
-    console.log(response)
+
     setisliker(false);
   };
 
@@ -160,7 +160,7 @@ const TweetCard = ({
 
 
   return (
-    <div className=" text-white w-full  md:w-[96%]  grid  grid-cols-12  mx-auto  py-4 px-2   md:p-4 border-b border-white/20  ">
+    <div className=" text-white w-full  md:w-[96%]  grid  grid-cols-12  mx-auto  py-2 px-2   md:p-4 border-b border-white/20  ">
       <div className=" col-span-2  md:col-span-1">
         <img
           src={tweet.user.photoURL}
