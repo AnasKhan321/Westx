@@ -46,7 +46,7 @@ export default function Home() {
 
                 {/* Dropdown Menu */}
                 {isOpen && (
-                  <div className="absolute left-0 right-0 mt-2 bg-black shadow-lg rounded-lg border">
+                  <div className="absolute z-10 left-0 right-0 mt-2 bg-black shadow-lg rounded-lg border">
                     {tabs.map((tab) => (
                       <button
                         key={tab}
