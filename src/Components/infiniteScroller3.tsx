@@ -47,19 +47,24 @@ function Tweets() {
 
   useEffect(() => {
     if (!bottomRef.current || !hasNextPage) return;
-
+  
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log("Observed:", entries[0].isIntersecting);  // 🔍 Debug log
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage(); 
+          console.log("Fetching next page...");  // ✅ Should log when fetching
+          fetchNextPage();
         }
       },
-      { threshold: 1.0 }
+      { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
     );
-
-    observer.observe(bottomRef.current);
-
-    return () => observer.disconnect();
+  
+    const currentRef = bottomRef.current;
+    observer.observe(currentRef);
+  
+    return () => {
+      observer.unobserve(currentRef);
+    };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (status === "error")
@@ -76,7 +81,7 @@ function Tweets() {
 
   return (
     <>
-      <div className=" mt-16 md:mt-16"></div>
+      <div className=" mt-8 md:mt-8"></div>
 
       {data?.pages?.map((group, i) => (
       <React.Fragment key={i}> 

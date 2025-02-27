@@ -11,7 +11,7 @@ const HorizontalBar = () => {
     <>
     
   <div className="flex w-[95%] h-full mx-auto justify-between items-center text-white text-lg">
-    <div className="w-full rounded-2xl border border-white bg-secondaryColor py-4 px-4 mx-auto flex justify-between items-center">
+    <div className="w-full rounded-3xl  border border-white bg-secondaryColor py-4 px-4 mx-auto flex justify-between items-center">
       <Link
         to="/"
         className="flex items-center space-x-3 transition-all hover:text-territary"

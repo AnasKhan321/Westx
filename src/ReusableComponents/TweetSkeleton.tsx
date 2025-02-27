@@ -2,7 +2,7 @@ const TweetSkeleton = () => {
   return (
     <div className=" text-white p-4   md:w-[96%] w-full mx-auto">
 
-      {[...Array(7)].map((_, index) => (
+      {[...Array(10)].map((_, index) => (
        <TwitterSkeletonComponent key={index}/>
       ))}
     </div>

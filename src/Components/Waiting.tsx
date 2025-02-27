@@ -55,7 +55,7 @@ const Waiting = () => {
     {data?.success &&
     <Link to={`/roastshow/previous`}>
         <div className=' mt-5 md:mt-0 p-2  md:p-4 grid grid-cols-14'>
-            <div  className='col-span-2 '>
+            <div  className='col-span-2  mx-auto'>
                 <img src="/roastfire.jpeg" alt=""  className= ' w-[50px]  h-[50px] md:w-[80px] md:h-[80px] rounded-xl'/>
             </div>
 

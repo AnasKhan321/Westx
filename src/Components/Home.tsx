@@ -1,5 +1,4 @@
-import React, { Suspense, useState } from "react";
-import Loader from "../ReusableComponents/Loader";
+import React, {Suspense, useState } from "react";
 
 const MyComponent = React.lazy(() => import("./infiniteScroller3"));
 const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
@@ -13,9 +12,9 @@ export default function Home() {
   return (
     <>
       <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-xl overflow-y-scroll ">
-        <Suspense fallback={<Loader />}>
+
           <div
-            className={`md:flex justify-between w-[50%]  hidden  backdrop-blur-xl   rounded-xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}
+            className={`md:flex justify-between w-[49.9%]  hidden  backdrop-blur-xl   rounded-xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}
           >
             {tabs.map((tab) => (
               <button
@@ -24,7 +23,7 @@ export default function Home() {
                 ${
                   activeTab === tab
                     ? "text-white font-bold before:absolute before:bottom-0 before:left-1/2 before:-translate-x-1/2 before:w-2/4 before:h-1 before:bg-purple-500 before:rounded-full"
-                    : "text-gray-400 hover:text-white hover:bg-[#0A0A0A]  rounded-xl "
+                    : "text-gray-400 hover:text-white   "
                 }`}
                 onClick={() => setActiveTab(tab)}
               >
@@ -34,7 +33,7 @@ export default function Home() {
           </div>
 
           <div className="flex md:hidden absolute top-0 bg-primaryColor w-full">
-            <div className="w-full max-w-md mx-auto">
+            <div className="w-full  mx-auto">
               {/* Dropdown Button */}
               <div className="relative md:hidden">
                 <button
@@ -68,27 +67,28 @@ export default function Home() {
             </div>
           </div>
 
-          {activeTab == "Latest Tweets" && (
+        {activeTab == "Latest Tweets"  &&(
             <>
-              <MyComponent />
-            </>
-          )}
+            <Suspense>
+              <MyComponent /></Suspense>
+            </>)}
+      
 
           {activeTab === "For You" && (
             <>
+        <Suspense>
 
-
-              <ForYouTweets />
+              <ForYouTweets /></Suspense>
             </>
           )}
 
           {activeTab == "Following" && (
             <>
-          
-              <FollowingTweet />
+          <Suspense>
+              <FollowingTweet /></Suspense>
             </>
           )}
-        </Suspense>
+
       </div>
     </>
   );

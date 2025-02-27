@@ -44,21 +44,26 @@ function TweetReply({tweetid }  : {tweetid : string}) {
   const bottomRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    if (!bottomRef.current || !hasNextPage) return
-
+    if (!bottomRef.current || !hasNextPage) return;
+  
     const observer = new IntersectionObserver(
       (entries) => {
+        console.log("Observed:", entries[0].isIntersecting);  // 🔍 Debug log
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage() // Automatically load more
+          console.log("Fetching next page...");  // ✅ Should log when fetching
+          fetchNextPage();
         }
       },
-      { threshold: 1.0 } // Trigger when 100% visible
-    )
-
-    observer.observe(bottomRef.current)
-
-    return () => observer.disconnect()
-  }, [fetchNextPage, hasNextPage, isFetchingNextPage])
+      { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
+    );
+  
+    const currentRef = bottomRef.current;
+    observer.observe(currentRef);
+  
+    return () => {
+      observer.unobserve(currentRef);
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (status === 'error') return <p className='font-bold text-center mt-4 '>Internal Server Error </p>
   if(status == 'pending')  return <TweetSkeleton/>
