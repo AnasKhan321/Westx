@@ -80,7 +80,7 @@ function Tweets() {
 
   return (
     <>
-      <div className=" mt-8 md:mt-8"></div>
+      <div className=" mt-8 md:mt-16"></div>
 
       {data?.pages?.map((group, i) => (
       <React.Fragment key={i}> 
