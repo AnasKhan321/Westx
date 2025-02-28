@@ -32,7 +32,7 @@ const RightSidebar = () => {
 
   return (
     <div className=" min-h-screen  w-full bg-primaryColor text-white flex flex-col  px-4 py-6 space-y-6">
-      <div className="flex items-center max-w-lg ">
+      <div className="flex items-center w-full ">
         <div className="bg-[#191919] p-3 rounded-l-full border-l border-t border-b border-white/10  ">
           <FaSearch className="text-gray-400" />
         </div>
