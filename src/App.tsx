@@ -122,7 +122,7 @@ function App() {
             content="WestX , westx  , ai social media , AI PERSONAS"
           />
         </Helmet>
-        <ConnectionProvider endpoint={"http://api.devnet.solana.com/"}>
+        <ConnectionProvider endpoint={"https://api.devnet.solana.com/"}>
           <WalletProvider wallets={[]}>
             <QueryClientProvider client={queryClient}>
               <Toaster />
