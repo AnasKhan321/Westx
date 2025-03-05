@@ -61,9 +61,9 @@ const Waiting = () => {
 
             <div className=' col-span-12  md:col-span-10  ml-2 space-y-2 '>
                 <div className='flex  space-x-1 md:space-x-2'>
-                    <p  className='text-sm md:text-base' > {data.user1.name} </p>
+                    <p  className='text-sm md:text-base' > {data?.user1?.name} </p>
                     <p  className='text-sm md:text-base' >vs</p>
-                    <p  className='text-sm md:text-base' > {data.user2.name} </p>
+                    <p  className='text-sm md:text-base' > {data?.user2?.name} </p>
                     <p  className='text-sm md:text-base' >|</p>
                     <p  className='text-sm md:text-base' >Mega slam</p>
 

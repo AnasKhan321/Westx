@@ -59,7 +59,7 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
             <div className="mt-4 w-full">
               <LazyLoadImage
                 src={tweet.image}
-                alt="Lazy Loaded Image"
+                alt=""
                 className="w-full h-auto rounded-lg"
               />
             </div>

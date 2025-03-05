@@ -26,6 +26,10 @@ import RoastShow from "./Components/TheRoastShow";
 import { SocketProvider } from "./Context/SocketContext";
 import Search from "./Components/Search";
 import PreviousRoast from "./Components/PreviousRoast";
+import { TokenProvider } from "./Context/TokenContext";
+import { ConnectionProvider } from '@solana/wallet-adapter-react'
+import { WalletProvider } from "@solana/wallet-adapter-react";
+import '@solana/wallet-adapter-react-ui/styles.css';
 
 const queryClient = new QueryClient();
 
@@ -79,7 +83,7 @@ function AppRoutes() {
             />
             <Route
               path="/roastshow/previous"
-              element={<PreviousRoast/> }
+              element={<PreviousRoast />}
               key={"PreviousRoastShow"}
             />
             <Route
@@ -101,6 +105,8 @@ function AppRoutes() {
 }
 
 function App() {
+
+
   return (
     <>
       <HelmetProvider>
@@ -116,16 +122,22 @@ function App() {
             content="WestX , westx  , ai social media , AI PERSONAS"
           />
         </Helmet>
-        <QueryClientProvider client={queryClient}>
-          <Toaster />
-          <Router>
-            <AuthContextProvider>
-              <SocketProvider>
-                <AppRoutes />
-              </SocketProvider>
-            </AuthContextProvider>
-          </Router>
-        </QueryClientProvider>
+        <ConnectionProvider endpoint={"http://api.devnet.solana.com/"}>
+          <WalletProvider wallets={[]}>
+            <QueryClientProvider client={queryClient}>
+              <Toaster />
+              <Router>
+                <TokenProvider>
+                  <AuthContextProvider>
+                    <SocketProvider>
+                      <AppRoutes />
+                    </SocketProvider>
+                  </AuthContextProvider>
+                </TokenProvider>
+              </Router>
+            </QueryClientProvider>
+          </WalletProvider>
+        </ConnectionProvider>
       </HelmetProvider>
     </>
   );

@@ -1,0 +1,478 @@
+import { createContext, useContext, ReactNode, useState } from 'react';
+import { WalletModalProvider, WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { useWallet } from '@solana/wallet-adapter-react';
+import toast from 'react-hot-toast';
+import { Transaction } from "@solana/web3.js"
+import { api } from '../utils/api';
+import { LAMPORTS_PER_SOL } from '@solana/web3.js';
+import { useConnection } from '@solana/wallet-adapter-react';
+import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { PublicKey } from '@solana/web3.js';
+interface TokenContextType {
+  handlebuy: (token: string) => void
+  handleSell: (token: string) => void
+  handleTokenLaucnh: (name: string, image: string) => void
+  isChecking : boolean
+}
+
+interface TokenProviderProps {
+  children: ReactNode;
+}
+
+interface SellToken {
+  address: string,
+  balance: number,
+  decimals: number,
+}
+
+
+const TokenContext = createContext<TokenContextType | undefined>(undefined);
+
+const convertImageUrlToFile = async (imageUrl: string, fileName: string): Promise<File> => {
+  try {
+    // Fetch the image
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    
+    // Create a File from the blob
+    const file = new File([blob], fileName, { type: blob.type });
+    return file;
+  } catch (error) {
+    console.error('Error converting image URL to file:', error);
+    throw error;
+  }
+};
+
+export function TokenProvider({ children }: TokenProviderProps) {
+
+  const [isOpen, setIsOpen] = useState(false)
+  const { publicKey, signTransaction } = useWallet()
+  const [isBuyOpen, setIsBuyOpen] = useState(false)
+  const [buyAmount, setBuyAmount] = useState(0.1)
+  const [buytoken, setBuyToken] = useState(0)
+  const [selectedtoken, setselectedtoken] = useState("")
+  const { connection } = useConnection()
+
+  const [isSellOpen, setIsSellOpen] = useState(false)
+
+  const [sellAmount, setSellAmount] = useState(0.1)
+  const [sellToken, setSellToken] = useState(0)
+  const [isBuying, setisBuying] = useState(false)
+
+  const [isSelling, setIsSelling] = useState(false)
+
+  const [selltokendata, setSellTokendata] = useState<SellToken | null>(null)
+
+  const [isTokenLaucnhOpen, setIsTokenLaucnhOpen] = useState(false)
+
+
+  const [tokenname, settokename] = useState("")
+  const [tokenimage, settokenimage] = useState("")
+  const [tokenSymbol, settokenSymbol] = useState("")
+  const [tokenDescription, settokenDescription] = useState("")
+  const [isChecking, setisChecking] = useState(false)
+
+  const onClose = () => {
+    setIsOpen(false)
+  }
+
+  const handlebuy = (token: string) => {
+    if (!publicKey) {
+      setIsOpen(true)
+      toast.error("Please connect your wallet")
+
+    } else {
+      setselectedtoken(token)
+      setIsBuyOpen(true)
+
+
+    }
+  }
+
+  const confirmBuy = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault()
+      setisBuying(true)
+
+      const lamports = Math.floor(buyAmount * LAMPORTS_PER_SOL);
+
+      const prepareResponse = await api.prepareBuyTransaction(selectedtoken, lamports, buytoken, publicKey?.toString() as string)
+
+      if (!prepareResponse.success) {
+        throw new Error(prepareResponse.error)
+      }
+
+      const { serializedTransaction } = prepareResponse.data;
+
+
+      const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
+
+      // 3. Get a fresh blockhash
+      const { blockhash } = await connection.getLatestBlockhash();
+
+
+      transaction.recentBlockhash = blockhash;
+
+      if (signTransaction) {
+        const signedTransaction = await signTransaction(transaction);
+        const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+        await connection.confirmTransaction(signature);
+
+
+        const confirmResponse = await api.confirmBuyTransaction(
+          selectedtoken,
+          signature
+        );
+        if(!confirmResponse.success){
+          throw new Error(confirmResponse.error)
+        }
+        setIsBuyOpen(false)
+        setisBuying(false)
+        toast.success("Purchased successfully")
+        setBuyAmount(0.1)
+        setBuyToken(0)
+
+      }
+
+
+
+
+
+    } catch (error) {
+      toast.error("Something went wrong")
+
+    }
+
+  }
+
+  const handleSell = async (token: string) => {
+
+    if (!publicKey) {
+      setIsOpen(true)
+      toast.error("Please connect your wallet")
+    } else {
+      setselectedtoken(token)
+      setisChecking(true)
+
+      try {
+        const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+          publicKey,
+          {
+            programId: TOKEN_PROGRAM_ID,
+          }
+        );
+
+
+
+        const tokenMintPublicKey = new PublicKey(token);
+        const userTokenAccount = tokenAccounts.value.find(
+          account => account.account.data.parsed.info.mint === tokenMintPublicKey.toString()
+        );
+
+        if (!userTokenAccount) {
+          toast.error("You don't own any of this token")
+          setisChecking(false)
+          return;
+        }
+
+        const balance = userTokenAccount.account.data.parsed.info.tokenAmount.uiAmount;
+        if (balance <= 0) {
+          toast.error("Your balance is zero for this token")
+          setisChecking(false)
+          return;
+        }
+        setisChecking(false)
+        setSellTokendata({
+          address: token,
+          balance: balance,
+          decimals: userTokenAccount.account.data.parsed.info.tokenAmount.decimals
+        });
+
+        setIsSellOpen(true)
+
+
+      } catch (error) {
+        setisChecking(false)
+      }
+    }
+  }
+
+
+  const confirmSell = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSelling(true)
+
+    const prepareResponse = await api.prepareSellTransaction(
+      selectedtoken,
+      sellToken,
+      0,
+      publicKey?.toString() as string
+    );
+
+    if (!prepareResponse.success) {
+      throw new Error(prepareResponse.error || 'Failed to prepare transaction');
+    }
+
+    const { serializedTransaction } = prepareResponse.data;
+    const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
+
+
+    const { blockhash } = await connection.getLatestBlockhash();
+    transaction.recentBlockhash = blockhash;
+
+    if (signTransaction) {
+      const signedTransaction = await signTransaction(transaction);
+      const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+
+
+      await connection.confirmTransaction(signature);
+
+      const confirmResponse = await api.confirmSellTransaction(
+        selectedtoken,
+        signature
+      );
+      if(!confirmResponse.success){
+        throw new Error(confirmResponse.error)
+      }
+      setIsSelling(false)
+      toast.success("Sold successfully")
+      setSellAmount(0.1)
+      setSellToken(0)
+      setIsSellOpen(false)
+    }
+
+  }
+
+
+  const handleTokenLaucnh = async (name: string, image: string) => {
+    if (!publicKey) {
+      setIsOpen(true)
+      toast.error("Please connect your wallet")
+    } else {
+      setIsTokenLaucnhOpen(true)
+      settokename(name)
+      settokenimage(image)
+    }
+  }
+
+
+  const confirmTokenLaucnh = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(tokenname, tokenSymbol, tokenDescription, tokenimage)
+
+    let newdata = new FormData()
+    newdata.append("name", tokenname)
+    newdata.append("symbol", tokenSymbol)
+    newdata.append("description", tokenDescription)
+    if (typeof tokenimage === 'string' && tokenimage.startsWith('http')) {
+      const fileName = `${tokenSymbol}_token.${tokenimage.split('.').pop()}`;
+      const imageFile = await convertImageUrlToFile(tokenimage, fileName);
+      newdata.append('image', imageFile);
+  } else {
+      // If image is already a File object, append directly
+      newdata.append('image', tokenimage);
+  }
+
+    
+    
+  }
+
+  return (
+    <TokenContext.Provider value={{ handlebuy, handleSell, handleTokenLaucnh  , isChecking }}>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center  justify-center ">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            onClick={onClose}
+          />
+          <div className="relative z-50 w-[95%] max-w-md rounded-lg bg-secondaryColor flex items-center justify-center p-6 shadow-xl">
+            <button
+              onClick={onClose}
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+              aria-label="Close modal"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <WalletModalProvider>
+              <WalletMultiButton />
+            </WalletModalProvider>
+
+          </div>
+        </div>
+      )}
+
+
+
+      {isBuyOpen && (
+        <div className="fixed inset-0 z-50 flex items-center  justify-center ">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            onClick={() => setIsBuyOpen(false)}
+          />
+          <div className="relative z-50 w-[95%] max-w-md rounded-lg bg-secondaryColor flex items-center justify-center p-6 shadow-xl">
+            <button
+              onClick={() => setIsBuyOpen(false)}
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+              aria-label="Close modal"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <form onSubmit={confirmBuy} className='w-full p-2 '>
+              <div className='flex flex-col my-4  w-full gap-2'>
+                <label htmlFor="amount" className='text-white'>Amount in Sol </label>
+                <input type="number"
+                  step="0.000000001"
+                  min="0.000000001" id="amount" value={buyAmount} onChange={(e) => setBuyAmount(parseFloat(e.target.value))} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+
+              <div className='flex flex-col w-full gap-2 '>
+                <label className='text-white' htmlFor="amount">Minimum Token to Receive </label>
+                <input value={buytoken} onChange={(e) => setBuyToken(parseInt(e.target.value))} type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+              <button type='submit' className={`w-full p-2 text-white rounded-md bg-purple-500  mt-5 ${isBuying ? "opacity-50 cursor-not-allowed" : ""}`}> {isBuying ? "Purchasing..." : "Confirm Buy"} </button>
+            </form>
+
+          </div>
+        </div>
+      )}
+
+
+      {isSellOpen && (
+        <div className="fixed inset-0 z-50 flex items-center  justify-center ">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            onClick={() => setIsSellOpen(false)}
+          />
+          <div className="relative z-50 w-[95%] max-w-md rounded-lg bg-secondaryColor flex items-center justify-center p-6 shadow-xl">
+            <button
+              onClick={() => setIsSellOpen(false)}
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+              aria-label="Close modal"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <form onSubmit={confirmSell} className='w-full p-2 '>
+
+
+              <div className='flex flex-col w-full gap-2 '>
+                <small className='text-white'> Your Current Balance is {selltokendata?.balance} </small>
+                <label className='text-white' htmlFor="amount">Number of Tokens </label>
+                <input value={sellToken} onChange={(e) => setSellToken(parseInt(e.target.value))} type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+              <div className='flex flex-col my-4  w-full gap-2'>
+                <label htmlFor="amount" className='text-white'>Minimum Sol to receive </label>
+                <input type="number"
+                  step="0.000000001"
+                  min="0.000000001" id="amount" value={sellAmount} onChange={(e) => setSellAmount(parseFloat(e.target.value))} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+
+
+              <button type='submit'
+                className={`w-full p-2 text-white rounded-md bg-purple-500  mt-5 ${isSelling ? "opacity-50 cursor-not-allowed" : ""}`}> {isSelling ? "Selling..." : "Confirm Sell"} </button>
+            </form>
+
+          </div>
+        </div>
+      )}
+
+
+      {isTokenLaucnhOpen && (
+        <div className="fixed inset-0 z-50 flex items-center  justify-center ">
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            onClick={() => setIsTokenLaucnhOpen(false)}
+          />
+          <div className="relative z-50 w-[95%] max-w-md rounded-lg bg-secondaryColor flex items-center justify-center p-6 shadow-xl">
+            <button
+              onClick={() => setIsTokenLaucnhOpen(false)}
+              className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
+              aria-label="Close modal"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <form onSubmit={confirmTokenLaucnh} className='w-full p-2 '>
+              {tokenimage && (
+                <img src={tokenimage} alt="" className='w-[100px] mx-auto  h-[100px] object-cover rounded-full' />
+              )}
+              <div className='flex flex-col w-full gap-2 '>
+                <label className='text-white' htmlFor="amount">Token Name </label>
+                <input value={tokenname} readOnly type="string" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+              <div className='flex flex-col my-4  w-full gap-2'>
+                <label htmlFor="amount" className='text-white'>Token Symbol </label>
+                <input required type="string"
+
+                  id="amount" value={tokenSymbol} onChange={(e) => settokenSymbol(e.target.value)} placeholder='Enter token Symbol' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+
+              <div className='flex flex-col my-4  w-full gap-2'>
+                <label htmlFor="desc" className='text-white'>Token Description </label>
+                <textarea required name="desc" id="desc" value={tokenDescription} onChange={(e) => settokenDescription(e.target.value)} className='p-2 text-white rounded-md bg-primaryColor' ></textarea>
+              </div>
+
+              <button type='submit' className='w-full p-2 text-white rounded-md bg-purple-500  mt-5'>Launch Token</button>
+
+
+            </form>
+
+          </div>
+        </div>
+      )}
+
+      {children}
+    </TokenContext.Provider>
+  );
+}
+
+// Custom hook to use the token context
+export function useToken() {
+  const context = useContext(TokenContext);
+  if (context === undefined) {
+    throw new Error('useToken must be used within a TokenProvider');
+  }
+  return context;
+}

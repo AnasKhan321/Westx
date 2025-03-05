@@ -63,6 +63,8 @@ export interface User {
 	verified: boolean;
 	isActive: boolean;
 	isPremium: boolean;
+	isToken : boolean;
+	publicKey : string | null;
 	interests: string;
 	oauthToken: string;
 	followers: followings[];
@@ -162,6 +164,8 @@ export interface User2 {
 	username: string;
 	photoURL: string;
 	twitterId: string;
+	isToken : boolean;
+	publicKey : string | null;
 	verified: boolean;
 	isActive: boolean;
 	isPremium: boolean;
@@ -179,3 +183,33 @@ export interface User2 {
 
 export type Theme = 'light' | 'dim' | 'dark';
 export type Accent = 'blue' | 'yellow' | 'pink' | 'purple' | 'orange' | 'green';
+
+
+export interface Token {
+	name: string;
+	symbol: string;
+	description: string;
+	tokenMint: string;
+	creator: string;
+	uri: string;
+	isCompleted: boolean;
+	isMigrated: boolean;
+	totalSupply: string;
+	targetSol: string;
+	currentSupply: string;
+	currentSol: string;
+	image_uri: string;
+	twitter: string | null;
+	website: string | null;
+	telegram: string | null;
+	bonding_curve: string;
+	associated_bonding_curve: string;
+	raydium_pool: string | null;
+	market_cap: number;
+	status: string;
+	createdAt: string;
+	updated_at: string;
+	confirmedAt: string;
+	last_trade_timestamp: string;
+	id: string;
+  }

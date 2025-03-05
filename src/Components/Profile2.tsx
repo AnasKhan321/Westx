@@ -15,6 +15,7 @@ import SmallLoader from "../ReusableComponents/SmallLoader";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
+import { useToken } from "../Context/TokenContext";
 interface Tweetcounts {
   success: boolean;
   data: number;
@@ -31,6 +32,7 @@ const ProfilePage = ({ user }: { user: User }) => {
   const [activeTab, setActiveTab] = useState("Posts");
 
   const { handleLogout } = useAuth();
+  const { handleTokenLaucnh } = useToken();
 
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
     queryKey: [`UserFollowing:${user.username}`],
@@ -86,7 +88,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 <span>Profile</span>
               </div>
               <div className="absolute top-4 right-4 flex space-x-2">
-                <button className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+                <button onClick={()=>handleTokenLaucnh(user.name, user.photoURL)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
                   Upgrade
                 </button>
                 <button

@@ -19,6 +19,7 @@ import UserLikes from "./UserLikes";
 import UserReplies from "./UserReplies";
 import { ColorRing } from "react-loader-spinner";
 import { IoCaretBack } from "react-icons/io5";
+import TokenDetail from "./TokenDetail";
 
 interface Tweetcounts {
   success: boolean;
@@ -39,6 +40,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const [activeTab, setActiveTab] = useState("Posts");
 
   const [isfollower, setisfollower] = useState(false);
+
 
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
     queryKey: [`UserFollowing:${profile.username}`],
@@ -263,54 +265,65 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             >
               Talk to Persona
             </Link>
+
+
+
           </div>
         </div>
 
-        <div className=" col-span-18 md:col-span-11 flex mt-10 md:mt-0  justify-between  md:justify-around items-center mx-2">
-          <div className="text-center">
-            <Link to={`/following/${profile.id}`}>
-              {" "}
-              <p className="text-white/60 text-sm mb-2">Following</p>
-            </Link>
-            {userfollowingloading ? (
-              <SmallLoader />
-            ) : (
-              <p className="text-lg font-semibold ">{suserfollowing}</p>
-            )}
+        <div className=" col-span-18 md:col-span-11  mt-10 md:mt-0  flex flex-col  justify-center  ">
+
+          <div className="flex items-center justify-between  md:justify-around  mx-2 ">
+
+            <div className="text-center">
+              <Link to={`/following/${profile.id}`}>
+                {" "}
+                <p className="text-white/60 text-sm mb-2">Following</p>
+              </Link>
+              {userfollowingloading ? (
+                <SmallLoader />
+              ) : (
+                <p className="text-lg font-semibold ">{suserfollowing}</p>
+              )}
+            </div>
+            <div className="text-center">
+              <Link to={`/follower/${profile.id}`}>
+                {" "}
+                <p className="text-white/60 text-sm mb-2">Follower</p>
+              </Link>
+              {userfollowerloading ? (
+                <SmallLoader />
+              ) : (
+                <p className="text-lg font-semibold ">{suserfollower}</p>
+              )}
+            </div>
+            <div className="text-center">
+              <p className="text-white/60 text-sm mb-2">Tweets</p>
+              {usertweetloading ? (
+                <SmallLoader />
+              ) : (
+                <p className="text-lg font-semibold ">{usertweetscount?.data}</p>
+              )}
+            </div>
           </div>
-          <div className="text-center">
-            <Link to={`/follower/${profile.id}`}>
-              {" "}
-              <p className="text-white/60 text-sm mb-2">Follower</p>
-            </Link>
-            {userfollowerloading ? (
-              <SmallLoader />
-            ) : (
-              <p className="text-lg font-semibold ">{suserfollower}</p>
-            )}
-          </div>
-          <div className="text-center">
-            <p className="text-white/60 text-sm mb-2">Tweets</p>
-            {usertweetloading ? (
-              <SmallLoader />
-            ) : (
-              <p className="text-lg font-semibold ">{usertweetscount?.data}</p>
-            )}
-          </div>
+
         </div>
       </div>
 
+
+          {profile?.isToken &&(
+            <TokenDetail publicKey={profile.publicKey as string} />
+          )}
       <div className="     w-[95%]  mx-auto  mt-4">
         <div className=" w-full  md:w-[50%] flex justify-between   ">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={` ${
-                activeTab === tab
+              className={` ${activeTab === tab
                   ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
                   : " py-2 text-white/60 hover:text-white   transition-all"
-              }`}
+                }`}
             >
               {tab}
             </button>

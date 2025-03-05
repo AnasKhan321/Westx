@@ -32,7 +32,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="flex md:hidden absolute top-0 bg-primaryColor w-full">
+          <div className="flex md:hidden absolute z-10 top-0 bg-primaryColor w-full">
             <div className="w-full  mx-auto">
               {/* Dropdown Button */}
               <div className="relative md:hidden">
