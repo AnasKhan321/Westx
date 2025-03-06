@@ -214,7 +214,7 @@ const TweetCard = ({
           <div className="mt-4 w-full">
             <LazyLoadImage
               src={tweet.image}
-              alt="Lazy Loaded Image"
+      
               className="w-full h-auto rounded-lg"
             />
           </div>

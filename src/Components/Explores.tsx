@@ -54,7 +54,7 @@ const Explores = () => {
         </>
       )}
 
-      {!data?.success && <div className=""> Something went Wrong Try Again !  </div> }
+      
     </div>
   );
 };

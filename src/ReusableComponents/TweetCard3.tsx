@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import {  Tweet } from "../utils/type";
 import { timeSince } from "../utils/date";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
 
   return (
@@ -36,14 +37,14 @@ export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
 
       {/* Media */}
       {tweet.image && (
-        <div className="mt-4 flex items-center justify-center">
-          <img
-            src={tweet.image} // Replace with your image path
-            alt="Tweet Media"
-            className="rounded-lg  h-[190px] md:h-[350px]"
-          />
-        </div>
-      )}
+            <div className="mt-4 w-full">
+              <LazyLoadImage
+                src={tweet.image}
+                alt=""
+                className="w-[80%] mx-auto h-auto rounded-lg"
+              />
+            </div>
+          )}
     </div>
   );
 }

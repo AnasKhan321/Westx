@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
 import { useToken } from "../Context/TokenContext";
+import TokenDetail from "../ReusableComponents/TokenDetail";
 interface Tweetcounts {
   success: boolean;
   data: number;
@@ -74,23 +75,24 @@ const ProfilePage = ({ user }: { user: User }) => {
 
           <div className="">
             <div className="relative">
-            <div className="relative w-full h-48">
-            <img
-              src={user.coverPhotoURL || "/back.jpeg"}
-              alt="Cover"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#000000b1] mix-blend-multiply"></div>
-          </div>
+              <div className="relative w-full h-48">
+                <img
+                  src={user.coverPhotoURL || "/back.jpeg"}
+                  alt="Cover"
+                  className="w-full h-48 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#000000b1] mix-blend-multiply"></div>
+              </div>
 
               <div className="absolute flex items-center  space-x-2 top-4 left-4 text-white text-lg font-semibold">
                 <IoCaretBack className="cursor-pointer" onClick={handleClick} />
                 <span>Profile</span>
               </div>
               <div className="absolute top-4 right-4 flex space-x-2">
-                <button onClick={()=>handleTokenLaucnh(user.name, user.photoURL)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
-                  Upgrade
-                </button>
+                {!user.isToken &&
+                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+                    Upgrade
+                  </button>}
                 <button
                   onClick={handleLogout}
                   className="border-white  px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black"
@@ -102,7 +104,7 @@ const ProfilePage = ({ user }: { user: User }) => {
           </div>
 
           <div className="grid grid-cols-18 pb-2 md:pb-10 border-b border-white/40 w-[95%]  mx-auto ">
-            <div className="relative flex flex-col  items-start  col-span-15    md:col-span-7    -mt-12">
+            <div className="relative flex flex-col  items-start  col-span-15    md:col-span-8    -mt-12">
               <img
                 src={user.photoURL as string}
                 alt="user"
@@ -119,45 +121,53 @@ const ProfilePage = ({ user }: { user: User }) => {
                   • Joined {formatDateTime(user.createdAt)}{" "}
                 </span>
               </p>
+
+              <div className="flex justify-between gap-x-2 mt-5 w-[95%] ">
+                <div className="text-center flex gapx-x-1 w-full   items-center">
+                {userfollowingloading ? (
+                    <SmallLoader />
+                  ) : (
+                    <p className="text-base font-semibold mx-1 ">
+                      {userfollower?.data?.length}
+                    </p>
+                  )}
+                  <Link to={`/following/${user.id}`}>
+                    {" "}
+                    <p className="text-white/60 text-sm ">Following</p>
+                  </Link>
+
+                </div>
+                <div className="text-center flex gapx-x-1 w-full    items-center">
+                {userfollowerloading ? (
+                    <SmallLoader />
+                  ) : (
+                    <p className="text-base font-semibold  ">
+                      {userfollowing?.data?.length}
+                    </p>
+                  )}
+                  <Link to={`/follower/${user.id}`}>
+                    {" "}
+                    <p className="text-white/60 text-sm mx-1 ">Followers</p>
+                  </Link>
+
+                </div>
+                <div className="text-center flex gapx-x-1 w-full    items-center">
+                {usertweetloading ? (
+                    <SmallLoader />
+                  ) : (
+                    <p className="text-base font-semibold mx-1 ">
+                      {usertweetscount?.data}
+                    </p>
+                  )}
+                  <p className="text-white/60 text-sm ">Tweets</p>
+
+                </div>
+              </div>
+
             </div>
 
-            <div className=" col-span-18  md:col-span-11 py-8   md:py-0    flex justify-between md:justify-around items-center mx-2">
-              <div className="text-center">
-                <Link to={`/following/${user.id}`}>
-                  {" "}
-                  <p className="text-white/60 text-sm mb-2">Following</p>
-                </Link>
-                {userfollowingloading ? (
-                  <SmallLoader />
-                ) : (
-                  <p className="text-lg font-semibold ">
-                    {userfollower?.data?.length}
-                  </p>
-                )}
-              </div>
-              <div className="text-center">
-                <Link to={`/follower/${user.id}`}>
-                  {" "}
-                  <p className="text-white/60 text-sm mb-2">Followers</p>
-                </Link>
-                {userfollowerloading ? (
-                  <SmallLoader />
-                ) : (
-                  <p className="text-lg font-semibold ">
-                    {userfollowing?.data?.length}
-                  </p>
-                )}
-              </div>
-              <div className="text-center">
-                <p className="text-white/60 text-sm mb-2">Tweets</p>
-                {usertweetloading ? (
-                  <SmallLoader />
-                ) : (
-                  <p className="text-lg font-semibold ">
-                    {usertweetscount?.data}
-                  </p>
-                )}
-              </div>
+            <div className=" col-span-18  md:col-span-10 py-8   md:py-0    flex justify-between md:justify-around items-center mx-2">
+                    <TokenDetail publicKey={user.publicKey as string} />
             </div>
           </div>
 
@@ -167,11 +177,10 @@ const ProfilePage = ({ user }: { user: User }) => {
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={` ${
-                    activeTab === tab
+                  className={` ${activeTab === tab
                       ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
                       : " py-2 text-white/60 hover:text-white   transition-all"
-                  }`}
+                    }`}
                 >
                   {tab}
                 </button>

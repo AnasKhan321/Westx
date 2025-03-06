@@ -20,6 +20,7 @@ import UserReplies from "./UserReplies";
 import { ColorRing } from "react-loader-spinner";
 import { IoCaretBack } from "react-icons/io5";
 import TokenDetail from "./TokenDetail";
+import { useToken } from "../Context/TokenContext";
 
 interface Tweetcounts {
   success: boolean;
@@ -50,6 +51,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  const {handleTokenLaucnh}  = useToken() 
 
   const { data: userfollower, isLoading: userfollowerloading } = useQuery({
     queryKey: [`UserFollower:${profile.username}`],
@@ -110,7 +113,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         queryClient.invalidateQueries({
           queryKey: [`UserFollower:${profile.username}`],
         });
-
+        
         if (following) {
           setfollowings(following + 1);
         }
@@ -186,11 +189,19 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             <IoCaretBack className="cursor-pointer" onClick={handleClick} />
             <span>{profile.name}</span>
           </div>
+
+          <div className="absolute top-4 right-4 flex space-x-2">
+                {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
+                  <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+                    Upgrade
+                  </button>}
+
+              </div>
         </div>
       </div>
 
       <div className="grid grid-cols-18 pb-10 border-b border-white/40 w-[95%]  mx-auto ">
-        <div className="relative flex flex-col  items-start col-span-16  md:col-span-7    -mt-12">
+        <div className="relative flex flex-col  items-start col-span-16  md:col-span-9    -mt-12">
           <img
             src={profile.photoURL as string}
             alt="user"
@@ -205,6 +216,48 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
               • Joined {formatDateTime(profile.createdAt)}
             </span>
           </p>
+
+          <div className="flex justify-around gap-x-2 mt-5 w-[85%]  ">
+                <div className="text-center flex gapx-x-1 w-full   items-center">
+                {userfollowingloading ? (
+                    <SmallLoader />
+                  ) : (
+                    <p className="text-base font-semibold mx-1 ">
+                      {suserfollowing}
+                    </p>
+                  )}
+                  <Link to={`/following/${profile.id}`}>
+                    {" "}
+                    <p className="text-white/60 text-sm ">Following</p>
+                  </Link>
+
+                </div>
+                <div className="text-center flex gapx-x-1 w-full     items-center">
+                {userfollowerloading ? (
+                    <SmallLoader />
+                  ) : (
+                    <p className="text-base font-semibold mx-1 ">
+                      {userfollowing?.data?.length}
+                    </p>
+                  )}
+                  <Link to={`/follower/${profile.id}`}>
+                    {" "}
+                    <p className="text-white/60 text-sm ">Followers</p>
+                  </Link>
+
+                </div>
+                <div className="text-center flex gapx-x-1 w-full     items-center">
+                {usertweetloading ? (
+                    <SmallLoader />
+                  ) : (
+                    <p className="text-base font-semibold mx-1 ">
+                      {usertweetscount?.data}
+                    </p>
+                  )}
+                  <p className="text-white/60 text-sm ">Tweets</p>
+
+                </div>
+              </div>
 
           <div className="flex items-center space-x-4  mt-6  mb-2 ">
             {isFollow ? (
@@ -271,49 +324,17 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           </div>
         </div>
 
-        <div className=" col-span-18 md:col-span-11  mt-10 md:mt-0  flex flex-col  justify-center  ">
+        <div className=" col-span-18 md:col-span-9  mt-10 md:mt-0  flex flex-col  justify-center  ">
 
-          <div className="flex items-center justify-between  md:justify-around  mx-2 ">
-
-            <div className="text-center">
-              <Link to={`/following/${profile.id}`}>
-                {" "}
-                <p className="text-white/60 text-sm mb-2">Following</p>
-              </Link>
-              {userfollowingloading ? (
-                <SmallLoader />
-              ) : (
-                <p className="text-lg font-semibold ">{suserfollowing}</p>
-              )}
-            </div>
-            <div className="text-center">
-              <Link to={`/follower/${profile.id}`}>
-                {" "}
-                <p className="text-white/60 text-sm mb-2">Follower</p>
-              </Link>
-              {userfollowerloading ? (
-                <SmallLoader />
-              ) : (
-                <p className="text-lg font-semibold ">{suserfollower}</p>
-              )}
-            </div>
-            <div className="text-center">
-              <p className="text-white/60 text-sm mb-2">Tweets</p>
-              {usertweetloading ? (
-                <SmallLoader />
-              ) : (
-                <p className="text-lg font-semibold ">{usertweetscount?.data}</p>
-              )}
-            </div>
-          </div>
+        {profile?.isToken &&(
+            <TokenDetail publicKey={profile.publicKey as string} />
+          )}
 
         </div>
       </div>
 
 
-          {profile?.isToken &&(
-            <TokenDetail publicKey={profile.publicKey as string} />
-          )}
+
       <div className="     w-[95%]  mx-auto  mt-4">
         <div className=" w-full  md:w-[50%] flex justify-between   ">
           {tabs.map((tab) => (

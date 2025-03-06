@@ -4,37 +4,37 @@ const API_URL = 'https://believe-in-fun-backend.onrender.com/api';
 
 export const api = {
   
-//   prepareLaunchTransaction: async (formData) => {
-//     try {
-//       const response = await axios.post(
-//         `${API_URL}/transactions/prepare-launch-transaction`, 
-//         formData,
-//         {
-//           headers: {
-//             'Content-Type': 'multipart/form-data'
-//           }
-//         }
-//       );
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error preparing launch transaction:', error);
-//       throw error;
-//     }
-//   },
+  prepareLaunchTransaction: async (formData: FormData) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/transactions/prepare-launch-transaction`, 
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error preparing launch transaction:', error);
+      throw error;
+    }
+  },
   
-//   confirmTokenCreation: async (tokenMint, transactionSignature, tokenDetails) => {
-//     try {
-//       const response = await axios.post(`${API_URL}/transactions/confirm-token-creation`, {
-//         tokenMint,
-//         transactionSignature,
-//         tokenDetails
-//       });
-//       return response.data;
-//     } catch (error) {
-//       console.error('Error confirming token creation:', error);
-//       throw error;
-//     }
-//   },
+  confirmTokenCreation: async (tokenMint: string, transactionSignature: string, tokenDetails: any) => {
+    try {
+      const response = await axios.post(`${API_URL}/transactions/confirm-token-creation`, {
+        tokenMint,
+        transactionSignature,
+        tokenDetails
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error confirming token creation:', error);
+      throw error;
+    }
+  },
   
   prepareBuyTransaction: async (tokenMint: string, amount: number, minReceive: number, publicKey: string) => {
     try {

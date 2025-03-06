@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  width: 1px;  /* Adjust the width of the scrollbar */
-  height: 1px; /* For horizontal scrollbars */
+  width: 0px;  /* Adjust the width of the scrollbar */
+  height: 0px; /* For horizontal scrollbars */
 }
 
 /* Style the scrollbar track (the background area) */

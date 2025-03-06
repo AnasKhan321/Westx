@@ -7,12 +7,13 @@ import { api } from '../utils/api';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { PublicKey } from '@solana/web3.js';
+import { PublicKey  , Keypair } from '@solana/web3.js';
+import axios from 'axios';
 interface TokenContextType {
   handlebuy: (token: string) => void
   handleSell: (token: string) => void
-  handleTokenLaucnh: (name: string, image: string) => void
-  isChecking : boolean
+  handleTokenLaucnh: (name: string, image: string ,username : string) => void
+  isChecking: boolean
 }
 
 interface TokenProviderProps {
@@ -33,7 +34,7 @@ const convertImageUrlToFile = async (imageUrl: string, fileName: string): Promis
     // Fetch the image
     const response = await fetch(imageUrl);
     const blob = await response.blob();
-    
+
     // Create a File from the blob
     const file = new File([blob], fileName, { type: blob.type });
     return file;
@@ -71,6 +72,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const [tokenSymbol, settokenSymbol] = useState("")
   const [tokenDescription, settokenDescription] = useState("")
   const [isChecking, setisChecking] = useState(false)
+  const [isLaunching, setisLaunching] = useState(false)
+  const [username, setusername] = useState("")
 
   const onClose = () => {
     setIsOpen(false)
@@ -123,7 +126,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
           selectedtoken,
           signature
         );
-        if(!confirmResponse.success){
+        if (!confirmResponse.success) {
           throw new Error(confirmResponse.error)
         }
         setIsBuyOpen(false)
@@ -231,7 +234,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
         selectedtoken,
         signature
       );
-      if(!confirmResponse.success){
+      if (!confirmResponse.success) {
         throw new Error(confirmResponse.error)
       }
       setIsSelling(false)
@@ -244,7 +247,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
   }
 
 
-  const handleTokenLaucnh = async (name: string, image: string) => {
+  const handleTokenLaucnh = async (name: string, image: string  ,username : string) => {
     if (!publicKey) {
       setIsOpen(true)
       toast.error("Please connect your wallet")
@@ -252,33 +255,92 @@ export function TokenProvider({ children }: TokenProviderProps) {
       setIsTokenLaucnhOpen(true)
       settokename(name)
       settokenimage(image)
+      setusername(username)
     }
   }
 
 
   const confirmTokenLaucnh = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(tokenname, tokenSymbol, tokenDescription, tokenimage)
+    try {
+      setisLaunching(true)
+      let newdata = new FormData()
+      newdata.append("name", tokenname)
+      newdata.append("symbol", tokenSymbol)
+      newdata.append("description", tokenDescription)
+      if (typeof tokenimage === 'string' && tokenimage.startsWith('http')) {
+        const fileName = `${tokenSymbol}_token.${tokenimage.split('.').pop()}`;
+        const imageFile = await convertImageUrlToFile(tokenimage, fileName);
+        newdata.append('image', imageFile);
+      } else {
+        newdata.append('image', tokenimage);
+      }
 
-    let newdata = new FormData()
-    newdata.append("name", tokenname)
-    newdata.append("symbol", tokenSymbol)
-    newdata.append("description", tokenDescription)
-    if (typeof tokenimage === 'string' && tokenimage.startsWith('http')) {
-      const fileName = `${tokenSymbol}_token.${tokenimage.split('.').pop()}`;
-      const imageFile = await convertImageUrlToFile(tokenimage, fileName);
-      newdata.append('image', imageFile);
-  } else {
-      // If image is already a File object, append directly
-      newdata.append('image', tokenimage);
-  }
+      newdata.append("publicKey", publicKey?.toString() as string)
 
-    
-    
+      const prepareResponse = await api.prepareLaunchTransaction(newdata)
+      if (!prepareResponse.success) {
+        throw new Error(prepareResponse.error)
+      }
+
+      const {  serializedTransaction, tokenMint, tokenDetails } = prepareResponse.data;
+      
+
+      const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
+
+      const { blockhash } = await connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+
+      const tokenMintKeypair = Keypair.fromSecretKey(new Uint8Array(tokenMint.secretKey));
+      transaction.partialSign(tokenMintKeypair);
+
+      if(signTransaction){
+        const signedTransaction = await signTransaction(transaction);
+        const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+        await connection.confirmTransaction(signature);
+
+        const confirmResponse = await api.confirmTokenCreation(
+            tokenMint.publicKey,
+            signature,
+            tokenDetails
+          );
+
+          if(!confirmResponse.success){
+            throw new Error(confirmResponse.error)
+          }
+          console.log(tokenMint.publicKey)
+
+          const {data }  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/updateUser`,{
+            publicKey : tokenMint.publicKey,
+            username : username
+          })
+
+          if(!data.success){
+            throw new Error("issues in updating publicKey in database")
+          }
+
+          toast.success("Token Launched Successfully")
+          setIsTokenLaucnhOpen(false)
+          setisLaunching(false)
+          
+        
+      }
+
+      setisLaunching(false)
+
+      
+
+    } catch (error) {
+      toast.error("Something went wrong")
+    }
+
+
+
+
   }
 
   return (
-    <TokenContext.Provider value={{ handlebuy, handleSell, handleTokenLaucnh  , isChecking }}>
+    <TokenContext.Provider value={{ handlebuy, handleSell, handleTokenLaucnh, isChecking }}>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center  justify-center ">
           <div
@@ -454,7 +516,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <textarea required name="desc" id="desc" value={tokenDescription} onChange={(e) => settokenDescription(e.target.value)} className='p-2 text-white rounded-md bg-primaryColor' ></textarea>
               </div>
 
-              <button type='submit' className='w-full p-2 text-white rounded-md bg-purple-500  mt-5'>Launch Token</button>
+              <button type='submit' disabled={isLaunching} className={` w-full p-2 text-white rounded-md bg-purple-500  mt-5 ${isLaunching ? "opacity-50 cursor-not-allowed" : ""}`} > {isLaunching ? "Launching..." : "Launch Token"}</button>
 
 
             </form>
