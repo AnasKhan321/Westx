@@ -201,7 +201,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       </div>
 
       <div className="grid grid-cols-18 pb-10 border-b border-white/40 w-[95%]  mx-auto ">
-        <div className="relative flex flex-col  items-start col-span-16  md:col-span-9    -mt-12">
+        <div className="relative flex flex-col  items-start col-span-16  md:col-span-8    -mt-12">
           <img
             src={profile.photoURL as string}
             alt="user"
@@ -324,7 +324,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           </div>
         </div>
 
-        <div className=" col-span-18 md:col-span-9  mt-10 md:mt-0  flex flex-col  justify-center  ">
+        <div className=" col-span-18 md:col-span-10  mt-10 md:mt-0  flex flex-col  justify-center  ">
 
         {profile?.isToken &&(
             <TokenDetail publicKey={profile.publicKey as string} />
