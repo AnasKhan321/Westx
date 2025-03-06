@@ -41,7 +41,7 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
        
             </div>
 
-            <div className="flex gap-x-10 items-center w-[95%]   md:w-[80%] justify-around">
+            <div className="flex gap-x-10 items-center w-[95%]   md:w-[95%] justify-around">
                 <div className="flex  gap-1 items-center w-[50%]">
                 <p className=" font-bold">${(Number(data?.market_cap) / Number(data?.totalSupply))
                         .toFixed(9)
