@@ -60,7 +60,7 @@ export const DynamicText: React.FC<DynamicTextProps> = ({ text, postedBy }) => {
       )}
       {postedBy === 'assistant' && (
         <span className='postedBy' title='AI Generated'>
-          AI
+    
         </span>
       )}
     </div>
