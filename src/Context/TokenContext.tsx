@@ -204,10 +204,10 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const confirmSell = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSelling(true)
-
+    let intNum = Math.floor(sellToken); 
     const prepareResponse = await api.prepareSellTransaction(
       selectedtoken,
-      sellToken,
+      intNum,
       0,
       publicKey?.toString() as string
     );
@@ -342,12 +342,12 @@ export function TokenProvider({ children }: TokenProviderProps) {
   return (
     <TokenContext.Provider value={{ handlebuy, handleSell, handleTokenLaucnh, isChecking }}>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center  justify-center ">
+        <div className="fixed inset-0 z-50 flex items-center   justify-center ">
           <div
             className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
             onClick={onClose}
           />
-          <div className="relative z-50 w-[95%] max-w-md rounded-lg bg-secondaryColor flex items-center justify-center p-6 shadow-xl">
+          <div className="relative z-50 w-[95%] max-w-md h-[200px] rounded-lg bg-secondaryColor flex items-center justify-center p-6 shadow-xl">
             <button
               onClick={onClose}
               className="absolute right-4 top-4 text-gray-400 hover:text-gray-600"
@@ -413,7 +413,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <label className='text-white' htmlFor="amount">Minimum Token to Receive </label>
                 <input value={buytoken} onChange={(e) => setBuyToken(parseInt(e.target.value))} type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
-              <button type='submit' className={`w-full p-2 text-white rounded-md bg-purple-500  mt-5 ${isBuying ? "opacity-50 cursor-not-allowed" : ""}`}> {isBuying ? "Purchasing..." : "Confirm Buy"} </button>
+              <button type='submit' className={`w-full p-2 text-white rounded-md bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br   mt-5 ${isBuying ? "opacity-50 cursor-not-allowed" : ""}`}> {isBuying ? "Purchasing..." : "Confirm Buy"} </button>
             </form>
 
           </div>
@@ -461,9 +461,18 @@ export function TokenProvider({ children }: TokenProviderProps) {
                   min="0.000000001" id="amount" value={sellAmount} onChange={(e) => setSellAmount(parseFloat(e.target.value))} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
 
+              <div className='flex  gap-2'>
+                <div onClick={() => setSellToken(0)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>Reset</div>
+                <div onClick={() => setSellToken(selltokendata?.balance as number * 0.25)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
+                <div onClick={() => setSellToken(selltokendata?.balance as number * 0.5)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
+                <div onClick={() => setSellToken(selltokendata?.balance as number * 0.75)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
+                <div onClick={() => setSellToken(selltokendata?.balance as number)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
+
+              </div>
+
 
               <button type='submit'
-                className={`w-full p-2 text-white rounded-md bg-purple-500  mt-5 ${isSelling ? "opacity-50 cursor-not-allowed" : ""}`}> {isSelling ? "Selling..." : "Confirm Sell"} </button>
+                className={`w-full p-2 text-white rounded-md bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br   mt-5 ${isSelling ? "opacity-50 cursor-not-allowed" : ""}`}> {isSelling ? "Selling..." : "Confirm Sell"} </button>
             </form>
 
           </div>
@@ -516,7 +525,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <textarea required name="desc" id="desc" value={tokenDescription} onChange={(e) => settokenDescription(e.target.value)} className='p-2 text-white rounded-md bg-primaryColor' ></textarea>
               </div>
 
-              <button type='submit' disabled={isLaunching} className={` w-full p-2 text-white rounded-md bg-purple-500  mt-5 ${isLaunching ? "opacity-50 cursor-not-allowed" : ""}`} > {isLaunching ? "Launching..." : "Launch Token"}</button>
+              <button type='submit' disabled={isLaunching} className={` w-full p-2 text-white rounded-md bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br  mt-5 ${isLaunching ? "opacity-50 cursor-not-allowed" : ""}`} > {isLaunching ? "Launching..." : "Launch Token"}</button>
 
 
             </form>

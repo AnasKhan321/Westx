@@ -37,7 +37,7 @@ const Reply2: React.FC<ReplyProps> = ({ name, username, content  , photoURL  , c
           </div>
 
           {/* Content */}
-         <Link to={`/reply/${replyid}`}>  <p className=" text-sm md:text-base text-white mt-1">{content}</p> </Link>
+         <Link to={`/tweet/${replyid}`}>  <p className=" text-sm md:text-base text-white mt-1">{content}</p> </Link>
 
 
         </div>
