@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://believe-in-fun-backend.onrender.com/api';
+const API_URL = 'https://believe-in-fun-backend-production.up.railway.app/api';
 
 export const api = {
   

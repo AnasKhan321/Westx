@@ -7,7 +7,7 @@ import { useToken } from "../Context/TokenContext";
 
 
 const getTokenDetail = async (publicKey: string): Promise<Token> => {
-    const { data } = await axios.get<Token>(`https://believe-in-fun-backend.onrender.com/api/tokens/mint/${publicKey}`)
+    const { data } = await axios.get<Token>(`https://believe-in-fun-backend-production.up.railway.app/api/tokens/mint/${publicKey}`)
     return data;
 }
 
