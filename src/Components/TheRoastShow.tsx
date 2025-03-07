@@ -12,9 +12,11 @@ const RoastShow = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("vote");
   const navigate = useNavigate() ; 
+
   const handleClick = ()=>{
     navigate(-1);
   }
+
   return (
     <div className="md:min-h-[96vh] md:my-[2vh] w-full md:rounded-xl border-white/20 border  bg-primaryColor md:bg-secondaryColor text-white  max-w-full min-w-full max-h-screen">
 
@@ -30,6 +32,7 @@ const RoastShow = () => {
       {user1 == null && (
         <Waiting/> 
       )}
+
 
       {live && (
         <>

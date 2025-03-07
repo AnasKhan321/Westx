@@ -16,7 +16,8 @@ interface SocketContextType {
   chats : Chats[];
   user1loading : boolean , 
   user2loading : boolean
-
+  user1Percentage : number ,  
+  user2Percentage : number ,  
 }
 
 
@@ -36,6 +37,9 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const [user1loading , setuser1loading]  = useState(false)
   const [user2loading , setuser2loading]  = useState(false)
+
+  const [user1Percentage , setuser1Percentage] = useState(0)
+  const [user2Percentage , setuser2Percentage] = useState(0)
 
 
   useEffect(() => {
@@ -76,6 +80,11 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           setlive(true)
       })
 
+      socket.on("ROASTSHOW:VOTES"  , (data)=>{
+        console.log(data);
+        setuser1Percentage(data.user1percentage)
+        setuser2Percentage(data.user2percentage)
+      })
       socket.on("END:SHOW"  , ()=>{
     
         setuser1loading(false)
@@ -104,7 +113,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     };
   }, []);
 
-  return <SocketContext.Provider value={{ socket  , user1 , user1loading , user2  , user2loading , chats , live }}>{children}</SocketContext.Provider>;
+  return <SocketContext.Provider value={{ socket  , user1 , user1loading , user2  , user2loading , chats , live , user1Percentage , user2Percentage }}>{children}</SocketContext.Provider>;
 };
 
 export const useSocket = () => {

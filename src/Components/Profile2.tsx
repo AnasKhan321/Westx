@@ -167,7 +167,7 @@ const ProfilePage = ({ user }: { user: User }) => {
             </div>
 
             <div className=" col-span-18  md:col-span-10 py-8   md:py-0    flex justify-between md:justify-around items-center mx-2">
-                    <TokenDetail publicKey={user.publicKey as string} />
+              {user.isToken && <TokenDetail publicKey={user.publicKey as string} />}
             </div>
           </div>
 

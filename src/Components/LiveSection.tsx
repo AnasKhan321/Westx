@@ -1,11 +1,31 @@
 import { useState } from "react";
 import { useSocket } from "../Context/SocketContext";
+import { useAuth } from "../Context/AuthContext";
 
 export default function LiveSection() {
   const [selectedCandidate, setSelectedCandidate] = useState<string | null>(
     null
   );
-  const { user1, user2 } = useSocket();
+  const { user1, user2 , socket , user1Percentage , user2Percentage } = useSocket();
+  const {user} = useAuth();
+
+  const handleCandidate = (candidate: string) => {
+    setSelectedCandidate(candidate);
+
+   if(candidate === user1?.name){
+    socket?.emit("vote", {
+      candidate: "user1",
+      username: user?.username,
+    });
+   }else{
+    socket?.emit("vote", {
+      candidate: "user2",
+      username: user?.username,
+
+    });
+   }
+  }
+
 
   return (
     <div className=" bg-secondaryColor border border-white/20   text-white p-6 rounded-xl shadow-md">
@@ -20,7 +40,7 @@ export default function LiveSection() {
               ? "border-blue-500"
               : "border-white/20"
           }`}
-          onClick={() => setSelectedCandidate(user1?.name as string)}
+          onClick={()=>{handleCandidate(user1?.name as string)}}
         >
           <img
             src={user1?.photoURL}
@@ -34,6 +54,7 @@ export default function LiveSection() {
               )}
             </div>
             <span className="text-sm py-4 ">{user1?.name}</span>
+       
           </div>
         </label>
 
@@ -44,8 +65,10 @@ export default function LiveSection() {
               ? "border-blue-500"
               : "border-white/20"
           }`}
-          onClick={() => setSelectedCandidate(user2?.name as string)}
+          onClick={()=>{handleCandidate(user2?.name as string)}}
         >
+
+
           <img
             src={user2?.photoURL}
             alt={user2?.name}
@@ -60,20 +83,17 @@ export default function LiveSection() {
             <span className="text-sm py-4 ">{user2?.name}</span>
           </div>
         </label>
+
       </div>
 
-      {/* Reactions Section */}
-      <h2 className="text-lg font-semibold mt-6 mb-3">Reactions</h2>
-      <div className="grid grid-cols-4 gap-4">
-        {["🔥", "😂", "😢", "😠", "🎉", "💀", "😭", "+"].map((emoji, index) => (
-          <button
-            key={index}
-            className="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center text-2xl shadow-md hover:bg-gray-700"
-          >
-            {emoji}
-          </button>
-        ))}
+      <div className="animate-pulse  text-white/50 text-center my-5 ">
+              <span>Voting is live</span>
       </div>
+      <div className="w-full  mx-auto flex justify-between mt-5">
+        <div className={`bg-gradient-to-r from-red-500 via-red-600 to-red-700 rounded-l-full text-center  p-2 transition-all duration-300  w-[${user1Percentage}%]`}>{ user1Percentage}%</div>
+        <div className={`bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700  rounded-r-full text-center  p-2 transition-all duration-300  w-[${user2Percentage}%]`}>{user2Percentage}%</div>
+      </div>
+     
     </div>
   );
 }
