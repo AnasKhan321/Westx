@@ -46,12 +46,12 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
         queryFn: () => getTokenDetail(publicKey)
     })
 
-    const {data : marketcapdata , isLoading : marketcaploading , isError : marketcaperror} = useQuery({
+    const {data : marketcapdata , isLoading : marketcaploading } = useQuery({
         queryKey: [`marketcap-${publicKey}`],
         queryFn: () => getMarketCap(publicKey)  , 
     })
 
-    const {data : tokenprice , isLoading : tokenpriceloading , isError : tokenpriceerror} = useQuery({
+    const {data : tokenprice , isLoading : tokenpriceloading } = useQuery({
         queryKey: [`tokenprice-${publicKey}`],
         queryFn: () => getTokenPrice(publicKey)  , 
     })
@@ -76,16 +76,28 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
 
             <div className="flex gap-x-10 items-center w-[95%]   md:w-[80%] justify-around">
                 <div className="flex  gap-1 items-center w-[50%]">
-                <p className=" font-bold">${tokenprice?.price.toFixed(9)
+                {!tokenpriceloading && 
+                <div className="flex gap-1 items-center ">
+          <p className=" font-bold">${tokenprice?.price.toFixed(9)
                         .replace(/\.?0+$/, '')}  
                     </p>
                     <p className="text-white/50  "> TokenPrice</p>
+                    </div>
+      
+          }
 
+          {tokenpriceloading && <SmallLoader />}
                 </div>
 
                 <div className="flex  gap-1 items-center w-[50%]">
-                <p className=" font-bold">  {marketcapdata?.marketCap as number/ LAMPORTS_PER_SOL} SOL  </p>
-                    <p className="text-white/50 text-sm  ">MK</p>
+                    {!marketcaploading && 
+                    <div className="flex gap-1 items-center ">
+ <p className=" font-bold">  {marketcapdata?.marketCap as number/ LAMPORTS_PER_SOL} SOL  </p>
+ <p className="text-white/50 text-sm  ">MK</p>
+                    </div>
+               }
+
+               {marketcaploading && <SmallLoader />}
 
                 </div>
 
