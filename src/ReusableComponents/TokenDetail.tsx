@@ -45,9 +45,9 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
     })
 
     if(marketcaploading || tokenpriceloading){
-        return 
-            <SmallLoader />
-
+        return <div className="w-full mx-auto py-8  mt-4 rounded-lg text-center ">
+            <SmallLoader  />
+        </div>
     }
 
 
@@ -69,7 +69,7 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
                         .replace(/\.?0+$/, '')}  
                     </p>
                     <p className="text-white/50  "> TokenPrice</p>
-                    </div>
+                     </div>
       
           }
 
