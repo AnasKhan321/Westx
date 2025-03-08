@@ -45,9 +45,13 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
     })
 
     if(marketcaploading || tokenpriceloading){
-        return <div className="w-full mx-auto py-8  mt-4 rounded-lg text-center ">
-            <SmallLoader  />
-        </div>
+        return <div className="w-full mx-auto bg-gray-700 h-[120px]  animate-pulse border border-white/40 py-8  mt-4 rounded-lg ">
+
+
+
+
+
+    </div>;
     }
 
 
@@ -56,8 +60,8 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
 
 
         <div className="flex gap-x-10 items-center flex-col">
-            <div className="text-white/50 mb-6 text-lg italic  ">
-
+            <div className="text-white/50 mb-6 text-lg italic  w-[80%] ">
+You can now even buy the token of Persona Now
        
             </div>
 

@@ -4,8 +4,8 @@ import { getUserFollowing } from "../utils/apicalls"
 import Loader from "../ReusableComponents/Loader"
 import { IoCaretBack } from "react-icons/io5"
 import { Suspense } from "react"
-import SmallLoader from "../ReusableComponents/SmallLoader"
 import React from "react"
+import PersonaLoading from "../ReusableComponents/PersonaLoading"
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 
 
@@ -47,7 +47,7 @@ const Following = () => {
             </>
           )}
           {data?.data?.map((user, index) => {
-            return <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={user.following}  /></Suspense>;
+            return <Suspense key={index} fallback={<PersonaLoading/>}> <UserCard user={user.following}  /></Suspense>;
           })}
         </div>
       )}

@@ -2,11 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserFollower } from "../utils/apicalls";
 import Loader from "../ReusableComponents/Loader";
-
-
 import { IoCaretBack } from "react-icons/io5";
 import React, { Suspense } from "react";
-import SmallLoader from "../ReusableComponents/SmallLoader";
+import PersonaLoading from "../ReusableComponents/PersonaLoading";
 
 
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
@@ -50,7 +48,7 @@ const Follower = () => {
 
                 
               
-              return         <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={user.follower}  /></Suspense>;
+              return         <Suspense key={index} fallback={<PersonaLoading/>}> <UserCard user={user.follower}  /></Suspense>;
             })}
           </div>
         )}

@@ -2,7 +2,6 @@ import Timer from '../ReusableComponents/Timer'
 import axios from 'axios'
 import { User } from '../utils/type'
 import { useQuery } from '@tanstack/react-query'
-import SmallLoader from '../ReusableComponents/SmallLoader'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -50,7 +49,10 @@ const Waiting = () => {
     <div className=' w-[96%] md:w-[95%]  mx-auto  mt-10 '>
         <h2 className='font-bold text-base md:text-xl '>Previous Show </h2>
 
-    {isLoading && <SmallLoader/> }
+    {isLoading && <Loading/> }
+
+
+
 
     {data?.success &&
     <Link to={`/roastshow/previous`}>
@@ -86,6 +88,31 @@ const Waiting = () => {
   )
 }
 
+
+const Loading = ()=>{
+  return(
+    <div className='grid grid-cols-14 m-4' >
+
+      <div className='col-span-2 bg-gray-700 h-20 rounded-sm animate-pulse' >
+   
+      </div>
+
+      <div className='col-span-10  h-20 ml-2  mt-2  ' >
+        <div className='flex flex-col space-y-2 '>
+          <div className='bg-gray-700 h-4 rounded-sm animate-pulse w-[50%]'></div>
+          <div className='bg-gray-700 h-4 rounded-sm animate-pulse w-[35%]'></div>
+        </div>
+      </div>
+
+
+
+      <div className='col-span-2 bg-gray-700 h-8 mt-4  animate-pulse rounded-full' >
+   
+      </div>
+
+    </div>
+  )
+}
 
 
 const TimeSince8PM: React.FC = () => {

@@ -30,6 +30,8 @@ import { TokenProvider } from "./Context/TokenContext";
 import { ConnectionProvider } from '@solana/wallet-adapter-react'
 import { WalletProvider } from "@solana/wallet-adapter-react";
 import '@solana/wallet-adapter-react-ui/styles.css';
+import PrivacyPolicy from "./Components/PrivacyPolicy";
+import CookiePolicy from "./Components/CookiePolicy";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +77,16 @@ function AppRoutes() {
               path="/tweet/:id"
               element={<TweetDetail />}
               key={"TweetDetail"}
+            />
+            <Route
+              path="/cookie-policy"
+              element={<CookiePolicy />}
+              key={"CookiePolicy"}
+            />
+            <Route
+              path="/privacy-policy"
+              element={<PrivacyPolicy />}
+              key={"PrivacyPolicy"}
             />
             <Route
               path="/roastshow"

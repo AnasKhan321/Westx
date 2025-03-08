@@ -5,7 +5,7 @@ import Loader from "../ReusableComponents/Loader";
 
 import { IoCaretBack } from "react-icons/io5";
 import React, { Suspense } from "react";
-import SmallLoader from "../ReusableComponents/SmallLoader";
+import PersonaLoading from "../ReusableComponents/PersonaLoading";
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 const Explores = () => {
   const { query } = useParams();
@@ -47,7 +47,7 @@ const Explores = () => {
                 </div>
               )}
               {data.data.map((user, index) => {
-                return     <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={user}  /></Suspense>;
+                return     <Suspense key={index} fallback={<PersonaLoading/>}> <UserCard user={user}  /></Suspense>;
               })}
           </div>
           )}

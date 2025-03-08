@@ -6,9 +6,8 @@ import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
-import SmallLoader from "../ReusableComponents/SmallLoader";
 import React from "react";
-
+import PersonaLoading from "../ReusableComponents/PersonaLoading";
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 
 
@@ -48,7 +47,7 @@ export default function Peoples(){
                 {user?.username === userd.username? ( <div> </div> )  : (
 
                     <>
-                    <Suspense key={index} fallback={<SmallLoader/>}> <UserCard user={userd}  /></Suspense>
+                    <Suspense key={index} fallback={<PersonaLoading/>}> <UserCard user={userd}  /></Suspense>
                     </>
                 )}
              
