@@ -81,7 +81,7 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       })
 
       socket.on("ROASTSHOW:VOTES"  , (data)=>{
-        console.log(data);
+        
         setuser1Percentage(data.user1percentage)
         setuser2Percentage(data.user2percentage)
       })

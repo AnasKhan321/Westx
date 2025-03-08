@@ -20,13 +20,11 @@ interface TokenPrice {
 
 const getMarketCap = async (publicKey: string) : Promise<MarketCap> => {
     const { data } = await axios.get<MarketCap>(`https://believe-in-fun-backend-production.up.railway.app/api/tokens/marketcap/${publicKey}`)
-    console.log(data)
     return data ; 
 }
 
 const getTokenPrice = async (publicKey: string) : Promise<TokenPrice> => {
     const { data } = await axios.get<TokenPrice>(`https://believe-in-fun-backend-production.up.railway.app/api/tokens/price/${publicKey}`)
-    console.log(data)
     return data ; 
 }
 

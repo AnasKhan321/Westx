@@ -308,7 +308,6 @@ export function TokenProvider({ children }: TokenProviderProps) {
           if(!confirmResponse.success){
             throw new Error(confirmResponse.error)
           }
-          console.log(tokenMint.publicKey)
 
           const {data }  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/updateUser`,{
             publicKey : tokenMint.publicKey,
