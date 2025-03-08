@@ -82,8 +82,8 @@ function BookMarks() {
   if (status === "error") return <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
   if (status == "pending")
     return (
-      <div className="w-full min-h-[96vh] max-h-[96vh] overflow-y-scroll my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
-        <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl  z-10    bg-secondaryColor w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
+      <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
+        <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl  z-10   bg-primaryColor md:bg-secondaryColor w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
           <IoCaretBack
             className="text-xl cursor-pointer"
             onClick={handleClick}
@@ -113,7 +113,7 @@ function BookMarks() {
         <div className=" mt-12">
           {data?.pages?.length === 0 ||
           data?.pages?.every((page) => page?.data?.length === 0) ? (
-            <p className="text-center text-gray-200 my-4 font-bold text-xl  ">
+            <p className="text-center text-gray-200 mt-10 font-bold text-xl  ">
               No BookMarks to show.
             </p>
           ) : (
