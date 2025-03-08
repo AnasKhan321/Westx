@@ -113,7 +113,7 @@ function BookMarks() {
         <div className=" mt-12">
           {data?.pages?.length === 0 ||
           data?.pages?.every((page) => page?.data?.length === 0) ? (
-            <p className="text-center text-gray-200 mt-10 font-bold text-xl  ">
+            <p className="text-center text-gray-200 mt-16 font-bold text-xl  ">
               No BookMarks to show.
             </p>
           ) : (
