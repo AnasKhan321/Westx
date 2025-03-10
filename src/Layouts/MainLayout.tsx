@@ -1,9 +1,9 @@
 import Sidebar from "../ReusableComponents/SideBar";
 import RightSidebar from "../Components/Explore";
 import HorizontalBar from "../ReusableComponents/HorizontalBar";
-import { Link, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import { useSocket } from "../Context/SocketContext";
-import { BsFire } from "react-icons/bs";
+// import { BsFire } from "react-icons/bs";
 export default function MainLayout({
   children,
 }: {
