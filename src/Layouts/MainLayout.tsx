@@ -19,11 +19,11 @@ export default function MainLayout({
 
       <div className=" col-span-14  md:col-span-7  bg-primaryColor  min-h-screen max-h-screen overflow-y-scroll scroll-smooth">
         {children}
-        <Link to={"/roastshow"}>
+        {/* <Link to={"/roastshow"}>
           <div className=" block md:hidden fixed  bg-white p-2  rounded-full top-[75vh] right-[30px]">
             <BsFire size={30} className="text-black" />
           </div>{" "}
-        </Link>
+        </Link> */}
 
         {!(location.pathname === "/roastshow" && live) ? (
           <div className="block h-[8vh]  md:hidden w-full  fixed bottom-0  ">

@@ -118,11 +118,11 @@ function Tweets() {
 
       {isFetchingNextPage && (
 
-        <div className=" flex justify-center items-start h-[10vh] ">
+        <div className=" flex justify-center items-start h-[14vh] ">
           <ColorRing
             visible={true}
-            height="30"
-            width="30"
+            height="40"
+            width="40"
             ariaLabel="color-ring-loading"
             wrapperStyle={{}}
             wrapperClass="color-ring-wrapper"
