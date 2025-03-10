@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { auth, twitterProvider } from "../firebaseF/firebaseConfig";
 import { User } from "../utils/type";
 import { ColorRing } from "react-loader-spinner";
+import toast from "react-hot-toast";
 
 function removeSize(url: string): string {
   return url.replace(/_\w+\./g, ".");
@@ -19,7 +20,7 @@ interface AuthContextType {
   handleLogout: () => void;
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  islogin : boolean 
+  islogin: boolean
 }
 
 // Create the context with a default value of undefined
@@ -35,39 +36,38 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate(); 
-  const [islogin  , setislogin ]  = useState(false)
+  const navigate = useNavigate();
+  const [islogin, setislogin] = useState(false)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-    		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const  user : any = currentUser
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const user: any = currentUser
       if (currentUser) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const res = await fetch(
-          `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/v2/${
-            user.reloadUserInfo.screenName
+          `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getUser/v2/${user.reloadUserInfo.screenName
           }`
         );
         const data = await res.json();
-        if(data.success){
+        if (data.success) {
 
           setUser(data.data);
           setIsLoading(false);
-          if(isLoading == false){
+          if (isLoading == false) {
             navigate("/")
           }
-        }else{
-          setIsLoading(false); 
+        } else {
+          setIsLoading(false);
           navigate("/login")
         }
 
-        
 
-     
-       
+
+
+
       } else {
-        setIsLoading(false); 
-        navigate("/login"); 
+        setIsLoading(false);
+        navigate("/login");
       }
     });
     return () => unsubscribe();
@@ -75,15 +75,15 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   const handleTwitterLogin = async () => {
     try {
-          		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result : any  = await signInWithPopup(auth, twitterProvider);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const result: any = await signInWithPopup(auth, twitterProvider);
       const creds = TwitterAuthProvider.credentialFromResult(result);
 
-    		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const signedUser = JSON.parse(
         result?._tokenResponse?.rawUserInfo ?? "{}"
       );
-   
+
       const userData = {
         interests: "",
         theme: "light",
@@ -128,10 +128,11 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       setUser(d.user);
       setislogin(false)
 
-      if(islogin == false){
+      if (islogin == false) {
         navigate("/")
       }
     } catch (error) {
+      toast.error("Please try again ");
       console.error("Error during Twitter login:", error);
     }
   };
@@ -161,7 +162,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
           ariaLabel="color-ring-loading"
           wrapperStyle={{}}
           wrapperClass="color-ring-wrapper"
-          colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
+          colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
         />
       </div>
     );
@@ -169,7 +170,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   return (
     <AuthContext.Provider
-      value={{ handleTwitterLogin, handleLogout, user, setUser   , islogin}}
+      value={{ handleTwitterLogin, handleLogout, user, setUser, islogin }}
     >
       {children}
     </AuthContext.Provider>
