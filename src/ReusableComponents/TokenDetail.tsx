@@ -19,12 +19,12 @@ interface TokenPrice {
 }
 
 const getMarketCap = async (publicKey: string) : Promise<MarketCap> => {
-    const { data } = await axios.get<MarketCap>(`https://believe-in-fun-backend-production.up.railway.app/api/tokens/marketcap/${publicKey}`)
+    const { data } = await axios.get<MarketCap>(`https://domestic-ynez-persist-81871a00.koyeb.app/api/tokens/marketcap/${publicKey}`)
     return data ; 
 }
 
 const getTokenPrice = async (publicKey: string) : Promise<TokenPrice> => {
-    const { data } = await axios.get<TokenPrice>(`https://believe-in-fun-backend-production.up.railway.app/api/tokens/price/${publicKey}`)
+    const { data } = await axios.get<TokenPrice>(`https://domestic-ynez-persist-81871a00.koyeb.app/api/tokens/price/${publicKey}`)
     return data ; 
 }
 

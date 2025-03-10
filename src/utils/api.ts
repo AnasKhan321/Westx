@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://believe-in-fun-backend-production.up.railway.app/api';
+const API_URL = 'https://domestic-ynez-persist-81871a00.koyeb.app/api';
 
 export const api = {
   
