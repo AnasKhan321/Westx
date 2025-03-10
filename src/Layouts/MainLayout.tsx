@@ -20,7 +20,7 @@ export default function MainLayout({
       <div className=" col-span-14  md:col-span-7  bg-primaryColor  min-h-screen max-h-screen overflow-y-scroll scroll-smooth">
         {children}
         <Link to={"/roastshow"}>
-          <div className=" block md:hidden absolute  bg-white p-2  rounded-full top-[85vh] right-[30px]">
+          <div className=" block md:hidden fixed  bg-white p-2  rounded-full top-[75vh] right-[30px]">
             <BsFire size={30} className="text-black" />
           </div>{" "}
         </Link>
