@@ -2,11 +2,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { Suspense, useEffect, useRef } from "react";
 import { BookMark } from "../utils/type";
-import SmallLoader from "../ReusableComponents/SmallLoader";
 import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
+import { ColorRing } from "react-loader-spinner";
 const TweetCardBookmark = React.lazy(
   () => import("../ReusableComponents/TweetCardBookmark")
 );
@@ -24,8 +24,7 @@ const fetchBookMarks = async ({
   userid: string | undefined;
 }) => {
   const { data } = await axios.get<BookMarkResponse>(
-    `${
-      import.meta.env.VITE_PUBLIC_AI_URL
+    `${import.meta.env.VITE_PUBLIC_AI_URL
     }/api/user/bookmark/${userid}/${pageParam}`
   );
 
@@ -91,8 +90,8 @@ function BookMarks() {
           <span>BookMarks</span>
         </div>
         <div className="mt-6"></div>
-        <TweetSkeleton/>
-        
+        <TweetSkeleton />
+
       </div>
     );
 
@@ -112,7 +111,7 @@ function BookMarks() {
 
         <div className=" mt-12">
           {data?.pages?.length === 0 ||
-          data?.pages?.every((page) => page?.data?.length === 0) ? (
+            data?.pages?.every((page) => page?.data?.length === 0) ? (
             <p className="text-center text-gray-200 mt-16 font-bold text-xl  ">
               No BookMarks to show.
             </p>
@@ -140,9 +139,20 @@ function BookMarks() {
         <div ref={bottomRef} className="h-10" />
 
         {isFetchingNextPage && (
-          <div className="flex justify-center w-full">
-            <SmallLoader />
+
+          <div className=" flex justify-center items-start h-[14vh] ">
+            <ColorRing
+              visible={true}
+              height="40"
+              width="40"
+              ariaLabel="color-ring-loading"
+              wrapperStyle={{}}
+              wrapperClass="color-ring-wrapper"
+              colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
+            />
           </div>
+
+
         )}
       </div>
     </>
