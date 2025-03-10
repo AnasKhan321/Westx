@@ -2,15 +2,15 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { Suspense, useEffect, useRef } from "react";
 import { Tweet } from "../utils/type";
-import SmallLoader from "../ReusableComponents/SmallLoader";
 import { BiRepost } from "react-icons/bi";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
+import { ColorRing } from "react-loader-spinner";
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 interface TweetResponse {
   success: boolean;
   data: Tweet[];
-  hasMore: boolean; // API must return this
+  hasMore: boolean; 
 }
 
 const fetchTweets = async ({ pageParam = 1 }) => {
@@ -47,7 +47,7 @@ function Tweets() {
 
   useEffect(() => {
     if (!bottomRef.current || !hasNextPage) return;
-  
+
     const observer = new IntersectionObserver(
       (entries) => {
 
@@ -57,10 +57,10 @@ function Tweets() {
       },
       { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
     );
-  
+
     const currentRef = bottomRef.current;
     observer.observe(currentRef);
-  
+
     return () => {
       observer.unobserve(currentRef);
     };
@@ -74,52 +74,63 @@ function Tweets() {
       </>
     );
   if (status == "pending") return <div className="mt-8">
-<TweetSkeleton/>
+    <TweetSkeleton />
 
-  </div>  
+  </div>
 
   return (
     <>
       <div className=" mt-16 md:mt-16"></div>
 
       {data?.pages?.map((group, i) => (
-      <React.Fragment key={i}> 
+        <React.Fragment key={i}>
 
-       
-        {group?.data?.map((tweet) => (
-          <Suspense
-            key={tweet.id}  // ✅ Key should be on Suspense, not inside it
-            fallback={
-              <div className="text-white p-4 md:w-[96%] w-full mx-auto">
-                
-                <TwitterSkeletonComponent/>
-              </div>
-            }
-          >
-            {tweet.tweettype === "REPOST" ? (
-              <>
-                <div className="flex items-center pl-8 py-2 space-x-2 text-gray-500 font-bold">
-                  <BiRepost className="text-xl" />
-                  <span className="text-xs">{tweet.user.name} reposted</span>
+
+          {group?.data?.map((tweet) => (
+            <Suspense
+              key={tweet.id}  // ✅ Key should be on Suspense, not inside it
+              fallback={
+                <div className="text-white p-4 md:w-[96%] w-full mx-auto">
+
+                  <TwitterSkeletonComponent />
                 </div>
-                <TwetCARD tweet={tweet.originalTweet as Tweet} isBookmark={false} />
-              </>
-            ) : (
-              <TwetCARD tweet={tweet} isBookmark={false} />
-            )}
-          </Suspense>
-        ))}
-      </React.Fragment>
-    ))}
+              }
+            >
+              {tweet.tweettype === "REPOST" ? (
+                <>
+                  <div className="flex items-center pl-8 py-2 space-x-2 text-gray-500 font-bold">
+                    <BiRepost className="text-xl" />
+                    <span className="text-xs">{tweet.user.name} reposted</span>
+                  </div>
+                  <TwetCARD tweet={tweet.originalTweet as Tweet} isBookmark={false} />
+                </>
+              ) : (
+                <TwetCARD tweet={tweet} isBookmark={false} />
+              )}
+            </Suspense>
+          ))}
+        </React.Fragment>
+      ))}
 
 
       {/* Invisible div to track scrolling and auto-load new data */}
-      <div ref={bottomRef} className=" h-[40px] md:h-5" />
+      <div ref={bottomRef} className="  h-5" />
 
       {isFetchingNextPage && (
-        <div className="flex justify-center w-full  ">
-          <SmallLoader />
+
+        <div className=" flex justify-center items-start h-[10vh] ">
+          <ColorRing
+            visible={true}
+            height="30"
+            width="30"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
+          />
         </div>
+
+
       )}
     </>
   );
