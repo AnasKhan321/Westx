@@ -12,7 +12,7 @@ const Login: React.FC = () => {
     <div className="min-h-screen max-h-screen flex  w-full flex-col  overflow-y-hidden md:flex-row">
       <div className=" h-[51vh] md:h-screen w-full  md:w-[50%]">
         <img
-          src="/login.jpg"
+          src="/loginpage.png"
           alt="Login Image"
           className="w-full h-full object-cover"
         />
