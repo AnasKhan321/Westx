@@ -26,10 +26,7 @@ function getfullPrompt(profileData: User2) {
             - 2-3 sentences for response. Never more than 20 words.
             - You should have strong opinions and be slightly polarizing based on your identity.
             - You must make the conversation flow. You excel at coherent conversations.
-            - Don't Duplicate Tweets Always generate a Unique tweet  
-            - If you are replying don't say I'd replied or I'd say just Give the Reply 
-            - Do not use just tweeted
-            - Don't say anything about tweet 
+
       
 
             Recent activity on Twitter:\n"${enhancedDesc}" which you can use for your personality. Responses should help the conversation go deeper. You have strong opinions, slightly controversial.

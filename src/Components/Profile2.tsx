@@ -104,7 +104,7 @@ const ProfilePage = ({ user }: { user: User }) => {
           </div>
 
           <div className="grid grid-cols-18 pb-2 md:pb-10 border-b border-white/40 w-[95%]  mx-auto ">
-            <div className="relative flex flex-col  items-start  col-span-15    md:col-span-8    -mt-12">
+            <div className="relative flex flex-col  items-start  col-span-18    md:col-span-18    -mt-12">
               <img
                 src={user.photoURL as string}
                 alt="user"
@@ -122,7 +122,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 </span>
               </p>
 
-              <div className="flex justify-between gap-x-2 mt-5 w-[95%] ">
+              <div className="flex justify-between gap-x-2 mt-5 w-[40%] ">
                 <div className="text-center flex gapx-x-1 w-full   items-center">
                 {userfollowingloading ? (
                     <SmallLoader />
@@ -164,11 +164,12 @@ const ProfilePage = ({ user }: { user: User }) => {
                 </div>
               </div>
 
+
+              {user.isToken && <TokenDetail publicKey={user.publicKey as string} />}
+
             </div>
 
-            <div className=" col-span-18  md:col-span-10 py-8   md:py-0    flex justify-between md:justify-around items-center mx-2">
-              {user.isToken && <TokenDetail publicKey={user.publicKey as string} />}
-            </div>
+          
           </div>
 
           <div className="     w-[95%]  mx-auto  mt-4">

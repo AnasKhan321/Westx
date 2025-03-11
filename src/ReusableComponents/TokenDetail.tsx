@@ -6,96 +6,92 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 
 interface MarketCap {
-    tokenMint: string , 
-    marketCap: number ,
-     unit: string
-    }
-
-interface TokenPrice {
-
-    price: number ,
-    tokenMint: string , 
+    tokenMint: string,
+    marketCap: number,
     unit: string
 }
 
-const getMarketCap = async (publicKey: string) : Promise<MarketCap> => {
-    const { data } = await axios.get<MarketCap>(`https://domestic-ynez-persist-81871a00.koyeb.app/api/tokens/marketcap/${publicKey}`)
-    return data ; 
+interface TokenPrice {
+
+    price: number,
+    tokenMint: string,
+    unit: string
 }
 
-const getTokenPrice = async (publicKey: string) : Promise<TokenPrice> => {
+const getMarketCap = async (publicKey: string): Promise<MarketCap> => {
+    const { data } = await axios.get<MarketCap>(`https://domestic-ynez-persist-81871a00.koyeb.app/api/tokens/marketcap/${publicKey}`)
+    return data;
+}
+
+const getTokenPrice = async (publicKey: string): Promise<TokenPrice> => {
     const { data } = await axios.get<TokenPrice>(`https://domestic-ynez-persist-81871a00.koyeb.app/api/tokens/price/${publicKey}`)
-    return data ; 
+    return data;
 }
 
 const TokenDetail = ({ publicKey }: { publicKey: string }) => {
 
     const { handlebuy, handleSell, isChecking } = useToken()
 
-    const {data : marketcapdata , isLoading : marketcaploading } = useQuery({
+    const { data: marketcapdata, isLoading: marketcaploading } = useQuery({
         queryKey: [`marketcap-${publicKey}`],
-        queryFn: () => getMarketCap(publicKey)  , 
+        queryFn: () => getMarketCap(publicKey),
     })
 
-    const {data : tokenprice , isLoading : tokenpriceloading } = useQuery({
+    const { data: tokenprice, isLoading: tokenpriceloading } = useQuery({
         queryKey: [`tokenprice-${publicKey}`],
-        queryFn: () => getTokenPrice(publicKey)  , 
+        queryFn: () => getTokenPrice(publicKey),
     })
 
-    if(marketcaploading || tokenpriceloading){
+    if (marketcaploading || tokenpriceloading) {
         return <div className="w-full mx-auto bg-gray-700 h-[120px]  animate-pulse border border-white/40 py-8  mt-4 rounded-lg ">
 
 
 
 
 
-    </div>;
+        </div>;
     }
 
 
-    return <div className="w-full mx-auto border border-white/40 py-8  mt-4 rounded-lg ">
+    return <div className="w-full mx-auto  py-2  mt-4 rounded-lg ">
 
 
 
-        <div className="flex gap-x-10 items-center flex-col">
-            <div className="text-white/50 mb-6 text-lg italic  w-[80%] ">
-You can now even buy the token of Persona Now
-       
-            </div>
+        <div className="flex gap-x-10 items-center md:flex-row flex-col justify-center ">
 
-            <div className="flex gap-x-10 items-center w-[95%]   md:w-[80%] justify-around">
+            <div className="flex gap-x-10 items-center w-full   md:w-[80%] justify-center md:justify-around">
                 <div className="flex  gap-1 items-center w-[50%]">
-                {!tokenpriceloading && 
-                <div className="flex gap-1 items-center ">
-          <p className=" font-bold">${tokenprice?.price.toFixed(9)
-                        .replace(/\.?0+$/, '')}  
-                    </p>
-                    <p className="text-white/50  "> TokenPrice</p>
-                     </div>
-      
-          }
+                    {!tokenpriceloading &&
+                        <div className="flex gap-1 items-center justify-center md:justify-start">
+                            <p className=" font-bold">${tokenprice?.price.toFixed(9)
+                                .replace(/\.?0+$/, '')}
+                            </p>
+                            <p className="text-white/50  "> TokenPrice</p>
+                        </div>
 
-          {tokenpriceloading && <SmallLoader />}
+                    }
+
+                    {tokenpriceloading && <SmallLoader />}
                 </div>
 
-                <div className="flex  gap-1 items-center w-[50%]">
-                    {!marketcaploading && 
-                    <div className="flex gap-1 items-center ">
- <p className=" font-bold">  {marketcapdata?.marketCap as number/ LAMPORTS_PER_SOL} SOL  </p>
- <p className="text-white/50 text-sm  ">MK</p>
-                    </div>
-               }
+                <div className="flex justify-center  md:justify-start  items-center w-[50%]">
+                    {!marketcaploading &&
+                        <div className="flex gap-1 items-center ">
+                            <p className=" font-bold">  {marketcapdata?.marketCap as number / LAMPORTS_PER_SOL} SOL  </p>
+                            <p className="text-white/50 text-sm  ">MK</p>
+                        </div>
+                    }
 
-               {marketcaploading && <SmallLoader />}
+                    {marketcaploading && <SmallLoader />}
 
                 </div>
 
             </div>
 
 
-            <div className="flex w-[95%] md:w-[80%]  justify-between items-center mt-7  space-x-2">
-                <button onClick={() => handlebuy(publicKey as string)} className="  w-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br py-2 rounded-full border border-white">Buy </button>
-                <button onClick={() => handleSell(publicKey as string)} className=" w-full py-2 border border-white rounded-full bg-gradient-to-r from-black/50 via-black/60 to-black/70 hover:bg-white transition-all   " disabled={isChecking}> {isChecking ? "Checking ..." : "Sell"} </button>
+            <div className="flex w-[95%] mt-5 md:mt-0 md:w-[80%]  justify-between items-center  space-x-2">
+                <button onClick={() => handlebuy(publicKey as string)} className="   text-white  no-underline  w-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br py-2 rounded-full border border-white">Buy </button>
+                <button onClick={() => handleSell(publicKey as string)} className="   w-full py-2 border border-white rounded-full bg-gradient-to-r from-black/50 via-black/60 to-black/70 hover:bg-white transition-all   " disabled={isChecking}> {isChecking ? "Checking ..." : "Sell"} </button>
             </div>
 
         </div>

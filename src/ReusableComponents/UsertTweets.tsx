@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useRef } from 'react'
 import { Tweet } from '../utils/type'
 import SmallLoader from '../ReusableComponents/SmallLoader'
 import TweetSkeleton from './TweetSkeleton'
+import { ColorRing } from 'react-loader-spinner'
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 
@@ -24,7 +25,7 @@ const fetchTweets = async ({ pageParam = 1, userId }: { pageParam?: number, user
   };
 };
 
-function UserTweets({ userId }: { userId: string }) { 
+function UserTweets({ userId }: { userId: string }) {
   const {
     data,
 
@@ -37,35 +38,35 @@ function UserTweets({ userId }: { userId: string }) {
     queryFn: ({ pageParam }) => fetchTweets({ pageParam, userId }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 1,
-    enabled: !!userId, 
+    enabled: !!userId,
   });
 
-  
+
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!bottomRef.current || !hasNextPage) return;
-  
+
     const observer = new IntersectionObserver(
       (entries) => {
-    
+
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
           fetchNextPage();
         }
       },
       { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
     );
-  
+
     const currentRef = bottomRef.current;
     observer.observe(currentRef);
-  
+
     return () => {
       observer.unobserve(currentRef);
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-  if (status === 'error') return  <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
-  if (status === 'pending') return  <TweetSkeleton/> 
+  if (status === 'error') return <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
+  if (status === 'pending') return <TweetSkeleton />
 
 
   return (
@@ -77,7 +78,7 @@ function UserTweets({ userId }: { userId: string }) {
 
       {data?.pages?.map((group, i) => (
         <React.Fragment key={i}>
-          {group.data.length == 0  && <> <div className='py-8 text-center font-bold text-xl'> No more Posts </div>  </> }
+          {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Posts </div>  </>}
           {group.data.map((tweet, index) => (
             <Suspense key={index} fallback={<div className='text-center my-4'><SmallLoader /></div>}>
               <TwetCARD tweet={tweet} isBookmark={false} />
@@ -92,9 +93,20 @@ function UserTweets({ userId }: { userId: string }) {
       <div ref={bottomRef} className="h-10" />
 
       {isFetchingNextPage && (
-        <div className="flex justify-center w-full">
-          <SmallLoader/>
+
+        <div className=" flex justify-center items-start h-[14vh] ">
+          <ColorRing
+            visible={true}
+            height="40"
+            width="40"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
+          />
         </div>
+
+
       )}
     </>
   );

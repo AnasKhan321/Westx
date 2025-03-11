@@ -113,14 +113,14 @@ const CookiePolicy = () => {
 
 // Helper Section component
 const Section = ({ title, content }: { title: string; content: string | JSX.Element }) => (
-  <div className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm">
+  <section className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm">
     <h2 className="text-2xl font-semibold mb-4 ">{title}</h2>
     {typeof content === 'string' ? (
       <p className=" leading-relaxed">{content}</p>
     ) : (
       content
     )}
-  </div>
+  </section>
 );
 
 export default CookiePolicy;

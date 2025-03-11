@@ -52,7 +52,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     refetchOnWindowFocus: false,
   });
 
-  const {handleTokenLaucnh}  = useToken() 
+  const { handleTokenLaucnh } = useToken()
 
   const { data: userfollower, isLoading: userfollowerloading } = useQuery({
     queryKey: [`UserFollower:${profile.username}`],
@@ -113,7 +113,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         queryClient.invalidateQueries({
           queryKey: [`UserFollower:${profile.username}`],
         });
-        
+
         if (following) {
           setfollowings(following + 1);
         }
@@ -191,146 +191,160 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           </div>
 
           <div className="absolute top-4 right-4 flex space-x-2">
-                {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
-                  <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
-                    Upgrade
-                  </button>}
+            {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
+              <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+                Upgrade
+              </button>}
 
-              </div>
+          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-18 pb-10 border-b border-white/40 w-[95%]  mx-auto ">
-        <div className="relative flex flex-col  items-start col-span-16  md:col-span-8    -mt-12">
+      <div className="grid grid-cols-18 pb-0 md:pb-10 border-b border-white/40 w-[95%]  mx-auto ">
+        <div className="relative flex flex-col  items-start col-span-18  md:col-span-18    -mt-12">
           <img
             src={profile.photoURL as string}
             alt="user"
             className=" w-20 h-20  md:w-24 md:h-24 rounded-full border  border-white"
           />
-          <h2 className=" text-base  md:text-xl font-semibold mt-2">
-            {profile.name}
-          </h2>
-          <p className="text-white/60 text-sm mt-2 ">
+
+          <div className=" flex items-center  gap-x-4 mt-4 ">
+            <h2 className=" text-base  md:text-xl font-semibold ">
+
+              {profile.name}
+            </h2>
+
+            <div className="flex items-center space-x-4    ">
+              {isFollow ? (
+                <button
+                  onClick={handleUnfollow}
+                  className=" text-white/60 "
+                >
+                  {isfollower ? (
+                    <ColorRing
+                      visible={true}
+                      height="20"
+                      width="20"
+                      ariaLabel="color-ring-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="color-ring-wrapper"
+                      colors={[
+                        "#9915eb",
+                        "#9915eb",
+                        "#9915eb",
+                        "#9915eb",
+                        "#9915eb",
+                      ]}
+                    />
+                  ) : (
+                    "unFollow"
+                  )}
+                </button>
+              ) : (
+                <button
+                  onClick={handleFollow}
+                  className=" text-purple-400 "
+                >
+                  {isfollower ? (
+                    <ColorRing
+                      visible={true}
+                      height="20"
+                      width="20"
+                      ariaLabel="color-ring-loading"
+                      wrapperStyle={{}}
+                      wrapperClass="color-ring-wrapper"
+                      colors={[
+                        "#FFFFFF",
+                        "#FFFFFF",
+                        "#FFFFFF",
+                        "#FFFFFF",
+                        "#FFFFFF",
+                      ]}
+                    />
+                  ) : (
+                    "Follow"
+                  )}
+                </button>
+              )}
+
+
+
+
+            </div>
+
+
+
+            <Link
+              to={`/chat/${profile.username}`}
+              className="   text-white  text-sm     underline  "
+            >
+              Talk to Persona
+            </Link>
+
+          </div>
+          <p className="text-white/60 text-sm mt-1 ">
             @{profile.username}{" "}
             <span className="text-white/40">
               • Joined {formatDateTime(profile.createdAt)}
             </span>
           </p>
 
-          <div className="flex justify-around gap-x-2 mt-5 w-[85%]  ">
-                <div className="text-center flex gapx-x-1 w-full   items-center">
-                {userfollowingloading ? (
-                    <SmallLoader />
-                  ) : (
-                    <p className="text-base font-semibold mx-1 ">
-                      {suserfollowing}
-                    </p>
-                  )}
-                  <Link to={`/following/${profile.id}`}>
-                    {" "}
-                    <p className="text-white/60 text-sm ">Following</p>
-                  </Link>
+          <div className="flex justify-around gap-x-2 mt-4 w-[35%]  ">
+            <div className="text-center flex gapx-x-1 w-full   items-center">
+              {userfollowingloading ? (
+                <SmallLoader />
+              ) : (
+                <p className="text-base font-semibold mx-1 ">
+                  {suserfollowing}
+                </p>
+              )}
+              <Link to={`/following/${profile.id}`}>
+                {" "}
+                <p className="text-white/60 text-sm ">Following</p>
+              </Link>
 
-                </div>
-                <div className="text-center flex gapx-x-1 w-full     items-center">
-                {userfollowerloading ? (
-                    <SmallLoader />
-                  ) : (
-                    <p className="text-base font-semibold mx-1 ">
-                      {userfollowing?.data?.length}
-                    </p>
-                  )}
-                  <Link to={`/follower/${profile.id}`}>
-                    {" "}
-                    <p className="text-white/60 text-sm ">Followers</p>
-                  </Link>
+            </div>
+            <div className="text-center flex gapx-x-1 w-full   items-center">
+              {userfollowerloading ? (
+                <SmallLoader />
+              ) : (
+                <p className="text-base font-semibold mx-1 ">
+                  {userfollowing?.data?.length}
+                </p>
+              )}
+              <Link to={`/follower/${profile.id}`}>
+                {" "}
+                <p className="text-white/60 text-sm ">Followers</p>
+              </Link>
 
-                </div>
-                <div className="text-center flex gapx-x-1 w-full     items-center">
-                {usertweetloading ? (
-                    <SmallLoader />
-                  ) : (
-                    <p className="text-base font-semibold mx-1 ">
-                      {usertweetscount?.data}
-                    </p>
-                  )}
-                  <p className="text-white/60 text-sm ">Tweets</p>
+            </div>
+            <div className="text-center flex gapx-x-1 w w-full       items-center">
+              {usertweetloading ? (
+                <SmallLoader />
+              ) : (
+                <p className="text-base font-semibold mx-1 ">
+                  {usertweetscount?.data}
+                </p>
+              )}
+              <p className="text-white/60 text-sm ">Tweets</p>
 
-                </div>
-              </div>
-
-          <div className="flex items-center space-x-4  mt-6  mb-2 ">
-            {isFollow ? (
-              <button
-                onClick={handleUnfollow}
-                className="py-2  px-6  bg-white text-black hover:bg-gradient-to-br  hover:text-white hover:bg-black transition-all border border-black hover:border-white  rounded-full "
-              >
-                {isfollower ? (
-                  <ColorRing
-                    visible={true}
-                    height="20"
-                    width="20"
-                    ariaLabel="color-ring-loading"
-                    wrapperStyle={{}}
-                    wrapperClass="color-ring-wrapper"
-                    colors={[
-                      "#9915eb",
-                      "#9915eb",
-                      "#9915eb",
-                      "#9915eb",
-                      "#9915eb",
-                    ]}
-                  />
-                ) : (
-                  "unFollow"
-                )}
-              </button>
-            ) : (
-              <button
-                onClick={handleFollow}
-                className="py-2  px-6  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br   rounded-full "
-              >
-                {isfollower ? (
-                  <ColorRing
-                    visible={true}
-                    height="20"
-                    width="20"
-                    ariaLabel="color-ring-loading"
-                    wrapperStyle={{}}
-                    wrapperClass="color-ring-wrapper"
-                    colors={[
-                      "#FFFFFF",
-                      "#FFFFFF",
-                      "#FFFFFF",
-                      "#FFFFFF",
-                      "#FFFFFF",
-                    ]}
-                  />
-                ) : (
-                  "Follow"
-                )}
-              </button>
-            )}
-
-            <Link
-              to={`/chat/${profile.username}`}
-              className="py-2  px-4  bg-black text-white border border-white hover:bg-white hover:text-black transition-all   rounded-full  "
-            >
-              Talk to Persona
-            </Link>
-
-
-
+            </div>
           </div>
+
+      
+
+          {profile?.isToken && (
+            <TokenDetail publicKey={profile.publicKey as string} />
+          )}
         </div>
 
         <div className=" col-span-18 md:col-span-10  mt-10 md:mt-0  flex flex-col  justify-center  ">
 
-        {profile?.isToken &&(
-            <TokenDetail publicKey={profile.publicKey as string} />
-          )}
 
         </div>
+
+
+
       </div>
 
 
@@ -342,8 +356,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={` ${activeTab === tab
-                  ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
-                  : " py-2 text-white/60 hover:text-white   transition-all"
+                ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
+                : " py-2 text-white/60 hover:text-white   transition-all"
                 }`}
             >
               {tab}

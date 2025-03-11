@@ -2,8 +2,8 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { Tweet } from '../utils/type'
-import SmallLoader from '../ReusableComponents/SmallLoader'
 import TweetSkeleton from '../ReusableComponents/TweetSkeleton'
+import { ColorRing } from 'react-loader-spinner'
 
 interface BookMarkResponse {
   success: boolean
@@ -13,11 +13,11 @@ interface BookMarkResponse {
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 
-const fetchReply = async ({ pageParam = 1   , tweetid}  : {pageParam : number , tweetid : string | undefined}) => {
+const fetchReply = async ({ pageParam = 1, tweetid }: { pageParam: number, tweetid: string | undefined }) => {
   const { data } = await axios.get<BookMarkResponse>(
     `${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply/${tweetid}/${pageParam}`
   )
-  
+
 
   return {
     data: data.data,
@@ -25,7 +25,7 @@ const fetchReply = async ({ pageParam = 1   , tweetid}  : {pageParam : number , 
   }
 }
 
-function TweetReply({tweetid }  : {tweetid : string}) {
+function TweetReply({ tweetid }: { tweetid: string }) {
 
   const {
     data,
@@ -35,7 +35,7 @@ function TweetReply({tweetid }  : {tweetid : string}) {
     status,
   } = useInfiniteQuery({
     queryKey: [`Replies:Tweet:${tweetid}`], // Include userid in the query key to refetch when it changes
-    queryFn: ({ pageParam }) => fetchReply({ pageParam, tweetid : tweetid }), // Pass pageParam and userid properly
+    queryFn: ({ pageParam }) => fetchReply({ pageParam, tweetid: tweetid }), // Pass pageParam and userid properly
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 1,
   });
@@ -45,28 +45,28 @@ function TweetReply({tweetid }  : {tweetid : string}) {
 
   useEffect(() => {
     if (!bottomRef.current || !hasNextPage) return;
-  
+
     const observer = new IntersectionObserver(
       (entries) => {
 
         if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
-  
+
           fetchNextPage();
         }
       },
       { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
     );
-  
+
     const currentRef = bottomRef.current;
     observer.observe(currentRef);
-  
+
     return () => {
       observer.unobserve(currentRef);
     };
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (status === 'error') return <p className='font-bold text-center mt-4 '>Internal Server Error </p>
-  if(status == 'pending')  return <TweetSkeleton/>
+  if (status == 'pending') return <TweetSkeleton />
 
 
 
@@ -75,34 +75,45 @@ function TweetReply({tweetid }  : {tweetid : string}) {
 
 
       {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
-      <p className="text-center text-gray-200 my-4 font-bold text-xl  "></p>
-    ) : (
-      data?.pages?.map((group, i) => (
-        <React.Fragment key={i}>
-          {group?.data?.map((tweet) => (
-          <Suspense
-          key={tweet.id}  // ✅ Key should be on Suspense, not inside it
-          fallback={
-            <div className="text-center my-4">
-            </div>
-          }
-        >
-            <TwetCARD tweet={tweet}  isBookmark={false}/> 
-            
-          
-        </Suspense>
-          ))}
-        </React.Fragment>
-      ))
-    )}
+        <p className="text-center text-gray-200 my-4 font-bold text-xl  "></p>
+      ) : (
+        data?.pages?.map((group, i) => (
+          <React.Fragment key={i}>
+            {group?.data?.map((tweet) => (
+              <Suspense
+                key={tweet.id}  // ✅ Key should be on Suspense, not inside it
+                fallback={
+                  <div className="text-center my-4">
+                  </div>
+                }
+              >
+                <TwetCARD tweet={tweet} isBookmark={false} />
+
+
+              </Suspense>
+            ))}
+          </React.Fragment>
+        ))
+      )}
 
       {/* Invisible div to track scrolling and auto-load new data */}
       <div ref={bottomRef} className="h-10" />
-      
+
       {isFetchingNextPage && (
-        <div className="flex justify-center w-full">
-          <SmallLoader />
+
+        <div className=" flex justify-center items-start h-[14vh] ">
+          <ColorRing
+            visible={true}
+            height="40"
+            width="40"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
+          />
         </div>
+
+
       )}
     </>
   )
