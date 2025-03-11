@@ -71,8 +71,7 @@ export const getAiResponse = async (user: User2, question: string, message: Mess
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const completion = await openai.chat.completions.create({
-        // model: "anthropic/claude-3.5-sonnet",
-        model: "x-ai/grok-2-1212",
+        model: "anthropic/claude-3.5-sonnet",
 
         //@ts-expect-error
         messages: formattedMessages,
