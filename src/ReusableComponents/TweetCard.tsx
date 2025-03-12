@@ -64,6 +64,8 @@ const TweetCard = ({
     tweet.reposts.some((tweetR) => tweetR.userId === user?.id)
   );
 
+
+
   const handleAddBookmark = async () => {
     if (isbookmarker) {
       return;
@@ -77,6 +79,11 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["tweets"],
+      });
+      
       toast.success("BookMark added Successfully"  , {
         style: {
           borderRadius: '20px',
@@ -104,6 +111,11 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
+
+
+      queryClient.invalidateQueries({
+        queryKey: ["tweets"],
+      });
       toast.success("Removed Bookmark"  , {
         style: {
           borderRadius: '20px',
@@ -128,6 +140,9 @@ const TweetCard = ({
       userid: user?.id as string,
     });
     if (response?.success) {
+      queryClient.invalidateQueries({
+        queryKey: ["tweets"],
+      });
       toast.success("Liked!"  , {
         style: {
           borderRadius: '20px',
@@ -136,6 +151,7 @@ const TweetCard = ({
         },
         
       });
+
       setislike(true);
       setlikes(likes + 1);
     }
@@ -153,6 +169,9 @@ const TweetCard = ({
       tweetid: tweet.id,
     });
     if (response?.success) {
+      queryClient.invalidateQueries({
+        queryKey: ["tweets"],
+      });
       toast.success("Removed Like"  , {
         style: {
           borderRadius: '20px',
@@ -178,6 +197,9 @@ const TweetCard = ({
       userid: user?.id as string,
     });
     if (response?.success) {
+      queryClient.invalidateQueries({
+        queryKey: ["tweets"],
+      });
       setisreposted(true);
       setreposts(reposts + 1);
       toast.success("Reposted !"   , {

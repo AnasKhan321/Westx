@@ -45,7 +45,6 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
     queryKey: [`UserFollowing:${profile.username}`],
-
     queryFn: () => getUserFollowinguserid(profile.id),
     staleTime: Infinity,
     refetchOnMount: false,
@@ -56,7 +55,6 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
   const { data: userfollower, isLoading: userfollowerloading } = useQuery({
     queryKey: [`UserFollower:${profile.username}`],
-
     queryFn: () => getUserFollowerbyuserid(profile.id),
     staleTime: Infinity,
     refetchOnMount: false,
@@ -111,15 +109,10 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           },
           
         });
-        queryClient.invalidateQueries({
-          queryKey: [`USER:FOLLOWERS:${profile.username}`],
-        });
-        queryClient.invalidateQueries({
-          queryKey: [`USER:FOLLOWING:${profile.username}`],
-        });
-        queryClient.invalidateQueries({
-          queryKey: [`UserFollower:${profile.username}`],
-        });
+        queryClient.invalidateQueries({queryKey: [`UserFollower:${profile.username}`],});
+        queryClient.invalidateQueries({queryKey: [`UserFollowing:${profile.username}`],});
+        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWERS:${profile.username}`],});
+        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWING:${profile.username}`],});
 
         if (following) {
           setfollowings(following + 1);
@@ -159,15 +152,10 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         },
         
       });
-      queryClient.invalidateQueries({
-        queryKey: [`USER:FOLLOWERS:${profile.username}`],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [`USER:FOLLOWING:${profile.username}`],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [`UserFollower:${profile.username}`],
-      });
+        queryClient.invalidateQueries({queryKey: [`UserFollower:${profile.username}`],});
+        queryClient.invalidateQueries({queryKey: [`UserFollowing:${profile.username}`],});
+        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWERS:${profile.username}`],});
+        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWING:${profile.username}`],});
       if (following) {
         setfollowings(following - 1);
       }

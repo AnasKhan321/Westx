@@ -6,6 +6,7 @@ import { useAuth } from "../Context/AuthContext";
 import ProfilePage from "./Profile2";
 import { User } from "../utils/type";
 import Loader2 from "../ReusableComponents/Loader2";
+import SEO from "../ReusableComponents/SEO";
 
 
 
@@ -24,6 +25,7 @@ export default function UserDetail() {
    })
   return (
     <div>
+      <SEO title={ `User - ${username}`} description={`User page for ${username}`} />
       {userLoading &&  <div className="bg-secondaryColor rounded-2xl min-h-[96vh]  my-[2vh] ">
       <Loader2 fullScreen={true}/>
       </div> }

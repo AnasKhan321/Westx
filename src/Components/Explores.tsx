@@ -5,6 +5,7 @@ import { IoCaretBack } from "react-icons/io5";
 import React, { Suspense } from "react";
 import PersonaLoading from "../ReusableComponents/PersonaLoading";
 import Loader2 from "../ReusableComponents/Loader2";
+import SEO from "../ReusableComponents/SEO";
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 const Explores = () => {
   const { query } = useParams();
@@ -22,6 +23,7 @@ const Explores = () => {
   }
   return (
     <div className=" max-h-screen min-h-screen md:max-h-[96vh]  md:min-h-[96vh] bg-primaryColor  md:my-[2vh]  md:bg-secondaryColor  w-full rounded-2xl  border border-white/10 ">
+      <SEO title={ "Search Result - " + query} description={"Search Result for " + query} />
       <div className="flex absolute  p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20 w-[50%] rounded-xl font-bold   "> 
         <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
         <span>Search Result</span>
@@ -29,7 +31,7 @@ const Explores = () => {
       
       {isLoading && <Loader2 fullScreen={true}/>}
       {error && (
-        <div className="font-bold text-center text-2xl  mt-8">
+        <div className="font-bold text-center text-2xl  mt-16">
           {" "}
           Something Went Wrong!{" "}
         </div>
@@ -41,8 +43,8 @@ const Explores = () => {
              
 
               {data.data.length == 0 && (
-                <div className="text-center font-bold text-xl mt-12">
-                  Not found any user!
+                <div className="text-center font-bold text-xl mt-16">
+                  Persona Not Created Yet!
                 </div>
               )}
               {data.data.map((user, index) => {

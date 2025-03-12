@@ -42,6 +42,7 @@ function Tweets() {
     refetchOnWindowFocus: false,
   });
 
+
   // Ref to track the intersection observer
   const bottomRef = useRef<HTMLDivElement | null>(null);
 

@@ -28,6 +28,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
       text: reply,
     });
     if (response?.success) {
+      queryClient.invalidateQueries({ queryKey: [`Replies:Tweet:${tweetid}`] });
       toast.success("Reply added !"  , {
         style: {
           borderRadius: '20px',
@@ -37,7 +38,6 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
         
       });
       
-      queryClient.invalidateQueries({ queryKey: [`Tweet:Reply:${tweetid}`] });
     }
     setReply("");
     setisLoading(false)
@@ -46,6 +46,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
   return (
     <div className="border-b border-borderColor  mx-auto  my-4  ">
       <div className="p-4  w-[98%] md:w-[93%]  mx-auto  grid grid-cols-12 gap-x-2  justify-center items-center">
+
       <img
           src={user?.photoURL}
           alt={user?.username}
@@ -62,6 +63,11 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
           className=" text-sm md:text-base col-span-8 md:col-span-10 border border-white bg-[#464646] rounded-full   px-2 py-2  focus:outline-none bg-transparent"
           type="text"
           placeholder="Tweet Your Reply "
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              handleClick();
+            }
+          }}
         />
         <button
           onClick={handleClick}

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import SEO from '../ReusableComponents/SEO';
 
 const CookiePolicy = () => {
   useEffect(() => {
@@ -7,6 +8,7 @@ const CookiePolicy = () => {
 
   return (
     <div className="min-h-[96vh]  max-h-[96vh] my-[2vh]  overflow-y-scroll bg-secondaryColor rounded-lg border border-white/10 text-white">
+      <SEO title={ "Cookie Policy"} description={"Cookie Policy for WestX"} />
       <div className="w-full mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-12">

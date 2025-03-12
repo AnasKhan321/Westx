@@ -7,6 +7,7 @@ import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
 import Loader2 from "../ReusableComponents/Loader2";
+import SEO from "../ReusableComponents/SEO";
 const TweetCardBookmark = React.lazy(
   () => import("../ReusableComponents/TweetCardBookmark")
 );
@@ -97,6 +98,7 @@ function BookMarks() {
 
   return (
     <>
+    <SEO title={ `BookMarks - ${user?.username} `} description={"BookMarks page where you can see all your bookmarked tweets"} />
       <div className="w-full min-h-screen max-h-screen md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh]  border border-white/10   bg-primaryColor  md:bg-secondaryColor rounded-xl ">
         <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
           <IoCaretBack

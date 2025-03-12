@@ -6,6 +6,7 @@ import { Suspense } from "react"
 import React from "react"
 import PersonaLoading from "../ReusableComponents/PersonaLoading"
 import Loader2 from "../ReusableComponents/Loader2"
+import SEO from "../ReusableComponents/SEO"
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 
 
@@ -29,6 +30,7 @@ const Following = () => {
     
   return (
     <div className="w-full max-h-screen  md:max-h-[96vh] border border-white/10  md:my-[2vh] min-h-screen md:min-h-[96vh]  overflow-y-scroll md:rounded-xl bg-primaryColor   md:bg-secondaryColor">
+      <SEO title={ `Following - ${username}`} description={`Following page for ${username}`} />
           <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20 w-full  md:w-[50%] rounded-xl font-bold   "> 
             <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
             <span>Following</span>

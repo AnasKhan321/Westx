@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import TrendingSection from "./TrendingSection";
 import { useSocket } from "../Context/SocketContext";
 import LiveSection from "./LiveSection";
+import toast from "react-hot-toast";
 const RightSidebar = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -24,7 +25,22 @@ const RightSidebar = () => {
     setSearch(e.target.value);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === '#'  || e.key === "%") {
+        e.preventDefault();
+        return;
+      }
     if (e.key === "Enter" && search.trim()) {
+
+      if(search.includes("#") || search.includes("%") ){
+        toast.error("Invalid Search Query !"  , {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+        return;
+      }
       navigate(`/explore/${search}`);
     }
   };
@@ -41,6 +57,7 @@ const RightSidebar = () => {
           value={search}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+         pattern="[^#]*"
           className="w-full px-4 py-2 bg-[#191919] border-b border-t border-r  border-white/10   text-white placeholder-gray-400 rounded-r-full focus:outline-none"
         />
       </div>

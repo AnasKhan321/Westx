@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import SmallLoader from "../ReusableComponents/SmallLoader";
 import TrendingSection from "./TrendingSection";
+import SEO from "../ReusableComponents/SEO";
 
 
 const Search = () => {
@@ -32,6 +33,7 @@ const Search = () => {
   };
   return (
     <div className=" min-h-screen  w-full bg-primaryColor text-white flex flex-col  px-4 py-6 space-y-6">
+      <SEO title={ "Search"} description={"Search page where you can search for a user"} />
       <div className=" w-full  grid grid-cols-14 ">
 
         <input

@@ -5,6 +5,7 @@ import axios from "axios";
 import { ColorRing } from "react-loader-spinner";
 import toast from "react-hot-toast";
 import Loader2 from "../ReusableComponents/Loader2";
+import SEO from "../ReusableComponents/SEO";
 
 interface TwitterUser {
   profile: string;
@@ -90,6 +91,7 @@ const Aiworld = () => {
 
   return (
     <div className="w-full h-screen max-h-screen  bg-primaryColor  md:min-h-[96vh] md:max-h-[96vh] md:my-[2vh]  md:rounded-2xl  md:bg-secondaryColor  ">
+            <SEO title={ "AiWorld - "} description={"An ai world page where you can import any user from twitter"} />
       <div className="">
         <div className="w-[90%] py-4   mx-auto">
           <input

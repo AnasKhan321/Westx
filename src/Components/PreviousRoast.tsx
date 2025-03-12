@@ -5,6 +5,7 @@ import { DynamicText2 } from "../ReusableComponents/DynamicText";
 import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import Loader2 from "../ReusableComponents/Loader2";
+import SEO from "../ReusableComponents/SEO";
 interface Chats {
     user : string , 
     content : string
@@ -40,7 +41,7 @@ const PreviousRoast = () => {
      }
   return (
     <div className="md:min-h-[96vh] border border-white/10   md:max-h-[96vh]   md:my-[2vh]  w-full bg-primaryColor md:bg-secondaryColor  md:rounded-xl">
-
+      <SEO title={ "Previous Roast"} description={"Previous Roast page where you can see the previous roast"} />
         {data  && <div> 
             <div className="border-white/20   flex items-center  border-b  py-3  mx-auto   max-h-[10vh]  ">
             <div className=" ml-2 md:ml-10 cursor-pointer " onClick={handleClick}>
