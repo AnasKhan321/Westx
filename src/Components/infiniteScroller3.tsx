@@ -4,7 +4,7 @@ import React, { Suspense, useEffect, useRef } from "react";
 import { Tweet } from "../utils/type";
 import { BiRepost } from "react-icons/bi";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
-import { ColorRing } from "react-loader-spinner";
+import Loader2 from "../ReusableComponents/Loader2";
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 interface TweetResponse {
@@ -119,15 +119,7 @@ function Tweets() {
       {isFetchingNextPage && (
 
         <div className=" flex justify-center items-start h-[14vh] ">
-          <ColorRing
-            visible={true}
-            height="40"
-            width="40"
-            ariaLabel="color-ring-loading"
-            wrapperStyle={{}}
-            wrapperClass="color-ring-wrapper"
-            colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
-          />
+            <Loader2 />
         </div>
 
 

@@ -1,10 +1,10 @@
 import axios from "axios"
 import {  User } from "../utils/type";
-import Loader from "../ReusableComponents/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { DynamicText2 } from "../ReusableComponents/DynamicText";
 import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Loader2 from "../ReusableComponents/Loader2";
 interface Chats {
     user : string , 
     content : string
@@ -112,7 +112,7 @@ const PreviousRoast = () => {
 
             
             </div>}
-        {isLoading && <Loader/> }
+        {isLoading && <Loader2 fullScreen={true}/> }
         
     </div>
   )

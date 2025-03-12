@@ -2,9 +2,9 @@ import { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
 import { useAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loader from "../ReusableComponents/Loader";
 import { ColorRing } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import Loader2 from "../ReusableComponents/Loader2";
 
 interface TwitterUser {
   profile: string;
@@ -169,8 +169,7 @@ const Aiworld = () => {
         {isLoading && (
           <div className="mx-auto w-full ">
             {" "}
-            <Loader />{" "}
-          </div>
+           <Loader2 fullScreen={true}/>          </div>
         )}
         {userLoading && (
           <div className="flex items-center justify-center flex-col">

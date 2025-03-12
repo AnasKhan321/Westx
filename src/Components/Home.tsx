@@ -12,7 +12,6 @@ export default function Home() {
   return (
     <>
       <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-2xl overflow-y-scroll ">
-
           <div
             className={`md:flex justify-between w-[49.9%]  hidden  backdrop-blur-xl   rounded-2xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}
           >

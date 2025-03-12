@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query"
 import { useNavigate, useParams } from "react-router-dom"
 import { getUserFollowing } from "../utils/apicalls"
-import Loader from "../ReusableComponents/Loader"
 import { IoCaretBack } from "react-icons/io5"
 import { Suspense } from "react"
 import React from "react"
 import PersonaLoading from "../ReusableComponents/PersonaLoading"
+import Loader2 from "../ReusableComponents/Loader2"
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 
 
@@ -34,7 +34,7 @@ const Following = () => {
             <span>Following</span>
            </div>
     <div className="mt-12">
-      {isLoading && <Loader />}
+      {isLoading && <Loader2 fullScreen={true}/>}
 
       {data?.data && (
         <div>

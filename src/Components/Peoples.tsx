@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-
-import Loader from "../ReusableComponents/Loader";
 import { getPersonas } from "../utils/apicalls";
 import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
@@ -8,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
 import React from "react";
 import PersonaLoading from "../ReusableComponents/PersonaLoading";
+import Loader2 from "../ReusableComponents/Loader2";
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 
 
@@ -36,7 +35,7 @@ export default function Peoples(){
             <span>Personas</span>
            </div>
 
-                {isLoading && <Loader/> }
+                {isLoading && <Loader2 fullScreen={true}/> }
 
                     {data && <div className="mt-12">
 

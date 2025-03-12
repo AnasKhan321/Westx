@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import Loader from "../ReusableComponents/Loader";
 import Profile from "../ReusableComponents/UserDetails";
 import { getUserbyUsername } from "../utils/apicalls";
 import { useAuth } from "../Context/AuthContext";
 import ProfilePage from "./Profile2";
 import { User } from "../utils/type";
+import Loader2 from "../ReusableComponents/Loader2";
 
 
 
@@ -25,7 +25,7 @@ export default function UserDetail() {
   return (
     <div>
       {userLoading &&  <div className="bg-secondaryColor rounded-2xl min-h-[96vh]  my-[2vh] ">
-        <Loader/> 
+      <Loader2 fullScreen={true}/>
       </div> }
       {usererror && <div>Error...</div>}
       {userdata?.success && (

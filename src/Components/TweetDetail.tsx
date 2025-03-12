@@ -7,6 +7,7 @@ import { getTweetDetail } from "../utils/apicalls";
 import React, { Suspense } from "react";
 import TweetReply from "./ReplyScroller";
 import { IoCaretBack } from "react-icons/io5";
+import Loader2 from "../ReusableComponents/Loader2";
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 export default function TweetDetail() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ export default function TweetDetail() {
             <span>Tweet</span>
            </div>
 
-      {isLoading && <Loader />}
+      {isLoading && <Loader2  fullScreen={true}/> }
       {isError && <div>Error...</div>}
       {data?.success && (
         <div>

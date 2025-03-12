@@ -3,7 +3,7 @@ import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { Tweet } from '../utils/type'
 import TweetSkeleton from '../ReusableComponents/TweetSkeleton'
-import { ColorRing } from 'react-loader-spinner'
+import Loader2 from '../ReusableComponents/Loader2'
 
 interface BookMarkResponse {
   success: boolean
@@ -102,15 +102,7 @@ function TweetReply({ tweetid }: { tweetid: string }) {
       {isFetchingNextPage && (
 
         <div className=" flex justify-center items-start h-[14vh] ">
-          <ColorRing
-            visible={true}
-            height="40"
-            width="40"
-            ariaLabel="color-ring-loading"
-            wrapperStyle={{}}
-            wrapperClass="color-ring-wrapper"
-            colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
-          />
+          <Loader2 />
         </div>
 
 

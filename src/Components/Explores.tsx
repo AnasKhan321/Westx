@@ -1,11 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { searchUser } from "../utils/apicalls";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../ReusableComponents/Loader";
-
 import { IoCaretBack } from "react-icons/io5";
 import React, { Suspense } from "react";
 import PersonaLoading from "../ReusableComponents/PersonaLoading";
+import Loader2 from "../ReusableComponents/Loader2";
 const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 const Explores = () => {
   const { query } = useParams();
@@ -28,7 +27,7 @@ const Explores = () => {
         <span>Search Result</span>
        </div>
       
-      {isLoading && <Loader />}
+      {isLoading && <Loader2 fullScreen={true}/>}
       {error && (
         <div className="font-bold text-center text-2xl  mt-8">
           {" "}

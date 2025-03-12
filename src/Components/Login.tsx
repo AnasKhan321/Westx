@@ -1,9 +1,9 @@
 import React from "react";
 import { useAuth } from "../Context/AuthContext";
-import { ColorRing } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 
 import { ReactTyped } from 'react-typed';
+import Loader2 from "../ReusableComponents/Loader2";
 
 const Login: React.FC = () => {
   const { handleTwitterLogin, islogin } = useAuth();
@@ -35,15 +35,7 @@ const Login: React.FC = () => {
           <button disabled={islogin} onClick={handleTwitterLogin} className=" font-bold  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-purple-300 disabled:opacity-50 disabled:cursor-not-allowed  text-white py-2 rounded-lg  ">   {islogin ? "Connecting..." : "Connect with X"} </button>
 
 
-           {islogin && <div className="flex text-center my-2  justify-center items-center">          <ColorRing
-                  visible={true}
-                  height="30"
-                  width="30"
-                  ariaLabel="color-ring-loading"
-                  wrapperStyle={{}}
-                  wrapperClass="color-ring-wrapper"
-                  colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
-                />  </div> }
+           {islogin && <div className="flex text-center my-2  justify-center items-center">        <Loader2 />  </div> }
 
           <p className="my-4 text-gray-100">  
           By continuing, you agree to our <Link to="#" className="text-purple-400"> Terms of Services </Link>  and  

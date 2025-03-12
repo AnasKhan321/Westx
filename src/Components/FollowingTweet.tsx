@@ -1,12 +1,12 @@
 import React, { Suspense } from "react";
-import Loader from "../ReusableComponents/Loader";
+import Loader2 from "../ReusableComponents/Loader2";
 
 
 const MyComponent = React.lazy(() => import("./infiniteScroller4"));
 const FollowingTweet = () => {
   return (
     <div>
-            <Suspense fallback={<Loader/> }>
+            <Suspense fallback={<Loader2 fullScreen={true}/> }>
             <MyComponent/> 
             
             

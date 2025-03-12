@@ -7,8 +7,8 @@ import React, { createContext, useEffect, useState, ReactNode } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { auth, twitterProvider } from "../firebaseF/firebaseConfig";
 import { User } from "../utils/type";
-import { ColorRing } from "react-loader-spinner";
 import toast from "react-hot-toast";
+import WestXLoader from "../ReusableComponents/WestXLoader";
 
 function removeSize(url: string): string {
   return url.replace(/_\w+\./g, ".");
@@ -156,22 +156,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   // Show loading state
   if (isLoading) {
     return (
-      <div className="w-screen h-screen flex justify-center flex-col items-center bg-primaryColor">
-        <img
-          src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
-          alt="Profile Logo"
-          className="w-[110px] h-[110px] rounded-full"
-        />
-        <ColorRing
-          visible={true}
-          height="50"
-          width="50"
-          ariaLabel="color-ring-loading"
-          wrapperStyle={{}}
-          wrapperClass="color-ring-wrapper"
-          colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
-        />
-      </div>
+
+      <WestXLoader />
     );
   }
 

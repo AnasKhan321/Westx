@@ -6,7 +6,7 @@ import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
-import { ColorRing } from "react-loader-spinner";
+import Loader2 from "../ReusableComponents/Loader2";
 const TweetCardBookmark = React.lazy(
   () => import("../ReusableComponents/TweetCardBookmark")
 );
@@ -141,15 +141,7 @@ function BookMarks() {
         {isFetchingNextPage && (
 
           <div className=" flex justify-center items-start h-[14vh] ">
-            <ColorRing
-              visible={true}
-              height="40"
-              width="40"
-              ariaLabel="color-ring-loading"
-              wrapperStyle={{}}
-              wrapperClass="color-ring-wrapper"
-              colors={["#9915eb", "#9915eb", "#9915eb", "#9915eb", "#9915eb"]}
-            />
+            <Loader2 />
           </div>
 
 
