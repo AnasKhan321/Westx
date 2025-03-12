@@ -73,7 +73,7 @@ const PrivacyPolicy = () => {
             <p className="mb-4">If you have any questions or concerns regarding this Privacy Policy, please reach out to us at:</p>
             <div className="flex flex-col md:flex-row gap-4 text-purple-300">
               <a href="mailto:contact@westx.com" className="flex items-center gap-2 hover:text-purple-400">
-                <span>📧</span>anaskhan.dev786@gmail.com
+                <span>📧</span>westxai@gmail.com
               </a>
               <a href="https://westx.xyz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-purple-400">
                 <span>🌐</span> www.westx.xyz

@@ -28,7 +28,14 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
       text: reply,
     });
     if (response?.success) {
-      toast.success("Reply added !");
+      toast.success("Reply added !"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       
       queryClient.invalidateQueries({ queryKey: [`Tweet:Reply:${tweetid}`] });
     }

@@ -103,7 +103,14 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       setisFollow(true);
       setuserfollower(suserfollower + 1);
       if (response?.success) {
-        toast.success("follow successfully!");
+        toast.success("follow successfully!"  , {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+          
+        });
         queryClient.invalidateQueries({
           queryKey: [`USER:FOLLOWERS:${profile.username}`],
         });
@@ -119,7 +126,14 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         }
         setisfollower(false);
       } else if (response?.success == false) {
-        toast.error("Something went wrong");
+        toast.error("Something went wrong"  , {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+          
+        });
       }
     }
   };
@@ -137,7 +151,14 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     setisFollow(false);
     setuserfollower(suserfollower - 1);
     if (response?.success) {
-      toast.success("unfollow successfully!");
+      toast.success("unfollow successfully!"   , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       queryClient.invalidateQueries({
         queryKey: [`USER:FOLLOWERS:${profile.username}`],
       });
@@ -152,7 +173,14 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       }
       setisfollower(false);
     } else if (response?.success == false) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
     }
   };
 

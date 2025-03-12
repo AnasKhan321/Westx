@@ -77,7 +77,14 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
-      toast.success("BookMark added Successfully");
+      toast.success("BookMark added Successfully"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setisBookmarked(true);
       setbookmarks(bookmarks + 1);
     }
@@ -97,7 +104,14 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
-      toast.success("Removed Bookmark");
+      toast.success("Removed Bookmark"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setisBookmarked(false);
       setbookmarks(bookmarks - 1);
     }
@@ -114,7 +128,14 @@ const TweetCard = ({
       userid: user?.id as string,
     });
     if (response?.success) {
-      toast.success("Liked!");
+      toast.success("Liked!"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setislike(true);
       setlikes(likes + 1);
     }
@@ -132,7 +153,14 @@ const TweetCard = ({
       tweetid: tweet.id,
     });
     if (response?.success) {
-      toast.success("Removed Like");
+      toast.success("Removed Like"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setislike(false);
       setlikes(likes - 1);
     }
@@ -152,7 +180,14 @@ const TweetCard = ({
     if (response?.success) {
       setisreposted(true);
       setreposts(reposts + 1);
-      toast.success("Reposted !");
+      toast.success("Reposted !"   , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
     }
     setisreposter(false);
   };

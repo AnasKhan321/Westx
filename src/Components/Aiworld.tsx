@@ -70,7 +70,14 @@ const Aiworld = () => {
 
       setuserLoading(false);
       if (data.success) {
-        toast.success("User Created Successfully !");
+        toast.success("User Created Successfully !" , {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+          
+        });
       }
     }
   };

@@ -50,7 +50,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const { publicKey, signTransaction } = useWallet()
   const [isBuyOpen, setIsBuyOpen] = useState(false)
   const [buyAmount, setBuyAmount] = useState(0.1)
-  const [buytoken, setBuyToken] = useState(0)
+  const [buytoken, setBuyToken] = useState(1000)
   const [selectedtoken, setselectedtoken] = useState("")
   const { connection } = useConnection()
 
@@ -82,7 +82,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const handlebuy = (token: string) => {
     if (!publicKey) {
       setIsOpen(true)
-      toast.error("Please connect your wallet")
+      toast.error("Please connect your wallet"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      })
 
     } else {
       setselectedtoken(token)
@@ -131,9 +138,16 @@ export function TokenProvider({ children }: TokenProviderProps) {
         }
         setIsBuyOpen(false)
         setisBuying(false)
-        toast.success("Purchased successfully")
+        toast.success("Purchased successfully"  , {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+          
+        })
         setBuyAmount(0.1)
-        setBuyToken(0)
+        setBuyToken(1000)
 
       }
 
@@ -142,7 +156,16 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
     } catch (error) {
-      toast.error("Something went wrong")
+      toast.error("Something went wrong"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      })
+      setIsBuyOpen(false)
+      setisBuying(false)
 
     }
 
@@ -152,7 +175,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
     if (!publicKey) {
       setIsOpen(true)
-      toast.error("Please connect your wallet")
+      toast.error("Please connect your wallet"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      })
     } else {
       setselectedtoken(token)
       setisChecking(true)
@@ -173,14 +203,28 @@ export function TokenProvider({ children }: TokenProviderProps) {
         );
 
         if (!userTokenAccount) {
-          toast.error("You don't own any of this token")
+          toast.error("You don't own any of this token"  , {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+            
+          })
           setisChecking(false)
           return;
         }
 
         const balance = userTokenAccount.account.data.parsed.info.tokenAmount.uiAmount;
         if (balance <= 0) {
-          toast.error("Your balance is zero for this token")
+          toast.error("Your balance is zero for this token"  , {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+            
+          })
           setisChecking(false)
           return;
         }
@@ -202,55 +246,84 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
   const confirmSell = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSelling(true)
-    let intNum = Math.floor(sellToken); 
-    const prepareResponse = await api.prepareSellTransaction(
-      selectedtoken,
-      intNum,
-      0,
-      publicKey?.toString() as string
-    );
-
-    if (!prepareResponse.success) {
-      throw new Error(prepareResponse.error || 'Failed to prepare transaction');
-    }
-
-    const { serializedTransaction } = prepareResponse.data;
-    const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
-
-
-    const { blockhash } = await connection.getLatestBlockhash();
-    transaction.recentBlockhash = blockhash;
-
-    if (signTransaction) {
-      const signedTransaction = await signTransaction(transaction);
-      const signature = await connection.sendRawTransaction(signedTransaction.serialize());
-
-
-      await connection.confirmTransaction(signature);
-
-      const confirmResponse = await api.confirmSellTransaction(
+    try {
+      e.preventDefault()
+      setIsSelling(true)
+      let intNum = Math.floor(sellToken); 
+      const prepareResponse = await api.prepareSellTransaction(
         selectedtoken,
-        signature
+        intNum,
+        0,
+        publicKey?.toString() as string
       );
-      if (!confirmResponse.success) {
-        throw new Error(confirmResponse.error)
+  
+      if (!prepareResponse.success) {
+        throw new Error(prepareResponse.error || 'Failed to prepare transaction');
       }
+  
+      const { serializedTransaction } = prepareResponse.data;
+      const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
+  
+  
+      const { blockhash } = await connection.getLatestBlockhash();
+      transaction.recentBlockhash = blockhash;
+  
+      if (signTransaction) {
+        const signedTransaction = await signTransaction(transaction);
+        const signature = await connection.sendRawTransaction(signedTransaction.serialize());
+  
+  
+        await connection.confirmTransaction(signature);
+  
+        const confirmResponse = await api.confirmSellTransaction(
+          selectedtoken,
+          signature
+        );
+        if (!confirmResponse.success) {
+          throw new Error(confirmResponse.error)
+        }
+        setIsSelling(false)
+        toast.success("Sold successfully"  , {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+          
+        })
+        setSellAmount(0.1)
+        setSellToken(0)
+        setIsSellOpen(false)
+      }
+  
+    } catch (error) {
+      toast.error("Something went wrong" ,{
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      })
       setIsSelling(false)
-      toast.success("Sold successfully")
-      setSellAmount(0.1)
-      setSellToken(0)
       setIsSellOpen(false)
-    }
 
+    }
+   
   }
 
 
   const handleTokenLaucnh = async (name: string, image: string  ,username : string) => {
     if (!publicKey) {
       setIsOpen(true)
-      toast.error("Please connect your wallet")
+      toast.error("Please connect your wallet",{
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      })
     } else {
       setIsTokenLaucnhOpen(true)
       settokename(name)
@@ -318,7 +391,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
             throw new Error("issues in updating publicKey in database")
           }
 
-          toast.success("Token Launched Successfully")
+          toast.success("Token Launched Successfully"  , {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+            
+          })
           setIsTokenLaucnhOpen(false)
           setisLaunching(false)
           
@@ -330,7 +410,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
       
 
     } catch (error) {
-      toast.error("Something went wrong")
+      toast.error("Something went wrong" ,{
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      })
     }
 
 
@@ -364,10 +451,17 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <path d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-
-            <WalletModalProvider>
+        <div className='flex flex-col gap-2 items-center justify-center '>
+        <div className=' text-[14px]  text-center  text-yellow-400'>We are currently on Devnet  Make sure You are on Devnet  and You Should Have Solana Wallet to buy the Tokens</div>
+          <div className='mt-4'>
+          <WalletModalProvider>
               <WalletMultiButton />
             </WalletModalProvider>
+          </div>
+
+        </div>
+   
+    
 
           </div>
         </div>
@@ -376,7 +470,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
       {isBuyOpen && (
-        <div className="fixed inset-0 z-50 flex items-center  justify-center ">
+        <div className="fixed inset-0 z-50 flex items-center  justify-center  transition-all  ">
           <div
             className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
             onClick={() => setIsBuyOpen(false)}

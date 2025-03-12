@@ -91,7 +91,7 @@ const CookiePolicy = () => {
             <p className="mb-4 text-gray-300">For any questions or concerns about our use of cookies, you can contact us at:</p>
             <div className="flex flex-col md:flex-row gap-4 text-purple-300">
               <a href="mailto:contact@westx.com" className="flex items-center gap-2 hover:text-purple-400 transition-colors">
-                <span>📧</span> anaskhan.dev786@gmail.com
+                <span>📧</span> westxai@gmail.com
               </a>
               <a href="https://westx.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-purple-400 transition-colors">
                 <span>🌐</span> www.westx.xyz

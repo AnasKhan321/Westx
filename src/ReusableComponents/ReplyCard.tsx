@@ -40,7 +40,14 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
-      toast.success("BookMark added Successfully");
+      toast.success("BookMark added Successfully"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setisBookmarked(true);
       setbookmarks(bookmarks + 1);
     }
@@ -55,7 +62,14 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
-      toast.success("Removed Bookmark");
+      toast.success("Removed Bookmark"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setisBookmarked(false);
       setbookmarks(bookmarks - 1);
     }
@@ -67,7 +81,14 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
       userid: user?.id as string,
     });
     if (response?.success) {
-      toast.success("Liked!");
+      toast.success("Liked!"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      }) ;
       setislike(true);
       setlikes(likes + 1);
     }
@@ -79,7 +100,14 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
       tweetid: reply.id,
     });
     if (response?.success) {
-      toast.success("Removed Like");
+      toast.success("Removed Like"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       setislike(false);
       setlikes(likes - 1);
     }
@@ -93,7 +121,14 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
     if (response?.success) {
       setisreposted(true);
       setreposts(reposts + 1);
-      toast.success("Reposted !");
+      toast.success("Reposted !"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
     }
   };
 
@@ -106,7 +141,14 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
     if (response?.success) {
       setisreposted(false);
       setreposts(reposts - 1);
-      toast.success("Remove Reposted");
+      toast.success("Remove Reposted"  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
     }
   };
 

@@ -132,7 +132,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         navigate("/")
       }
     } catch (error) {
-      toast.error("Please try again ");
+      toast.error("Please try again "  , {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+        
+      });
       console.error("Error during Twitter login:", error);
     }
   };
