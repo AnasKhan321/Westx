@@ -21,6 +21,7 @@ import { ColorRing } from "react-loader-spinner";
 import { IoCaretBack } from "react-icons/io5";
 import TokenDetail from "./TokenDetail";
 import { useToken } from "../Context/TokenContext";
+import SafeImage from "./SafeImage";
 
 interface Tweetcounts {
   success: boolean;
@@ -101,31 +102,31 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       setisFollow(true);
       setuserfollower(suserfollower + 1);
       if (response?.success) {
-        toast.success("follow successfully!"  , {
+        toast.success("follow successfully!", {
           style: {
             borderRadius: '20px',
             background: '#333',
             color: '#fff',
           },
-          
+
         });
-        queryClient.invalidateQueries({queryKey: [`UserFollower:${profile.username}`],});
-        queryClient.invalidateQueries({queryKey: [`UserFollowing:${profile.username}`],});
-        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWERS:${profile.username}`],});
-        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWING:${profile.username}`],});
+        queryClient.invalidateQueries({ queryKey: [`UserFollower:${profile.username}`], });
+        queryClient.invalidateQueries({ queryKey: [`UserFollowing:${profile.username}`], });
+        queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWERS:${profile.username}`], });
+        queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWING:${profile.username}`], });
 
         if (following) {
           setfollowings(following + 1);
         }
         setisfollower(false);
       } else if (response?.success == false) {
-        toast.error("Something went wrong"  , {
+        toast.error("Something went wrong", {
           style: {
             borderRadius: '20px',
             background: '#333',
             color: '#fff',
           },
-          
+
         });
       }
     }
@@ -144,30 +145,30 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     setisFollow(false);
     setuserfollower(suserfollower - 1);
     if (response?.success) {
-      toast.success("unfollow successfully!"   , {
+      toast.success("unfollow successfully!", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       });
-        queryClient.invalidateQueries({queryKey: [`UserFollower:${profile.username}`],});
-        queryClient.invalidateQueries({queryKey: [`UserFollowing:${profile.username}`],});
-        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWERS:${profile.username}`],});
-        queryClient.invalidateQueries({queryKey: [`USER:FOLLOWING:${profile.username}`],});
+      queryClient.invalidateQueries({ queryKey: [`UserFollower:${profile.username}`], });
+      queryClient.invalidateQueries({ queryKey: [`UserFollowing:${profile.username}`], });
+      queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWERS:${profile.username}`], });
+      queryClient.invalidateQueries({ queryKey: [`USER:FOLLOWING:${profile.username}`], });
       if (following) {
         setfollowings(following - 1);
       }
       setisfollower(false);
     } else if (response?.success == false) {
-      toast.error("Something went wrong"  , {
+      toast.error("Something went wrong", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       });
     }
   };
@@ -196,7 +197,11 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           <div className="relative w-full h-48">
             <img
               src={profile.coverPhotoURL || "/back.jpeg"}
-              alt="Cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null; // Prevent infinite loop
+                target.src = "/back.jpeg";
+              }}
               className="w-full h-48 object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#000000b1] mix-blend-multiply"></div>
@@ -218,11 +223,13 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
       <div className="grid grid-cols-18 pb-0 md:pb-10 border-b border-white/40 w-[95%]  mx-auto ">
         <div className="relative flex flex-col  items-start col-span-18  md:col-span-18    -mt-12">
-          <img
+
+          <SafeImage
             src={profile.photoURL as string}
             alt="user"
             className=" w-20 h-20  md:w-24 md:h-24 rounded-full border  border-white"
           />
+
 
           <div className=" flex items-center  gap-x-4 mt-4 ">
             <h2 className=" text-base  md:text-xl font-semibold ">
@@ -347,7 +354,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             </div>
           </div>
 
-      
+
 
           {profile?.isToken && (
             <TokenDetail publicKey={profile.publicKey as string} />

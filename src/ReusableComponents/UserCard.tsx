@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { User } from "../utils/type";
 import { IoChatboxOutline } from "react-icons/io5";
+import SafeImage from "./SafeImage";
 
 
 const UserCard = ({user}  : {user : User}) => {
@@ -8,16 +9,13 @@ const UserCard = ({user}  : {user : User}) => {
     <div className="flex items-center p-4   text-white  rounded-lg w-full  font-roboto">
       {/* Avatar */}
       <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
-        <img
-          src={user.photoURL} // Replace with your image URL
+        <SafeImage
+          src={user.photoURL}
           alt="User Avatar"
           className="w-full h-full object-cover"
         />
 
-
-
       </div>
-      {/* User Info */}
       <div className="flex-grow">
         <div className="font-bold flex gap-x-2 items-center"> <Link to={`/user/${user.username}`}> {user.name}</Link>          <span >
 

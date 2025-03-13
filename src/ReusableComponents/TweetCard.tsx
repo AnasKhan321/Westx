@@ -19,6 +19,7 @@ import { IoBookmark } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { ColorRing } from "react-loader-spinner";
 import { useApp } from "../Context/ActivityContext";
+import SafeImage from "./SafeImage";
 
 const SmallestLoader = () => {
   return (
@@ -230,12 +231,11 @@ const TweetCard = ({
   return (
     <div className=" text-white w-full  md:w-[96%]  grid  grid-cols-12  mx-auto  py-4 px-2   md:p-4 border-b border-white/20  ">
       <div className=" col-span-2  md:col-span-1">
-        <img
+        <SafeImage
           src={tweet.user.photoURL}
-          alt={tweet.user.name}
           width={48}
           height={48}
-          className="rounded-full "
+          className="rounded-full"
         />
       </div>
 
