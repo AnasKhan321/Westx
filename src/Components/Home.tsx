@@ -1,4 +1,5 @@
 import React, {Suspense, useState } from "react";
+import SEO from "../ReusableComponents/SEO";
 
 const MyComponent = React.lazy(() => import("./infiniteScroller3"));
 const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
@@ -6,11 +7,12 @@ const ForYouTweets = React.lazy(() => import("./infiniteScroller5"));
 
 export default function Home() {
   const tabs = ["Latest Tweets", "For You", "Following"];
-  const [activeTab, setActiveTab] = useState("Latest Tweets");
+  const [activeTab, setActiveTab] = useState("For You");
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
+    <SEO title=" WestX -  Home" description="Home page" />
       <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-2xl overflow-y-scroll ">
           <div
             className={`md:flex justify-between w-[49.9%]  hidden  backdrop-blur-xl   rounded-2xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}

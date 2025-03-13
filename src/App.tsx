@@ -32,6 +32,9 @@ import { WalletProvider } from "@solana/wallet-adapter-react";
 import '@solana/wallet-adapter-react-ui/styles.css';
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import CookiePolicy from "./Components/CookiePolicy";
+import TopicsTweets from "./Components/TopicsTweets";
+import { ActivityProvider } from "./Context/ActivityContext";
+
 
 const queryClient = new QueryClient();
 
@@ -108,6 +111,7 @@ function AppRoutes() {
               element={<Following />}
               key={"following"}
             />
+            <Route path="/topics/:topic" element={<TopicsTweets />} key={"TopicsTweets"} />
             <Route path="/search" element={<Search />} key={"search"} />
           </Routes>
         </MainLayout>
@@ -142,7 +146,9 @@ function App() {
                 <TokenProvider>
                   <AuthContextProvider>
                     <SocketProvider>
-                      <AppRoutes />
+                      <ActivityProvider>
+                        <AppRoutes />
+                      </ActivityProvider>
                     </SocketProvider>
                   </AuthContextProvider>
                 </TokenProvider>

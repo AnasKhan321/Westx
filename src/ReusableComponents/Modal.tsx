@@ -54,7 +54,7 @@ const Modal = ({ isOpen, onClose, title  , text }: ModalProps) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed  -translate-x-1/2 -translate-y-1/2 w-full  md:w-[90%] max-w-2xl z-50 top-0"
+            className="fixed  max-h-[94vh] left-0   md:left-1/2 overflow-y-scroll my-[3vh] w-full  md:w-[90%] max-w-[32rem]  md:max-w-2xl z-50 top-0"
           >
             <div className="bg-[#1a1a1a] rounded-xl shadow-xl border border-purple-500/20">
               {/* Header */}

@@ -21,6 +21,10 @@ const Explores = () => {
   const handleClick = ()=>{
           navigate(-1);
   }
+
+  if(isLoading){
+    return <Loader2 fullScreen={true}/>
+  }
   return (
     <div className=" max-h-screen min-h-screen md:max-h-[96vh]  md:min-h-[96vh] bg-primaryColor  md:my-[2vh]  md:bg-secondaryColor  w-full rounded-2xl  border border-white/10 ">
       <SEO title={ "Search Result - " + query} description={"Search Result for " + query} />
@@ -29,7 +33,6 @@ const Explores = () => {
         <span>Search Result</span>
        </div>
       
-      {isLoading && <Loader2 fullScreen={true}/>}
       {error && (
         <div className="font-bold text-center text-2xl  mt-16">
           {" "}

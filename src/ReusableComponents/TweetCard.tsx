@@ -18,6 +18,7 @@ import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { IoBookmark } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { ColorRing } from "react-loader-spinner";
+import { useApp } from "../Context/ActivityContext";
 
 const SmallestLoader = () => {
   return (
@@ -64,6 +65,8 @@ const TweetCard = ({
     tweet.reposts.some((tweetR) => tweetR.userId === user?.id)
   );
 
+  const { contextlikes, setcontextlikes, contextreposts, setcontextreposts, contextbookmarks, setcontextbookmarks, removecontextlikes, setremovecontextlikes, removecontextbookmarks, setremovecontextbookmarks } = useApp()
+
 
 
   const handleAddBookmark = async () => {
@@ -79,28 +82,25 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
-
-      queryClient.invalidateQueries({
-        queryKey: ["tweets"],
-      });
-      
-      toast.success("BookMark added Successfully"  , {
+      toast.success("BookMark added Successfully", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       });
       setisBookmarked(true);
       setbookmarks(bookmarks + 1);
+      setcontextbookmarks([...contextbookmarks, tweet.id])
+      setremovecontextbookmarks(removecontextbookmarks.filter((id) => id !== tweet.id))
     }
     setisbookmarker(false);
   };
 
   const removeBookmark = async () => {
-    if(isbookmarker){
-      return ; 
+    if (isbookmarker) {
+      return;
     }
     setisbookmarker(true)
     const response = await DeleteBookmark({
@@ -111,21 +111,20 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: [`${user?.username}:Bookmarks`],
       });
-
-
-      queryClient.invalidateQueries({
-        queryKey: ["tweets"],
-      });
-      toast.success("Removed Bookmark"  , {
+      toast.success("Removed Bookmark", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       });
       setisBookmarked(false);
-      setbookmarks(bookmarks - 1);
+      if (bookmarks > 0) {
+        setbookmarks(bookmarks - 1);
+      }
+      setcontextbookmarks(contextbookmarks.filter((id) => id !== tweet.id))
+      setremovecontextbookmarks([...removecontextbookmarks, tweet.id])
     }
     setisbookmarker(false)
   };
@@ -143,25 +142,31 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: ["tweets"],
       });
-      toast.success("Liked!"  , {
+      toast.success("Liked!", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
+
       });
+
+      setremovecontextlikes(removecontextlikes.filter((id) => id !== tweet.id))
+      setcontextlikes([...contextlikes, tweet.id])
 
       setislike(true);
       setlikes(likes + 1);
+
+
     }
 
     setisliker(false);
   };
 
   const removeLike = async () => {
-    if(isliker){
-      return ; 
+    if (isliker) {
+      return;
     }
     setisliker(true)
     const response = await DeleteLike({
@@ -172,16 +177,21 @@ const TweetCard = ({
       queryClient.invalidateQueries({
         queryKey: ["tweets"],
       });
-      toast.success("Removed Like"  , {
+      toast.success("Removed Like", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       });
+      setcontextlikes(contextlikes.filter((id) => id !== tweet.id))
       setislike(false);
-      setlikes(likes - 1);
+      setremovecontextlikes([...removecontextlikes, tweet.id])
+      if (likes > 0) {
+        setlikes(likes - 1);
+      }
+
     }
     setisliker(false)
   };
@@ -202,14 +212,15 @@ const TweetCard = ({
       });
       setisreposted(true);
       setreposts(reposts + 1);
-      toast.success("Reposted !"   , {
+      toast.success("Reposted !", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       });
+      setcontextreposts([...contextreposts, tweet.id])
     }
     setisreposter(false);
   };
@@ -271,7 +282,7 @@ const TweetCard = ({
           <div className="mt-4 w-full">
             <LazyLoadImage
               src={tweet.image}
-      
+
               className="w-full h-auto rounded-lg"
             />
           </div>
@@ -288,7 +299,7 @@ const TweetCard = ({
               </div>
             </Link>
 
-            {isreposted ? (
+            {isreposted || contextreposts.some((id) => id === tweet.id) ? (
               <div className="flex gap-x-1 items-center">
                 <span className="text-sm">{reposts == 0 ? "" : reposts}</span>
                 <BiRepost className=" text-green-500    bg-neutral-700  transition-all cursor-pointer   hover:bg-neutral-800  p-2 rounded-full text-4xl   " />
@@ -305,19 +316,51 @@ const TweetCard = ({
             )}
 
             <div className="flex gap-x-1 group   transition-all  group items-center">
-              {islike ? (
-                <div onClick={removeLike} className="flex gap-x-1 items-center">
-                  <span className="text-sm">{likes == 0 ? "" : likes}</span>
+              {islike || contextlikes.some((id) => id === tweet.id) ? (
 
-                  {isliker ? (
-                    <SmallestLoader />
+
+
+
+                <>
+
+
+                  {removecontextlikes.some((id) => id === tweet.id) ? (
+                    <div onClick={AddLike} className="flex gap-x-1 items-center">
+
+
+                      <span className="text-sm"> {likes - 1 == 0 ? "" : likes}</span>
+                      {isliker ? (
+                        <SmallestLoader />
+                      ) : (
+                        <FaRegHeart className="group-hover:bg-neutral-800 text-white transition-all   bg-neutral-700   cursor-pointer text-4xl p-2 rounded-full " />
+                      )}
+                    </div>
                   ) : (
-                    <FaHeart className=" text-red-500 group-hover:bg-neutral-800  transition-all    bg-neutral-700   cursor-pointer text-4xl p-2 rounded-full " />
-                  )}
-                </div>
+                    <>
+
+                      <div onClick={removeLike} className="flex gap-x-1 items-center">
+
+                        <span className="text-sm"> {likes == 0 ? 1 : likes}</span>
+
+                        {isliker ? (
+                          <SmallestLoader />
+                        ) : (
+                          <FaHeart className=" text-red-500 group-hover:bg-neutral-800  transition-all    bg-neutral-700   cursor-pointer text-4xl p-2 rounded-full " />
+                        )}
+                      </div>
+                    </>)
+
+                  }
+
+
+
+
+                </>
               ) : (
                 <div onClick={AddLike} className="flex gap-x-1 items-center">
-                  <span className="text-sm">{likes == 0 ? "" : likes}</span>
+
+
+                  <span className="text-sm"> {likes == 0 ? "" : likes}</span>
                   {isliker ? (
                     <SmallestLoader />
                   ) : (
@@ -327,20 +370,50 @@ const TweetCard = ({
               )}
             </div>
 
-            {isBookmarked ? (
-              <div
-                onClick={removeBookmark}
-                className="flex gap-x-1 items-center"
-              >
-                <span className="text-sm">
-                  {bookmarks == 0 ? "" : bookmarks}
-                </span>
-                {isbookmarker ? (
-                  <SmallestLoader />
+            {isBookmarked || contextbookmarks.some((id) => id === tweet.id) ? (
+
+
+              <>
+
+                {removecontextbookmarks.some((id) => id === tweet.id) ? (
+                  <div
+                    className="flex items-center gap-x-1  text-gray-500"
+                    onClick={handleAddBookmark}
+                  >
+                    <span className="text-sm">
+                      {bookmarks == 0 ? "" : bookmarks}
+                    </span>
+                    {isbookmarker ? (
+                      <SmallestLoader />
+                    ) : (
+                      <IoBookmarkOutline className=" text-white  transition-all   bg-neutral-700 rounded-full cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
+                    )}
+                  </div>
+
+
+
+
                 ) : (
-                  <IoBookmark className="text-territary rounded-full  transition-all  bg-neutral-700  cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
+
+                  <div
+                    onClick={removeBookmark}
+                    className="flex gap-x-1 items-center"
+                  >
+                    <span className="text-sm">
+                      {bookmarks == 0 ? 1 : bookmarks}
+                    </span>
+                    {isbookmarker ? (
+                      <SmallestLoader />
+                    ) : (
+                      <IoBookmark className="text-territary rounded-full  transition-all  bg-neutral-700  cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
+                    )}
+                  </div>
+
                 )}
-              </div>
+
+
+
+              </>
             ) : (
               <div
                 className="flex items-center gap-x-1  text-gray-500"

@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useAuth } from "../Context/AuthContext";
-import { Link } from "react-router-dom";
-
 import { ReactTyped } from 'react-typed';
 import Loader2 from "../ReusableComponents/Loader2";
 import Modal from "../ReusableComponents/Modal";
+
 
 const Login: React.FC = () => {
   const { handleTwitterLogin, islogin } = useAuth();
@@ -22,6 +21,20 @@ const Login: React.FC = () => {
     Platform Functionality: Your data helps us operate WestX, process transactions, and provide seamless experiences.,
     Security & Compliance: We ensure compliance with applicable laws, protect against fraud, and maintain security.,
     Platform Improvements: Data insights help refine AI interactions and improve features over time.
+  `
+
+
+  const termosContent = `
+  At WestX, we use cookies to enhance your experience on our platform. 
+  This Cookie Policy explains how and why we use cookies, specifically Firebase cookies, 
+  and how you can manage your preferences.
+
+  WestX only uses Firebase cookies for the following purposes:
+    Authentication & Security: Firebase cookies help authenticate users and maintain secure sessions.
+    Performance & Analytics: We use Firebase cookies to track engagement and improve platform performance.
+    Session Management: These cookies help ensure a seamless user experience by remembering login sessions.
+    WestX does not use third-party tracking cookies, advertising cookies, or any other cookies unrelated to Firebase services.
+  
   `
   return (
     <div className="min-h-screen max-h-screen flex  w-full flex-col  overflow-y-hidden md:flex-row">
@@ -53,23 +66,21 @@ const Login: React.FC = () => {
           {islogin && <div className="flex text-center my-2  justify-center items-center">        <Loader2 />  </div>}
 
           <p className="my-4 text-gray-100">
-            By continuing, you agree to our <Link to="#" className="text-purple-400"> Terms of Services </Link>  and
+            By continuing, you agree to our <button onClick={() => setShowTermsModal(true)} className="text-purple-400"> Terms of Services </button>  and
 
 
-            <button onClick={() => setShowTermsModal(true)} className="text-purple-400"> Privacy Policy</button>
+            <button onClick={() => setShowPrivacyModal(true)} className="text-purple-400"> Privacy Policy</button>
           </p>
         </div>
 
         <Modal
           isOpen={showTermsModal}
           onClose={() => setShowTermsModal(false)}
-          title="Privacy Policy"
-          text={privacyContent}
+          title="Terms of Services"
+          text={termosContent}
         >
           <div className="text-gray-300 space-y-4 max-h-[60vh] overflow-y-auto">
-            <pre className="whitespace-pre-wrap font-sans leading-relaxed">
-              { }
-            </pre>
+
           </div>
         </Modal>
 

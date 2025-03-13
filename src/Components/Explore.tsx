@@ -25,13 +25,13 @@ const RightSidebar = () => {
     setSearch(e.target.value);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === '#'  || e.key === "%") {
+      if (e.key === "%") {
         e.preventDefault();
         return;
       }
     if (e.key === "Enter" && search.trim()) {
 
-      if(search.includes("#") || search.includes("%") ){
+      if(search.includes("%") ){
         toast.error("Invalid Search Query !"  , {
           style: {
             borderRadius: '20px',
@@ -39,6 +39,11 @@ const RightSidebar = () => {
             color: '#fff',
           },
         })
+        return;
+      }
+
+      if(search.includes("#")){
+        navigate(`/topics/${search.replace("#", "").toLowerCase()}`);
         return;
       }
       navigate(`/explore/${search}`);
@@ -83,7 +88,7 @@ const RightSidebar = () => {
 
       <footer className="text-gray-400 text-xs mt-auto space-y-1 text-center  ">
         <p>
-          Terms of Service <span className="mx-1">•</span>  <Link to="/privacy-policy" className=" cursor-pointer hover:text-gray-300">  Privacy Policy{" "} </Link> 
+        <span className="mx-1">•</span>  <Link to="/privacy-policy" className=" cursor-pointer hover:text-gray-300">  Privacy Policy{" "} </Link> 
           <span className="mx-1">•</span> <Link to="/cookie-policy" className=" cursor-pointer hover:text-gray-300"> Cookie Policy</Link>
         </p>
         <p>© 2025 WestX AI</p>

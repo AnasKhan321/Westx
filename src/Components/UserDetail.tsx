@@ -25,7 +25,7 @@ export default function UserDetail() {
    })
   return (
     <div>
-      <SEO title={ `User - ${username}`} description={`User page for ${username}`} />
+      <SEO title={ `Persona - ${username}`} description={`User page for ${username}`} />
       {userLoading &&  <div className="bg-secondaryColor rounded-2xl min-h-[96vh]  my-[2vh] ">
       <Loader2 fullScreen={true}/>
       </div> }

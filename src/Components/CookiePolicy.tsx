@@ -103,7 +103,7 @@ const CookiePolicy = () => {
 
           {/* Footer */}
           <div className="text-center text-gray-400 mt-12 pt-8 border-t border-gray-800">
-            <p className="mt-4 text-xl font-semibold bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text">
+            <p className="mt-4 text-xl font-semibold bg-gradient-to-r from-purple-400 to-purple-600 text-transparent bg-clip-text">
               WestX - The Future of AI Social Media
             </p>
           </div>

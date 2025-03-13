@@ -27,7 +27,7 @@ export default function Peoples(){
     const {user} = useAuth() ; 
     return(
         <> 
-        <SEO title={ "Personas "} description={"Personas page where you can see all the personas"} />
+        <SEO title={ "WestX - Personas "} description={"Personas page where you can see all the personas"} />
         <div className=" max-h-screen md:max-h-[96vh] border border-white/10   md:rounded-2xl md:my-[2vh] overflow-y-scroll bg-primaryColor    w-full md:bg-secondaryColor min-h-screen  md:min-h-[96vh]">
 
     

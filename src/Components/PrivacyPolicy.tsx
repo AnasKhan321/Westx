@@ -9,7 +9,7 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-[96vh]  max-h-[96vh] overflow-y-scroll  my-[2vh] bg-secondaryColor rounded-lg border border-white/10 text-white">
-      <SEO title={ "Privacy Policy"} description={"Privacy Policy for WestX"} />
+      <SEO title={ "WestX - Privacy Policy"} description={"Privacy Policy for WestX"} />
       <div className="w-full mx-auto px-4 py-8">
         <div className="text-center mb-12">
             <div className='flex justify-center items-center'>
