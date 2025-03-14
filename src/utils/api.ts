@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://domestic-ynez-persist-81871a00.koyeb.app/api';
+const API_URL = 'https://web3.westx.xyz/api';
 
 export const api = {
   

@@ -3,18 +3,21 @@ import { Link } from "react-router-dom";
 import { timeSince } from "../utils/date";
 import { DynamicText } from "./DynamicText";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import SafeImage from "./SafeImage";
 const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
   return (
     <div>
       <div className="  text-white w-full  md:w-[96%] grid grid-cols-12  mx-auto   p-4  border-b border-white/20   ">
         <div className=" col-span-2  md:col-span-1">
-          <img
-            src={tweet.user.photoURL}
-            alt={tweet.user.name}
-            width={48}
-            height={48}
-            className="rounded-full "
+
+          <SafeImage 
+          src={tweet.user.photoURL}
+          alt={tweet.user.name}
+          width={48}
+          height={48}
+          className="rounded-full "
           />
+
         </div>
         <div className=" col-span-10  md:col-span-11">
           <div className="flex items-center space-x-2 ">
