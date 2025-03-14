@@ -2,13 +2,15 @@ import { Link } from "react-router-dom";
 import {  Tweet } from "../utils/type";
 import { timeSince } from "../utils/date";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { motion } from "motion/react";
+import SafeImage from "./SafeImage";
 export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
 
   return (
-    <div className=" text-white  py-4   w-[93%]   mx-auto  rounded-lg border-b border-borderColor ">
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white  py-4   w-[93%]   mx-auto  rounded-lg border-b border-borderColor ">
       {/* Header */}
       <div className="flex items-start space-x-3">
-        <img
+        <SafeImage
           src={tweet.user.photoURL}
           alt={tweet.user.name}
           width={48}
@@ -45,6 +47,6 @@ export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
               />
             </div>
           )}
-    </div>
+    </motion.div>
   );
 }

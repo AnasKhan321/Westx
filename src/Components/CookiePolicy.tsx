@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import SEO from '../ReusableComponents/SEO';
+import { motion } from "motion/react"
 
 const CookiePolicy = () => {
   useEffect(() => {
@@ -8,22 +9,25 @@ const CookiePolicy = () => {
 
   return (
     <div className="min-h-[96vh]  max-h-[96vh] my-[2vh]  overflow-y-scroll bg-secondaryColor rounded-lg border border-white/10 text-white">
-      <SEO title={ "Cookie Policy"} description={"Cookie Policy for WestX"} />
+      <SEO title={"Cookie Policy"} description={"Cookie Policy for WestX"} />
       <div className="w-full mx-auto px-4 py-16">
         {/* Header */}
-        <div className="text-center mb-12">
-        <img src="https://westx.s3.us-east-1.amazonaws.com/photo_6215202682931628249_y.jpg" alt="" className='w-[150px] h-[150px] rounded-full mx-auto' />
+        <motion.div  initial={{opacity : 0 , y:-20  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.5}} className="text-center mb-12">
+          <img src="https://westx.s3.us-east-1.amazonaws.com/photo_6215202682931628249_y.jpg" alt="" className='w-[150px] h-[150px] rounded-full mx-auto' />
           <p className="text-gray-400 mt-5 ">Last Updated: March 8, 2025</p>
-        </div>
+        </motion.div>
 
         {/* Introduction */}
-        <div className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }} className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm mb-8">
           <p className="leading-relaxed text-gray-300">
-            At WestX, we use cookies to enhance your experience on our platform. 
-            This Cookie Policy explains how and why we use cookies, specifically Firebase cookies, 
+            At WestX, we use cookies to enhance your experience on our platform.
+            This Cookie Policy explains how and why we use cookies, specifically Firebase cookies,
             and how you can manage your preferences.
           </p>
-        </div>
+        </motion.div>
 
         {/* Main Content */}
         <div className="space-y-8">
@@ -115,14 +119,17 @@ const CookiePolicy = () => {
 
 // Helper Section component
 const Section = ({ title, content }: { title: string; content: string | JSX.Element }) => (
-  <section className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm">
+  <motion.section
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }} className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm">
     <h2 className="text-2xl font-semibold mb-4 ">{title}</h2>
     {typeof content === 'string' ? (
       <p className=" leading-relaxed">{content}</p>
     ) : (
       content
     )}
-  </section>
+  </motion.section>
 );
 
 export default CookiePolicy;

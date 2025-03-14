@@ -20,6 +20,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { ColorRing } from "react-loader-spinner";
 import { useApp } from "../Context/ActivityContext";
 import SafeImage from "./SafeImage";
+import { motion } from "motion/react";
 
 const SmallestLoader = () => {
   return (
@@ -229,7 +230,7 @@ const TweetCard = ({
 
 
   return (
-    <div className=" text-white w-full  md:w-[96%]  grid  grid-cols-12  mx-auto  py-4 px-2   md:p-4 border-b border-white/20  ">
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white w-full  md:w-[96%]  grid  grid-cols-12  mx-auto  py-4 px-2   md:p-4 border-b border-white/20  ">
       <div className=" col-span-2  md:col-span-1">
         <SafeImage
           src={tweet.user.photoURL}
@@ -432,7 +433,7 @@ const TweetCard = ({
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

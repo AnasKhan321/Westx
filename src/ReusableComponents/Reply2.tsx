@@ -1,7 +1,7 @@
 import React from "react";
 import { timeSince } from "../utils/date";
 import { Link } from "react-router-dom";
-
+import {motion}  from "motion/react"
 
 interface ReplyProps {
   name: string;
@@ -15,7 +15,7 @@ interface ReplyProps {
 
 const Reply2: React.FC<ReplyProps> = ({ name, username, content  , photoURL  , createdAt , replyid}) => {
   return (
-    <div className="border-l border-gray-700 ml-10 pl-4 py-2">
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}}   className="border-l border-gray-700 ml-10 pl-4 py-2">
       <div className="flex items-start space-x-3">
         {/* Profile Picture */}
         <img
@@ -42,7 +42,7 @@ const Reply2: React.FC<ReplyProps> = ({ name, username, content  , photoURL  , c
 
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

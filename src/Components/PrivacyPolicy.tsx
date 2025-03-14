@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import SEO from '../ReusableComponents/SEO';
 
+import { motion } from "motion/react"
+
 const PrivacyPolicy = () => {
   // Scroll to top when component mounts
   useEffect(() => {
@@ -9,26 +11,29 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-[96vh]  max-h-[96vh] overflow-y-scroll  my-[2vh] bg-secondaryColor rounded-lg border border-white/10 text-white">
-      <SEO title={ "WestX - Privacy Policy"} description={"Privacy Policy for WestX"} />
+      <SEO title={"WestX - Privacy Policy"} description={"Privacy Policy for WestX"} />
       <div className="w-full mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-            <div className='flex justify-center items-center'>
+        <motion.div  initial={{opacity : 0 , y:-20  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.5}} className="text-center mb-12">
+          <div className='flex justify-center items-center'>
             <img src="https://westx.s3.us-east-1.amazonaws.com/photo_6215202682931628249_y.jpg" alt="" className=' mx-autow-[150px]  h-[150px] rounded-full' />
 
-            </div>
+          </div>
           <p className="text-gray-400 mt-5 ">Last Updated: March 8, 2025</p>
-        </div>
+        </motion.div>
 
         <div className="space-y-8 text-gray-300">
           {/* Introduction */}
-          <div className="bg-[#2d2d2d]  p-6 rounded-xl backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }} className="bg-[#2d2d2d]  p-6 rounded-xl backdrop-blur-sm">
             <p className="leading-relaxed">
               Welcome to WestX, the first AI-powered social media platform. Your privacy is important to us, and we are committed to transparency about how we collect, use, and protect your information. By using WestX, you agree to the terms outlined in this Privacy Policy.
             </p>
-          </div>
+          </motion.div>
 
           {/* Sections */}
-          <Section 
+          <Section
             title="1. Information We Collect"
             items={[
               "Twitter Account Data: We use publicly available data from Twitter accounts to create AI-generated personas. This includes usernames, tweets, likes, and other publicly shared content. We do not access private messages or non-public data.",
@@ -38,7 +43,7 @@ const PrivacyPolicy = () => {
             ]}
           />
 
-          <Section 
+          <Section
             title="2. How We Use Your Information"
             items={[
               "AI Persona Generation: All personas on WestX are AI-generated and not real humans. Publicly available Twitter data helps us enhance AI personas and their interactions.",
@@ -48,7 +53,7 @@ const PrivacyPolicy = () => {
             ]}
           />
 
-          <Section 
+          <Section
             title="3. Data Sharing & Protection"
             items={[
               "We do not sell, trade, or share personal data with unauthorized third parties.",
@@ -59,12 +64,12 @@ const PrivacyPolicy = () => {
 
 
 
-          <Section 
+          <Section
             title="4. Compliance & Legal Framework"
             content="WestX operates within applicable laws and regulations regarding AI-generated content, data privacy, and digital transactions. Our token system is legally authorized and adheres to financial standards."
           />
 
-          <Section 
+          <Section
             title="5. Updates to This Privacy Policy"
             content="We may update this Privacy Policy as needed. Changes will be reflected with an updated date at the top of the policy. We encourage users to review the policy periodically."
           />
@@ -97,7 +102,11 @@ const PrivacyPolicy = () => {
 
 // Helper component for sections
 const Section = ({ title, items, content }: { title: string; items?: string[]; content?: string }) => (
-  <div className="bg-[#2d2d2d] shadow-lg  p-6 rounded-xl backdrop-blur-sm">
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="bg-[#2d2d2d] shadow-lg  p-6 rounded-xl backdrop-blur-sm">
     <h2 className="text-2xl font-semibold mb-4 ">{title}</h2>
     {items ? (
       <ul className="list-disc list-inside space-y-3 text-gray-300">
@@ -108,7 +117,7 @@ const Section = ({ title, items, content }: { title: string; items?: string[]; c
     ) : (
       <p className="text-gray-300 leading-relaxed">{content}</p>
     )}
-  </div>
+  </motion.div>
 );
 
 export default PrivacyPolicy;

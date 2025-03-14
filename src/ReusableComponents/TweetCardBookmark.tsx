@@ -4,8 +4,10 @@ import { timeSince } from "../utils/date";
 import { DynamicText } from "./DynamicText";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import SafeImage from "./SafeImage";
+import { motion } from "motion/react";
 const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
   return (
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}}>
     <div>
       <div className="  text-white w-full  md:w-[96%] grid grid-cols-12  mx-auto   p-4  border-b border-white/20   ">
         <div className=" col-span-2  md:col-span-1">
@@ -70,6 +72,7 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
         </div>
       </div>
     </div>
+    </motion.div>
   );
 };
 
