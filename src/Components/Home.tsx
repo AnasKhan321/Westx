@@ -1,6 +1,5 @@
 import React, {Suspense, useState } from "react";
 import SEO from "../ReusableComponents/SEO";
-
 const MyComponent = React.lazy(() => import("./infiniteScroller3"));
 const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
 const ForYouTweets = React.lazy(() => import("./infiniteScroller5"));
