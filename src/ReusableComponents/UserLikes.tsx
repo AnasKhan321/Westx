@@ -1,35 +1,114 @@
-import { useQuery } from "@tanstack/react-query"
-import { getUserLikes } from "../utils/apicalls"
-import TweetDetailTweet from "./TweetCard3"
-import TweetSkeleton from "./TweetSkeleton"
+import { useInfiniteQuery } from "@tanstack/react-query"
+import TweetSkeleton, { TwitterSkeletonComponent } from "./TweetSkeleton"
+import React, { Suspense, useEffect, useRef } from "react"
+import { Like } from "../utils/type"
+import Loader2 from "./Loader2"
+
+const getUserLikes = async ({ userid, page }: { userid: string, page: number }) => {
+  const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/${page}`)
+  const data = await res.json();
+  console.log(data)
+  return {
+    data: data.data,
+    nextCursor: data.data.length > 0 ? page + 1 : undefined, // Stop pagination when no more data
+  }
+}
 
 
+const TweetCardBookmark = React.lazy(
+  () => import("../ReusableComponents/TweetCardBookmark")
+);
 
-const UserLikes = ({id}  : {id : string}) => {
+const UserLikes = ({ id }: { id: string }) => {
 
-    const {isLoading , isError , data }  = useQuery({
-        queryKey : [`user:likes:${id}`] , 
-        queryFn : ()=> getUserLikes(id),
-        staleTime: Infinity, 
-        refetchOnMount: false, 
-        refetchOnWindowFocus: false, 
-    })
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: [`user:likes:${id}`],
+    queryFn: ({ pageParam }) => getUserLikes({ page: pageParam, userid: id }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Ensure no extra fetch
+    initialPageParam: 1,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const bottomRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (!bottomRef.current || !hasNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+
+          fetchNextPage();
+        }
+      },
+      { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
+    );
+
+    const currentRef = bottomRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      observer.unobserve(currentRef);
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+
+  if (status === 'error') return <p>Error: {error.message}</p>
+  if (status == 'pending') return <div className="mt-4">
+    <TweetSkeleton />
+  </div>
+
   return (
     <div>
-      {isLoading && 
-       <TweetSkeleton/>
-    }
-      {isError &&  <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>}
+      <>
+        {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
+          <p className="text-center text-gray-200 my-4 font-bold text-xl  ">No tweets to show.</p>
+        ) : (
+          data?.pages?.map((group, i) => (
+            <React.Fragment key={i}>
+                    {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Tweets  </div>  </>}
+              {group?.data?.map((tweet : Like) => (
+                <Suspense
+                  key={tweet.id}  // ✅ Key should be on Suspense, not inside it
+                  fallback={
 
-      {data?.success && <div> 
-        {data.data.length == 0  && <div className="text-center font-bold p-4 text-xl py-12 "> He doesn't Have any Liked Post !  </div>}
+                    <div className="text-white p-4 md:w-[96%] w-full mx-auto">
 
-            {data.data.map((item , index)=> {
-                return(
-                    <TweetDetailTweet key={index} tweet={item.tweet}/>
-                )
-            })}
-        </div>}
+                      <TwitterSkeletonComponent />
+                    </div>
+
+                  }
+                >
+                  <TweetCardBookmark tweet={tweet.tweet} />
+                </Suspense>
+              ))}
+            </React.Fragment>
+          ))
+        )}
+
+        {/* Invisible div to track scrolling and auto-load new data */}
+        <div ref={bottomRef} className="h-10" />
+
+        {isFetchingNextPage && (
+
+          <div className=" flex justify-center items-start h-[14vh] ">
+            <Loader2 />
+          </div>
+
+
+        )}
+      </>
+
     </div>
   )
 }

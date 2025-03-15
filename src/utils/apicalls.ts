@@ -81,9 +81,10 @@ export interface TweetResponselist2{
 
 
 
-interface UserLikesResponse{
+export interface UserLikesResponse{
     success : boolean , 
-    data : Like[]
+    data : Like[]  , 
+    hasMore : boolean
 }
 
 interface UserReposts {
@@ -191,7 +192,7 @@ export const getUserFollower = async(userid : string)  : Promise<Followingrespon
 
 //using
 export const getUserLikes  = async(userid : string) : Promise<UserLikesResponse>=>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}`)
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/1`)
     const data  = await res.json()  ; 
     return data 
 }
