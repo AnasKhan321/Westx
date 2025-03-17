@@ -1,46 +1,105 @@
-import { useQuery } from "@tanstack/react-query";
-import { getUserReplies } from "../utils/apicalls";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import {  } from "../utils/apicalls";
 import Reply2 from "./Reply2";
 import Tweet4 from "./TweetCard4";
-import { User2 } from "../utils/type";
-import TweetSkeleton from "./TweetSkeleton";
+import { Tweet, User2 } from "../utils/type";
+import TweetSkeleton, { TwitterSkeletonComponent } from "./TweetSkeleton";
 import { motion } from "motion/react";
+import React, { Suspense, useEffect, useRef } from "react";
+import Loader2 from "./Loader2";
+
+interface UserReplies {
+  success : boolean , 
+  data : Tweet[]   , 
+  hasMore : boolean 
+}
+
+
+export const getUserReplies = async({userid , page}  : {userid : string , page : number}  )=>{
+  const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreplies/${userid}/${page}`)
+  const data = await res.json();
+  return {
+    data: data.data,
+    nextCursor: data.data.length > 0 ? page + 1 : undefined, // Stop pagination when no more data , 
+    success: data.success
+  }
+}
 
 const UserReplies = ({ user }: { user : User2 }) => {
-  const { isLoading, data, isError } = useQuery({
+
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
     queryKey: [`user:replies:${user.id}`],
-    queryFn: () => getUserReplies(user.id),
+    queryFn: ({ pageParam }) => getUserReplies({ page: pageParam, userid: user.id }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Ensure no extra fetch
+    initialPageParam: 1,
     staleTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
 
 
+  const bottomRef = useRef<HTMLDivElement | null>(null)
 
-  return (
-    <div>
-      {isError && (
-        <div className="p-4 text-xl font-bold text-center">
- <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>
-        </div>
-      )}
-      {isLoading && 
-         <TweetSkeleton/>
-    }
-      {data?.success && (
-        <>
-          {data.data.length == 0 && (
-            <div className="text-center font-bold text-xl text-white p-4 py-12  ">
-              {" "}
-              He doesn't Have any Replies{" "}
-            </div>
-          )}
+  useEffect(() => {
+    if (!bottomRef.current || !hasNextPage) return;
 
-        </>
-      )}
-      {data?.data?.map((item  , index) => {
-        return (
-          <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className="border-b border-white/20  py-4  " key={index}>
+    const observer = new IntersectionObserver(
+      (entries) => {
+
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+
+          fetchNextPage();
+        }
+      },
+      { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
+    );
+
+    const currentRef = bottomRef.current;
+    observer.observe(currentRef);
+
+    return () => {
+      observer.unobserve(currentRef);
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+
+  if (status === 'error') return <p className="text-center text-gray-200 my-4 font-bold text-xl  ">Internal Server Error</p>
+  if (status == 'pending') return <div className="mt-4">
+    <TweetSkeleton />
+  </div>
+
+
+
+
+return (
+  <div>
+    <>
+      {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
+        <p className="text-center text-gray-200 my-4 font-bold text-xl  ">No tweets to show.</p>
+      ) : (
+        data?.pages?.map((group, i) => (
+          <React.Fragment key={i}>
+            {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Replies  </div>  </>}
+            {group?.data?.map((item: Tweet  , index : number) => (
+              <Suspense
+                key={item.id}  // ✅ Key should be on Suspense, not inside it
+                fallback={
+
+                  <div className="text-white p-4 md:w-[96%] w-full mx-auto">
+
+                    <TwitterSkeletonComponent />
+                  </div>
+
+                }
+              >
+                          <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className="border-b border-white/20  py-4  " key={index}>
             {item.parentTweetId && <Tweet4 createdAt={item.parentTweet?.createdAt as Date} photoURL={item.parentTweet?.user.photoURL as string } tweetid={item.parentTweet?.id as string} content={item.parentTweet?.text as string} username={item.parentTweet?.user.username as string} date={""}  name={item.parentTweet?.user.name as string} />  }
         
             <Reply2
@@ -53,10 +112,27 @@ const UserReplies = ({ user }: { user : User2 }) => {
               createdAt={item.createdAt}
             />
           </motion.div>
-        );
-      })}
-    </div>
-  );
+              </Suspense>
+            ))}
+          </React.Fragment>
+        ))
+      )}
+
+      {/* Invisible div to track scrolling and auto-load new data */}
+      <div ref={bottomRef} className="h-10" />
+
+      {isFetchingNextPage && (
+
+        <div className=" flex justify-center items-start h-[14vh] ">
+          <Loader2 />
+        </div>
+
+
+      )}
+    </>
+
+  </div>
+)
 };
 
 export default UserReplies;

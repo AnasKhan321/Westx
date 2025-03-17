@@ -7,7 +7,6 @@ import Loader2 from "./Loader2"
 const getUserLikes = async ({ userid, page }: { userid: string, page: number }) => {
   const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/${page}`)
   const data = await res.json();
-  console.log(data)
   return {
     data: data.data,
     nextCursor: data.data.length > 0 ? page + 1 : undefined, // Stop pagination when no more data
@@ -23,7 +22,6 @@ const UserLikes = ({ id }: { id: string }) => {
 
   const {
     data,
-    error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -63,7 +61,7 @@ const UserLikes = ({ id }: { id: string }) => {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
 
-  if (status === 'error') return <p>Error: {error.message}</p>
+  if (status === 'error') return <p className="text-center text-gray-200 my-4 font-bold text-xl  ">Internal Server Error</p>
   if (status == 'pending') return <div className="mt-4">
     <TweetSkeleton />
   </div>
@@ -76,8 +74,8 @@ const UserLikes = ({ id }: { id: string }) => {
         ) : (
           data?.pages?.map((group, i) => (
             <React.Fragment key={i}>
-                    {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Tweets  </div>  </>}
-              {group?.data?.map((tweet : Like) => (
+              {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Tweets  </div>  </>}
+              {group?.data?.map((tweet: Like) => (
                 <Suspense
                   key={tweet.id}  // ✅ Key should be on Suspense, not inside it
                   fallback={

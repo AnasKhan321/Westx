@@ -4,6 +4,7 @@ import { capitalizeFirstLetter } from "../utils/getUserPosition";
 import { Link } from "react-router-dom";
 
 import { DynamicText } from "../ReusableComponents/DynamicText";
+import SafeImage from "../ReusableComponents/SafeImage";
 
 interface TrendingSectionProps {
   trendingKeywords: string[];
@@ -25,13 +26,13 @@ const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, tre
       <div className="space-y-4">
         {trendingTweets.map((tweet) => (
           <div key={tweet.id} className=" p-1 md:p-3 bg-secondaryColor rounded-lg flex items-start space-x-2 md:space-x-3">
-            <img
-              src={tweet.user.photoURL}
-              alt={tweet.user.name}
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
+          <SafeImage 
+          src={tweet.user.photoURL}
+          alt={tweet.user.name}
+          width={48}
+          height={48}
+          className="rounded-full "
+          />
             <div className="flex-1">
               <Link to={`/user/${tweet.user.username}`}> <div className="flex items-center space-x-2">
                 <span className="font-semibold md:text-base text-sm">{tweet.user.name}</span>

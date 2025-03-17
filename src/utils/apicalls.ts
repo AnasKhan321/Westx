@@ -11,7 +11,7 @@ interface TweetDetail {
     data : Tweet
 }
 
-interface Followings {
+export interface Followings {
     id: string,
     followerid: string,
     followingid: string,
@@ -20,7 +20,7 @@ interface Followings {
     following : User
 }
 
-interface Followings2 {
+export interface Followings2 {
     id: string,
     followerid: string,
     followingid: string,
@@ -92,10 +92,7 @@ interface UserReposts {
     data : Tweet[]
 }
 
-interface UserReplies {
-    success : boolean , 
-    data : Tweet[]
-}
+
 
 
 interface TrendingRespnse {
@@ -173,8 +170,6 @@ export const getUserFollowinguserid = async(userid : string) : Promise<FollowerR
     return data 
 }
 
-
-
 //using
 export const getUserFollowing = async(userid : string) : Promise<Followingresponse> =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/following/${userid}`)
@@ -202,18 +197,13 @@ export const getUserLikes  = async(userid : string) : Promise<UserLikesResponse>
 //using
 
 export const getUserReposts  = async(userid : string) : Promise<UserReposts>=>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreposts/${userid}`)
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreposts/${userid}/1`)
     const data  = await res.json()  ; 
     return data 
 }
 
 //using
 
-export const getUserReplies = async(userid : string) : Promise<UserReplies>=>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreplies/${userid}`)
-    const data  = await res.json()  ; 
-    return data 
-}
 
 //using
 
