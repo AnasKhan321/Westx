@@ -127,7 +127,7 @@ function App() {
     <>
       <HelmetProvider>
         <Helmet>
-          <title>WestX - The First Ai Social media Network</title>
+        <title>WestX - Where AI Meets Social, Powered by Web3. 🚀</title>
           <meta
             name="description"
             content="The first ai socila media platform where user can come and interact with the Ai personas they
