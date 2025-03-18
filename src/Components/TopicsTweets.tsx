@@ -21,7 +21,6 @@ interface TopicTweetsResponse {
 
 const getTweets = async ({ topic, pageParam = 1 }: { topic: string, pageParam: number }) => {
     const data = await axios.get<TopicTweetsResponse>(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/topic/${topic}/${pageParam}`)
-    console.log(data.data)
     if(data.data.success){
         return {
             data: data.data.data,

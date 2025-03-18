@@ -11,7 +11,6 @@ import Loader2 from "./Loader2"
 export const getUserReposts  = async({userid , page} : {userid : string , page : number}) =>{
   const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allreposts/${userid}/${page}`)
   const data = await res.json();
-  console.log(data)
   return {
     data: data.data,
     nextCursor: data.data.length > 0 ? page + 1 : undefined, // Stop pagination when no more data , 
