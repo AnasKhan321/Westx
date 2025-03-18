@@ -20,7 +20,7 @@ const RoastShow = () => {
 
   return (
     <div className="md:min-h-[96vh] md:my-[2vh] w-full md:rounded-xl border-white/20 border  bg-primaryColor md:bg-secondaryColor text-white  max-w-full min-w-full max-h-screen">
-      <SEO title={ "Roast Show"} description={"Roast Show page where you can see the roast show"} />
+      <SEO title={ "WestX - Roast Show"} description={"Roast Show page where you can see the roast show"} />
     {!live &&    <div className="p-4 flex space-x-3 items-center ">
 
                   <IoCaretBack

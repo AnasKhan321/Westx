@@ -3,7 +3,7 @@ import { useAuth } from "../Context/AuthContext";
 import { ReactTyped } from 'react-typed';
 import Loader2 from "../ReusableComponents/Loader2";
 import Modal from "../ReusableComponents/Modal";
-
+import SEO from "../ReusableComponents/SEO";
 
 const Login: React.FC = () => {
   const { handleTwitterLogin, islogin } = useAuth();
@@ -38,6 +38,7 @@ const Login: React.FC = () => {
   `
   return (
     <div className="min-h-screen max-h-screen flex  w-full flex-col  overflow-y-hidden md:flex-row">
+      <SEO title={ "WestX - Login"} description={"Login page of WestX"} />
       <div className=" h-[51vh] md:h-screen w-full  md:w-[50%]">
         <img
           src="/loginpage.png"
