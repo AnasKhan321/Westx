@@ -92,7 +92,7 @@ const Follower = () => {
    <p className="text-center text-gray-200  font-bold text-xl mt-16  ">No  Followers to show.</p>
         ) : (
           data?.pages?.map((group, i) => (
-            <React.Fragment key={i}>
+              <React.Fragment key={i}>
               {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'>  No more Followers </div>  </>}
               {group?.data?.map((user : Followings2) => (
                 <Suspense
