@@ -77,7 +77,7 @@ const TokenDetail = ({ publicKey }: { publicKey: string }) => {
                 <div className="flex justify-center  md:justify-start  items-center w-[50%]">
                     {!marketcaploading &&
                         <div className="flex gap-1 items-center ">
-                            <p className=" font-bold">  {marketcapdata?.marketCap as number / LAMPORTS_PER_SOL} SOL  </p>
+                            <p className=" font-bold">  {marketcapdata?.marketCap as number / LAMPORTS_PER_SOL} USD  </p>
                             <p className="text-white/50 text-sm  ">MK</p>
                         </div>
                     }
