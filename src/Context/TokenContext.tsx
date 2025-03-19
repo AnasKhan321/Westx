@@ -6,13 +6,12 @@ import { Transaction } from "@solana/web3.js"
 import { api } from '../utils/api';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { useConnection } from '@solana/wallet-adapter-react';
-import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { PublicKey  , Keypair } from '@solana/web3.js';
+import { Keypair } from '@solana/web3.js';
 import axios from 'axios';
 interface TokenContextType {
   handlebuy: (token: string) => void
   handleSell: (token: string) => void
-  handleTokenLaucnh: (name: string, image: string ,username : string) => void
+  handleTokenLaucnh: (name: string, image: string, username: string) => void
   isChecking: boolean
 }
 
@@ -26,6 +25,31 @@ interface SellToken {
   decimals: number,
 }
 
+interface TokenBalanceResponse {
+  address: string
+  balance: number,
+  decimals: number
+  exsists: boolean
+}
+
+// const calculateTokenAmount = (
+//   solAmount: number,
+//   totalSupply: string,
+//   targetSol: string
+// ): number => {
+//   // Convert SOL to lamports (1 SOL = 1e9 lamports)
+//   const lamports = solAmount * LAMPORTS_PER_SOL;
+  
+//   // Convert string values to numbers
+//   const supply = Number(totalSupply);
+//   const target = Number(targetSol);
+  
+//   // Calculate tokens using bonding curve formula
+//   // tokens = (input_sol * total_supply) / target_sol
+//   const tokenAmount = (lamports * supply) / target;
+  
+//   return tokenAmount;
+// };
 
 const TokenContext = createContext<TokenContextType | undefined>(undefined);
 
@@ -47,7 +71,7 @@ const convertImageUrlToFile = async (imageUrl: string, fileName: string): Promis
 export function TokenProvider({ children }: TokenProviderProps) {
 
   const [isOpen, setIsOpen] = useState(false)
-  const { publicKey, signTransaction } = useWallet()
+  const { publicKey, signTransaction, sendTransaction } = useWallet()
   const [isBuyOpen, setIsBuyOpen] = useState(false)
   const [buyAmount, setBuyAmount] = useState(0.1)
   const [buytoken, setBuyToken] = useState(1000)
@@ -82,13 +106,13 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const handlebuy = (token: string) => {
     if (!publicKey) {
       setIsOpen(true)
-      toast.error("Please connect your wallet"  , {
+      toast.error("Please connect your wallet", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       })
 
     } else {
@@ -116,19 +140,13 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
       const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
-
-      // 3. Get a fresh blockhash
-      const { blockhash } = await connection.getLatestBlockhash();
-
-
-      transaction.recentBlockhash = blockhash;
-
-      if (signTransaction) {
-        const signedTransaction = await signTransaction(transaction);
-        const signature = await connection.sendRawTransaction(signedTransaction.serialize());
-        await connection.confirmTransaction(signature);
-
-
+      if (sendTransaction) {
+        const signature = await sendTransaction(transaction, connection);
+        // const {data}  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/verifySignature`, {
+        //   signature: signature,
+        // })
+        // console.log(data)
+        await connection.confirmTransaction(signature)
         const confirmResponse = await api.confirmBuyTransaction(
           selectedtoken,
           signature
@@ -138,13 +156,13 @@ export function TokenProvider({ children }: TokenProviderProps) {
         }
         setIsBuyOpen(false)
         setisBuying(false)
-        toast.success("Purchased successfully"  , {
+        toast.success("Purchased successfully", {
           style: {
             borderRadius: '20px',
             background: '#333',
             color: '#fff',
           },
-          
+
         })
         setBuyAmount(0.1)
         setBuyToken(1000)
@@ -156,13 +174,13 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
     } catch (error) {
-      toast.error("Something went wrong"  , {
+      toast.error("Something went wrong", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       })
       setIsBuyOpen(false)
       setisBuying(false)
@@ -175,71 +193,39 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
     if (!publicKey) {
       setIsOpen(true)
-      toast.error("Please connect your wallet"  , {
+      toast.error("Please connect your wallet", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       })
     } else {
       setselectedtoken(token)
       setisChecking(true)
 
-      try {
-        const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
-          publicKey,
-          {
-            programId: TOKEN_PROGRAM_ID,
-          }
-        );
+      const { data } = await axios.get<TokenBalanceResponse>(`${import.meta.env.VITE_PUBLIC_AI_URL}/getTokenBalance/${publicKey.toBase58()}/${token}`)
+      if (!data.exsists) {
+        toast.error("You don't own any of this token", {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
 
-
-
-        const tokenMintPublicKey = new PublicKey(token);
-        const userTokenAccount = tokenAccounts.value.find(
-          account => account.account.data.parsed.info.mint === tokenMintPublicKey.toString()
-        );
-
-        if (!userTokenAccount) {
-          toast.error("You don't own any of this token"  , {
-            style: {
-              borderRadius: '20px',
-              background: '#333',
-              color: '#fff',
-            },
-            
-          })
-          setisChecking(false)
-          return;
-        }
-
-        const balance = userTokenAccount.account.data.parsed.info.tokenAmount.uiAmount;
-        if (balance <= 0) {
-          toast.error("Your balance is zero for this token"  , {
-            style: {
-              borderRadius: '20px',
-              background: '#333',
-              color: '#fff',
-            },
-            
-          })
-          setisChecking(false)
-          return;
-        }
+        })
+        setisChecking(false)
+        return;
+      } else {
         setisChecking(false)
         setSellTokendata({
-          address: token,
-          balance: balance,
-          decimals: userTokenAccount.account.data.parsed.info.tokenAmount.decimals
+          address: data.address,
+          balance: Math.floor(data.balance),
+          decimals: data.decimals
         });
 
         setIsSellOpen(true)
-
-
-      } catch (error) {
-        setisChecking(false)
       }
     }
   }
@@ -249,32 +235,29 @@ export function TokenProvider({ children }: TokenProviderProps) {
     try {
       e.preventDefault()
       setIsSelling(true)
-      let intNum = Math.floor(sellToken); 
+      let intNum = Math.floor(sellToken);
       const prepareResponse = await api.prepareSellTransaction(
         selectedtoken,
         intNum,
         0,
         publicKey?.toString() as string
       );
-  
+
       if (!prepareResponse.success) {
         throw new Error(prepareResponse.error || 'Failed to prepare transaction');
       }
-  
+
       const { serializedTransaction } = prepareResponse.data;
       const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
-  
-  
-      const { blockhash } = await connection.getLatestBlockhash();
-      transaction.recentBlockhash = blockhash;
-  
-      if (signTransaction) {
-        const signedTransaction = await signTransaction(transaction);
-        const signature = await connection.sendRawTransaction(signedTransaction.serialize());
-  
-  
-        await connection.confirmTransaction(signature);
-  
+
+      if (sendTransaction) {
+        const signature = await sendTransaction(transaction, connection);
+        console.log(signature)
+        // const {data}  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/verifySignature`, {
+        //   signature: signature,
+        // })
+        // console.log(data)
+        await connection.confirmTransaction(signature)
         const confirmResponse = await api.confirmSellTransaction(
           selectedtoken,
           signature
@@ -283,46 +266,46 @@ export function TokenProvider({ children }: TokenProviderProps) {
           throw new Error(confirmResponse.error)
         }
         setIsSelling(false)
-        toast.success("Sold successfully"  , {
+        toast.success("Sold successfully", {
           style: {
             borderRadius: '20px',
             background: '#333',
             color: '#fff',
           },
-          
+
         })
         setSellAmount(0.1)
         setSellToken(0)
         setIsSellOpen(false)
       }
-  
+
     } catch (error) {
-      toast.error("Something went wrong" ,{
+      toast.error("Something went wrong", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       })
       setIsSelling(false)
       setIsSellOpen(false)
 
     }
-   
+
   }
 
 
-  const handleTokenLaucnh = async (name: string, image: string  ,username : string) => {
+  const handleTokenLaucnh = async (name: string, image: string, username: string) => {
     if (!publicKey) {
       setIsOpen(true)
-      toast.error("Please connect your wallet",{
+      toast.error("Please connect your wallet", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       })
     } else {
       setIsTokenLaucnhOpen(true)
@@ -356,8 +339,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
         throw new Error(prepareResponse.error)
       }
 
-      const {  serializedTransaction, tokenMint, tokenDetails } = prepareResponse.data;
-      
+      const { serializedTransaction, tokenMint, tokenDetails } = prepareResponse.data;
+
 
       const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
 
@@ -367,56 +350,55 @@ export function TokenProvider({ children }: TokenProviderProps) {
       const tokenMintKeypair = Keypair.fromSecretKey(new Uint8Array(tokenMint.secretKey));
       transaction.partialSign(tokenMintKeypair);
 
-      if(signTransaction){
-        const signedTransaction = await signTransaction(transaction);
-        const signature = await connection.sendRawTransaction(signedTransaction.serialize());
-        await connection.confirmTransaction(signature);
+      if (signTransaction) {
+        const signature = await sendTransaction(transaction, connection);
+
 
         const confirmResponse = await api.confirmTokenCreation(
-            tokenMint.publicKey,
-            signature,
-            tokenDetails
-          );
+          tokenMint.publicKey,
+          signature,
+          tokenDetails
+        );
 
-          if(!confirmResponse.success){
-            throw new Error(confirmResponse.error)
-          }
+        if (!confirmResponse.success) {
+          throw new Error(confirmResponse.error)
+        }
 
-          const {data }  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/updateUser`,{
-            publicKey : tokenMint.publicKey,
-            username : username
-          })
+        const { data } = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/updateUser`, {
+          publicKey: tokenMint.publicKey,
+          username: username
+        })
 
-          if(!data.success){
-            throw new Error("issues in updating publicKey in database")
-          }
+        if (!data.success) {
+          throw new Error("issues in updating publicKey in database")
+        }
 
-          toast.success("Token Launched Successfully"  , {
-            style: {
-              borderRadius: '20px',
-              background: '#333',
-              color: '#fff',
-            },
-            
-          })
-          setIsTokenLaucnhOpen(false)
-          setisLaunching(false)
-          
-        
+        toast.success("Token Launched Successfully", {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+
+        })
+        setIsTokenLaucnhOpen(false)
+        setisLaunching(false)
+
+
       }
 
       setisLaunching(false)
 
-      
+
 
     } catch (error) {
-      toast.error("Something went wrong" ,{
+      toast.error("Something went wrong", {
         style: {
           borderRadius: '20px',
           background: '#333',
           color: '#fff',
         },
-        
+
       })
     }
 
@@ -451,17 +433,17 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <path d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-        <div className='flex flex-col gap-2 items-center justify-center '>
-        <div className=' text-[14px]  text-center  text-yellow-400'>We are currently on Devnet  Make sure You are on Devnet  and You Should Have Solana Wallet to buy the Tokens</div>
-          <div className='mt-4'>
-          <WalletModalProvider>
-              <WalletMultiButton />
-            </WalletModalProvider>
-          </div>
+            <div className='flex flex-col gap-2 items-center justify-center '>
+              <div className=' text-[14px]  text-center  text-yellow-400'>We are currently on Devnet  Make sure You are on Devnet  and You Should Have Solana Wallet to buy the Tokens</div>
+              <div className='mt-4'>
+                <WalletModalProvider>
+                  <WalletMultiButton />
+                </WalletModalProvider>
+              </div>
 
-        </div>
-   
-    
+            </div>
+
+
 
           </div>
         </div>
@@ -543,7 +525,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
               <div className='flex flex-col w-full gap-2 '>
-                <small className='text-white'> Your Current Balance is {selltokendata?.balance} </small>
+                <small className='text-white'> Your Current Balance is  {Math.floor(selltokendata?.balance as number)} </small>
                 <label className='text-white' htmlFor="amount">Number of Tokens </label>
                 <input value={sellToken} onChange={(e) => setSellToken(parseInt(e.target.value))} type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
@@ -556,10 +538,10 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
               <div className='flex  gap-2'>
                 <div onClick={() => setSellToken(0)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>Reset</div>
-                <div onClick={() => setSellToken(selltokendata?.balance as number * 0.25)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
-                <div onClick={() => setSellToken(selltokendata?.balance as number * 0.5)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
-                <div onClick={() => setSellToken(selltokendata?.balance as number * 0.75)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
-                <div onClick={() => setSellToken(selltokendata?.balance as number)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
+                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number * 0.25))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
+                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number * 0.5))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
+                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number * 0.75))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
+                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
 
               </div>
 
