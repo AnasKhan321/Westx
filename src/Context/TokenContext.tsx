@@ -9,8 +9,8 @@ import { useConnection } from '@solana/wallet-adapter-react';
 import { Keypair } from '@solana/web3.js';
 import axios from 'axios';
 interface TokenContextType {
-  handlebuy: (token: string) => void
-  handleSell: (token: string) => void
+  handlebuy: (token: string  , symbol : string) => void
+  handleSell: (token: string  , tokneprice : number) => void
   handleTokenLaucnh: (name: string, image: string, username: string) => void
   isChecking: boolean
 }
@@ -31,6 +31,33 @@ interface TokenBalanceResponse {
   decimals: number
   exsists: boolean
 }
+
+
+const fetchSolPrice = async () => {
+  const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+  const data = await response.json();
+  return data.solana.usd; // SOL price in USD
+};
+
+const fetchTokenPrice = async () => {
+  return 0.000000033; // Hardcoded NASA price in USD
+};
+
+const calculateTokenEquivalent = async () => {
+  const solPrice = await fetchSolPrice();  // SOL price in USD
+  const nasaPriceUSD = await fetchTokenPrice(); // NASA price in USD
+
+  if (!solPrice || !nasaPriceUSD) return 'Price unavailable';
+
+  const solInUsd = solPrice * 0.1; // Convert 0.1 SOL to USD
+  const nasaEquivalent = solInUsd / nasaPriceUSD; // Convert USD to NASA tokens
+
+  console.log(`0.1 SOL ≈ ${nasaEquivalent.toLocaleString()} NASA (~$${solInUsd.toFixed(2)} USD)`);
+  
+  return { nasaEquivalent, solInUsd };
+};
+
+
 
 // const calculateTokenAmount = (
 //   solAmount: number,
@@ -77,7 +104,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const [buytoken, setBuyToken] = useState(1000)
   const [selectedtoken, setselectedtoken] = useState("")
   const { connection } = useConnection()
-
+  const [symbol, setSymbol] = useState("")
   const [isSellOpen, setIsSellOpen] = useState(false)
 
   const [sellAmount, setSellAmount] = useState(0.1)
@@ -98,12 +125,23 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const [isChecking, setisChecking] = useState(false)
   const [isLaunching, setisLaunching] = useState(false)
   const [username, setusername] = useState("")
+  const [initial, setinitial] = useState(0)
+  const [tokenPrice , setTokenPrice] = useState(0)
 
+
+  const updateAmountBuy = async (token : string   , amount : number)=>{
+    if(amount == 0 ) {
+      setBuyToken(0)
+      return
+    }
+    const {data}   = await axios.get(`https://web3.westx.xyz/api/tokens/amount/${token}?solAmount=${amount}`)
+    setBuyToken(data.tokensReceived)
+  }
   const onClose = () => {
     setIsOpen(false)
   }
 
-  const handlebuy = (token: string) => {
+  const handlebuy = (token: string  , symbol : string) => {
     if (!publicKey) {
       setIsOpen(true)
       toast.error("Please connect your wallet", {
@@ -118,6 +156,9 @@ export function TokenProvider({ children }: TokenProviderProps) {
     } else {
       setselectedtoken(token)
       setIsBuyOpen(true)
+      console.log(token)
+      setSymbol(symbol)
+      updateAmountBuy(token  , buyAmount)
 
 
     }
@@ -138,7 +179,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
       const { serializedTransaction } = prepareResponse.data;
 
-
+      const data = await calculateTokenEquivalent();
+      console.log(data)
       const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
       if (sendTransaction) {
         const signature = await sendTransaction(transaction, connection);
@@ -189,7 +231,9 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
   }
 
-  const handleSell = async (token: string) => {
+
+
+  const handleSell = async (token: string  , tokneprice : number  ) => {
 
     if (!publicKey) {
       setIsOpen(true)
@@ -224,8 +268,9 @@ export function TokenProvider({ children }: TokenProviderProps) {
           balance: Math.floor(data.balance),
           decimals: data.decimals
         });
-
+        setTokenPrice(tokneprice)
         setIsSellOpen(true)
+        setSellAmount(tokenPrice * sellToken)
       }
     }
   }
@@ -324,6 +369,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
       newdata.append("name", tokenname)
       newdata.append("symbol", tokenSymbol)
       newdata.append("description", tokenDescription)
+      newdata.append("buyAmount", initial.toString())
       if (typeof tokenimage === 'string' && tokenimage.startsWith('http')) {
         const fileName = `${tokenSymbol}_token.${tokenimage.split('.').pop()}`;
         const imageFile = await convertImageUrlToFile(tokenimage, fileName);
@@ -351,12 +397,12 @@ export function TokenProvider({ children }: TokenProviderProps) {
       transaction.partialSign(tokenMintKeypair);
 
       if (signTransaction) {
-        const signature = await sendTransaction(transaction, connection);
-
+        const signedTransaction = await sendTransaction(transaction, connection)
+        await connection.confirmTransaction(signedTransaction)
 
         const confirmResponse = await api.confirmTokenCreation(
           tokenMint.publicKey,
-          signature,
+          signedTransaction,
           tokenDetails
         );
 
@@ -481,12 +527,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <label htmlFor="amount" className='text-white'>Amount in Sol </label>
                 <input type="number"
                   step="0.000000001"
-                  min="0.000000001" id="amount" value={buyAmount} onChange={(e) => setBuyAmount(parseFloat(e.target.value))} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
+                  min="0.000000001" id="amount" value={buyAmount} onChange={(e) => {setBuyAmount(parseFloat(e.target.value)); 
+                   updateAmountBuy(selectedtoken, parseFloat(e.target.value))
+                 }} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
 
               <div className='flex flex-col w-full gap-2 '>
-                <label className='text-white' htmlFor="amount">Minimum Token to Receive </label>
-                <input value={buytoken} onChange={(e) => setBuyToken(parseInt(e.target.value))} type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
+                <label className='text-white' htmlFor="amount">You Will Receive  ({symbol}) </label>
+                <input value={ Math.floor( buytoken)} readOnly type="number" id="amount" placeholder='' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
               <button type='submit' className={`w-full p-2 text-white rounded-md bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br   mt-5 ${isBuying ? "opacity-50 cursor-not-allowed" : ""}`}> {isBuying ? "Purchasing..." : "Confirm Buy"} </button>
             </form>
@@ -527,21 +575,20 @@ export function TokenProvider({ children }: TokenProviderProps) {
               <div className='flex flex-col w-full gap-2 '>
                 <small className='text-white'> Your Current Balance is  {Math.floor(selltokendata?.balance as number)} </small>
                 <label className='text-white' htmlFor="amount">Number of Tokens </label>
-                <input value={sellToken} onChange={(e) => setSellToken(parseInt(e.target.value))} type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
+                <input value={sellToken} onChange={(e) => {setSellToken(parseInt(e.target.value))  ;     setSellAmount(tokenPrice * sellToken)} } type="number" id="amount" placeholder='Enter minimum token to receive' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
               <div className='flex flex-col my-4  w-full gap-2'>
-                <label htmlFor="amount" className='text-white'>Minimum Sol to receive </label>
+                <label htmlFor="amount" className='text-white'>You will receive this Much of Sol </label>
                 <input type="number"
-                  step="0.000000001"
-                  min="0.000000001" id="amount" value={sellAmount} onChange={(e) => setSellAmount(parseFloat(e.target.value))} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
+                  id="amount" readOnly value={sellAmount} onChange={(e) => setSellAmount(parseFloat(e.target.value))} placeholder='Enter amount in Sol' className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
 
               <div className='flex  gap-2'>
-                <div onClick={() => setSellToken(0)} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>Reset</div>
-                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number * 0.25))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
-                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number * 0.5))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
-                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number * 0.75))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
-                <div onClick={() => setSellToken(Math.floor(selltokendata?.balance as number))} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
+                <div onClick={() => {setSellToken(0)  ; setSellAmount(0)}} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>Reset</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.25))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number * 0.25))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.5))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number * 0.5))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.75))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number * 0.75))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
 
               </div>
 
@@ -593,6 +640,14 @@ export function TokenProvider({ children }: TokenProviderProps) {
                 <input required type="string"
 
                   id="amount" value={tokenSymbol} onChange={(e) => settokenSymbol(e.target.value)} placeholder='Enter token Symbol' className='p-2 text-white rounded-md bg-primaryColor' />
+              </div>
+
+
+              <div className='flex flex-col my-4  w-full gap-2'>
+                <label htmlFor="intial" className='text-white'>Initial Buy </label>
+                <input required type="number"  min={0}
+
+                  id="intial" value={initial} onChange={(e) => setinitial(parseInt(e.target.value))} placeholder='Enter Initial Tokens you want'  className='p-2 text-white rounded-md bg-primaryColor' />
               </div>
 
               <div className='flex flex-col my-4  w-full gap-2'>
