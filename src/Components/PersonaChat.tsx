@@ -155,11 +155,14 @@ const PersonaChat = () => {
                   src={data.data.photoURL}
                   alt=""
                   className="w-[50px] h-[50px]  rounded-full "
+                  onError={(e) => {
+                    e.currentTarget.src = "/userdefault.jpg";
+                  }}
                 />
                 <span className="font-bold "> Chat with {data.data.name} </span>
               </div>
 
-              <div className="w-full md:min-h-[72vh]  my-4  min-h-[78vh]  max-h-[78vh]  md:max-h-[72vh] overflow-y-scroll ">
+              <div className="w-full md:min-h-[72vh]  my-4  min-h-[76vh]  max-h-[76vh]  md:max-h-[72vh] overflow-y-scroll ">
              
                 {chats.map((chat, index) => (
                   <div

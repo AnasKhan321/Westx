@@ -24,6 +24,9 @@ const Reply2: React.FC<ReplyProps> = ({ name, username, content  , photoURL  , c
           width={40}
           height={40}
           className="rounded-full "
+          onError={(e) => {
+            e.currentTarget.src = "/userdefault.jpg";
+          }}
         />
 
         {/* Reply Content */}

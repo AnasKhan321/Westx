@@ -33,9 +33,7 @@ const getTweets = async ({ topic, pageParam = 1 }: { topic: string, pageParam: n
 
 }
 
-const TweetCardBookmark = React.lazy(
-    () => import("../ReusableComponents/TweetCardBookmark")
-);
+const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 const TopicsTweets = () => {
     const { topic } = useParams();
 
@@ -148,10 +146,10 @@ const TopicsTweets = () => {
                                                 <BiRepost className="text-xl" />
                                                 <span className="text-xs">{tweet.user.name} reposted</span>
                                             </div>
-                                            <TweetCardBookmark tweet={tweet} />
+                                            <TwetCARD tweet={tweet} isBookmark={false} />
                                         </>
                                     ) : (
-                                        <TweetCardBookmark tweet={tweet} />
+                                        <TwetCARD tweet={tweet} isBookmark={false} />
                                     )}
                                 </Suspense>
                             ))}

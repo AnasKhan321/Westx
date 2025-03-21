@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
-import { AiOutlineFire  , AiFillFire } from "react-icons/ai";
+// import { AiOutlineFire  , AiFillFire } from "react-icons/ai";
 const Sidebar = () => {
   const location = useLocation();
   const { user } = useAuth();
@@ -73,7 +73,7 @@ const Sidebar = () => {
           </Link>
 
 
-          <Link
+          {/* <Link
             to="/roastshow"
             className="flex items-center space-x-3  transition-all hover:text-territary"
           >
@@ -84,7 +84,7 @@ const Sidebar = () => {
             )}
 
             <span className="font-medium text-xl  font-roboto ">Roast Show</span>
-          </Link>
+          </Link> */}
         </nav>
 
         {user?.username && (
