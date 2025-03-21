@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import OpenAI from "openai"
 import { Message, User2 } from "../utils/type";
+import axios from "axios";
 
-const openai = new OpenAI({
-    baseURL: "https://openrouter.ai/api/v1",
-    apiKey: import.meta.env.VITE_PUBLIC_OPENAI_KEY,
-    dangerouslyAllowBrowser: true
-})
+
 
 
 function getfullPrompt(profileData: User2) {
@@ -69,17 +65,15 @@ export const getAiResponse = async (user: User2, question: string, message: Mess
         },
     ];
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const completion = await openai.chat.completions.create({
-        model: "anthropic/claude-3.5-sonnet",
 
-        //@ts-expect-error
-        messages: formattedMessages,
-        temperature: 0.8,
-        max_tokens: 2044,
-    });
 
-    return completion.choices[0].message.content as string
+    const {data } = await axios.post(`${import.meta.env.VITE_PUBLIC_BACKEND_URL}/chat`, {
+        messages : formattedMessages
+    })
+
+    console.log(data)
+
+    return data.message
 
 
 

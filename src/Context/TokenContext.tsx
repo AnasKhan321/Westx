@@ -137,6 +137,15 @@ export function TokenProvider({ children }: TokenProviderProps) {
     const {data}   = await axios.get(`https://web3.westx.xyz/api/tokens/amount/${token}?solAmount=${amount}`)
     setBuyToken(data.tokensReceived)
   }
+
+  const updateAmountSell = async (token : string   , amount : number)=>{
+    if(amount == 0 ) {
+      setSellAmount(0)
+      return
+    }
+    const {data}   = await axios.get(`https://web3.westx.xyz/api/tokens/solAmount/${token}?tokenAmount=${amount}`)
+    setSellAmount(data.solReceived)
+  }
   const onClose = () => {
     setIsOpen(false)
   }
@@ -271,6 +280,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
         setTokenPrice(tokneprice)
         setIsSellOpen(true)
         setSellAmount(tokenPrice * sellToken)
+        updateAmountSell(selectedtoken, 0)
       }
     }
   }
@@ -585,10 +595,10 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
               <div className='flex  gap-2'>
                 <div onClick={() => {setSellToken(0)  ; setSellAmount(0)}} className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>Reset</div>
-                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.25))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number * 0.25))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
-                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.5))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number * 0.5))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
-                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.75))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number * 0.75))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
-                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number))  ; setSellAmount(tokenPrice * Math.floor(selltokendata?.balance as number))} } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.25))  ;    updateAmountSell(selectedtoken, Math.floor(selltokendata?.balance as number * 0.25)) } } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>25%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.5))  ;  updateAmountSell(selectedtoken, Math.floor(selltokendata?.balance as number * 0.5)) } } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>50%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number * 0.75))  ;     updateAmountSell(selectedtoken, Math.floor(selltokendata?.balance as number * 0.75)) } } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>75%</div>
+                <div onClick={() => {setSellToken(Math.floor(selltokendata?.balance as number))  ;    updateAmountSell(selectedtoken, Math.floor(selltokendata?.balance as number)) } } className='p-2 cursor-pointer text-white rounded-md bg-primaryColor'>100%</div>
 
               </div>
 
