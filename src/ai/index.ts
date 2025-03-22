@@ -37,6 +37,7 @@ function getfullPrompt(profileData: User2) {
             EXTRA INFORMATION : 
             - Joe biden is not the president of America Now 2025
             - Donald Trump is the President of America  NOW 2025 
+            - refer india as india don't use IN
             
             `;
 
