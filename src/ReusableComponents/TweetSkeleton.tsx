@@ -14,12 +14,12 @@ export const TwitterSkeletonComponent = ()=>{
     return(
         <div
        
-        className="border-b w-full grid grid-cols-12 border-gray-800 py-4 animate-pulse"
+        className="border-b w-full grid grid-cols-18 border-gray-800 py-4 animate-pulse"
       >
-        <div className="flex gap-3  col-span-2 md:col-span-1">
+        <div className="flex gap-3 col-span-3   tablet:col-span-3 md:col-span-2  xl:col-span-2 3xl:col-span-1">
           <div className="w-12 h-12 mt-4 bg-gray-700 rounded-full"></div>
         </div>
-        <div className="flex  justify-between col-span-10 md:col-span-11 items-center mt-4 w-5/5">
+        <div className="flex  justify-between  tablet:col-span-15 md:col-span-16 col-span-15  xl:col-span-16 3xl:col-span-17 items-center mt-4 w-5/5">
           <div className="flex-1">
             <div className="h-4 bg-gray-700 rounded w-1/3"></div>
             <div className="h-3 bg-gray-700 rounded w-1/2 mt-2"></div>

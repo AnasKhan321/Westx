@@ -14,7 +14,7 @@ export default function Home() {
     <SEO title=" WestX -  Home" description="Home page" />
       <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-2xl overflow-y-scroll ">
           <div
-            className={`md:flex justify-between w-[49.9%]  hidden  backdrop-blur-xl   rounded-2xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}
+            className={`md:flex justify-between  w-full tablet:w-[49.9%]  hidden  backdrop-blur-xl   rounded-2xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}
           >
             {tabs.map((tab) => (
               <button
@@ -35,7 +35,7 @@ export default function Home() {
           <div className="flex md:hidden absolute z-10 top-0 bg-primaryColor w-full">
             <div className="w-full  mx-auto">
               {/* Dropdown Button */}
-              <div className="relative md:hidden">
+              <div className="relative tablet:hidden">
                 <button
                   onClick={() => setIsOpen(!isOpen)}
                   className="w-full  bg-black text-white px-4 py-4 mt-5  rounded-lg flex justify-between items-center"

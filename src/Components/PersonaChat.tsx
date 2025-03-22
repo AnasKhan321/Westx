@@ -135,18 +135,18 @@ const PersonaChat = () => {
       )}
       {data && (
         <div className="grid grid-cols-16  bg-primaryColor text-secondary min-h-screen max-h-screen overflow-x-hidden font-roboto  ">
-          <div className="  md:col-span-3">
+          <div className="   tablet:col-span-3">
             <Link to={"/"}>
               <img
                 src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
                 alt="WestX Logo"
-                className="w-16 h-16 rounded-full m-4 md:block hidden "
+                className="w-16 h-16 rounded-full m-4 tablet:block hidden "
               />{" "}
             </Link>
           </div>
-          <div className="  border-white/10 md:border col-span-16  min-h-screen max-h-screen  md:col-span-10 bg-primaryColor md:bg-secondaryColor  md:max-h-[96vh]    md:min-h-[96vh]  md:my-[2vh] md:rounded-2xl ">
+          <div className="  border-white/10 md:border col-span-16  min-h-screen max-h-screen  tablet:col-span-10 bg-primaryColor tablet:bg-secondaryColor  tablet:max-h-[96vh]    md:min-h-[96vh]  md:my-[2vh] md:rounded-2xl ">
             <div className="w-[97%] mx-auto">
-              <div className="pt-2 pb-4 border-b border-white/20 flex space-x-4 items-center    ">
+              <div className="pt-2 pb-2   h-[10vh]  border-b border-white/20 flex space-x-4 items-center    ">
                 <IoCaretBack
                   className="text-xl cursor-pointer"
                   onClick={handleClick}
@@ -162,7 +162,7 @@ const PersonaChat = () => {
                 <span className="font-bold "> Chat with {data.data.name} </span>
               </div>
 
-              <div className="w-full md:min-h-[72vh]  my-4  min-h-[76vh]  max-h-[76vh]  md:max-h-[72vh] overflow-y-scroll ">
+              <div className="w-full h-[76vh]  overflow-y-scroll  mb-3  ">
              
                 {chats.map((chat, index) => (
                   <div
@@ -191,7 +191,7 @@ const PersonaChat = () => {
                 )}
               </div>
 
-              <div className="w-full max-h-[20vh] y-4 ">
+              <div className="w-full h-[10vh] my-auto ">
                 <div className="  ">
                   <form
                     className="w-full grid grid-cols-12   gap-x-2  items-center   "

@@ -34,6 +34,10 @@ export default {
         'span-17': 'span 17 / span 17',
         'span-18': 'span 18 / span 18',
 
+      } , 
+      screens : {
+        "tablet" : "1025px",
+        '3xl' : '2100px'
       }
     },
   },

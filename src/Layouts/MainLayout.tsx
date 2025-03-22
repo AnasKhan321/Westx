@@ -13,11 +13,11 @@ export default function MainLayout({
   const { live } = useSocket();
   return (
     <div className="grid grid-cols-14  bg-primaryColor text-secondary min-h-screen font-roboto  ">
-      <div className=" hidden md:block bg-primaryColor  md:col-span-3  bg text-white max-h-screen min-h-screen ">
+      <div className=" hidden tablet:block bg-primaryColor  md:col-span-3  bg text-white max-h-screen min-h-screen ">
         <Sidebar />
       </div>
 
-      <div className=" col-span-14  md:col-span-7  bg-primaryColor  min-h-screen max-h-screen overflow-y-scroll scroll-smooth">
+      <div className=" col-span-14  md:col-span-14 tablet:col-span-7  bg-primaryColor  min-h-screen max-h-screen overflow-y-scroll scroll-smooth">
         {children}
         {/* <Link to={"/roastshow"}>
           <div className=" block md:hidden fixed  bg-white p-2  rounded-full top-[75vh] right-[30px]">
@@ -26,12 +26,12 @@ export default function MainLayout({
         </Link> */}
 
         {!(location.pathname === "/roastshow" && live) ? (
-          <div className="block h-[8vh]  md:hidden w-full  fixed bottom-0  ">
+          <div className="block h-[8vh]  tablet:hidden w-full  fixed bottom-0  ">
             <HorizontalBar />
           </div>
         ) : null}
       </div>
-      <div className="col-span-4  min-h-screen  hidden md:block max-h-screen overflow-y-scroll  bg-primaryColor  ">
+      <div className="   tablet:col-span-4    min-h-screen  hidden tablet:block max-h-screen overflow-y-scroll  bg-primaryColor  ">
         <RightSidebar />
       </div>
     </div>

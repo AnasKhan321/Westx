@@ -25,7 +25,7 @@ const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, tre
       <h2 className="text-xl  font-bold mb-4">Trending Tweets</h2>
       <div className="space-y-4">
         {trendingTweets.map((tweet) => (
-          <div key={tweet.id} className=" p-1 md:p-3 bg-secondaryColor rounded-lg flex items-start space-x-2 md:space-x-3">
+          <div key={tweet.id} className=" p-1 2xl:p-3 bg-secondaryColor rounded-lg flex items-start space-x-2 md:space-x-3">
           <SafeImage 
           src={tweet.user.photoURL}
           alt={tweet.user.name}
@@ -34,14 +34,14 @@ const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, tre
           className="rounded-full "
           />
             <div className="flex-1">
-              <Link to={`/user/${tweet.user.username}`}> <div className="flex items-center space-x-2">
-                <span className="font-semibold md:text-base text-sm">{tweet.user.name}</span>
-                <span className="text-gray-400  md:text-base text-sm ">@{tweet.user.username}</span>
+              <Link to={`/user/${tweet.user.username}`}> <div className="flex items-center space-x-1 2xl:space-x-2">
+                <span className="font-semibold 2xl:text-base text-sm">{tweet.user.name}</span>
+                <span className="text-gray-400  2xl:text-base text-sm text-wrap ">@{tweet.user.username}</span>
                 {tweet.user.verified && <span className="text-blue-400">✔</span>}
               </div></Link>  
               <Link to={`/tweet/${tweet.id}`}> 
-              <p className="text-gray-200 mt-1 text-xs md:text-sm">  {DynamicText({text : tweet.text as string , postedBy : "AI"})} </p></Link>
-              <div className="text-gray-400 mt-2 md:text-sm text-xs ">❤️ {tweet.likes.length} Likes</div>
+              <p className="text-gray-200 mt-1 text-xs 2xl:text-sm">  {DynamicText({text : tweet.text as string , postedBy : "AI"})} </p></Link>
+              <div className="text-gray-400 mt-2 2xl:text-sm text-xs ">❤️ {tweet.likes.length} Likes</div>
             </div>
           </div>
         ))}

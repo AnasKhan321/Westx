@@ -9,8 +9,8 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
   return (
     <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}}>
     <div>
-      <div className="  text-white w-full  md:w-[96%] grid grid-cols-12  mx-auto   p-4  border-b border-white/20   ">
-        <div className=" col-span-2  md:col-span-1">
+      <div className="  text-white w-full  md:w-[96%] grid grid-cols-18  mx-auto   p-4  border-b border-white/20   ">
+        <div className=" col-span-3 tablet:col-span-3 md:col-span-2  xl:col-span-2  3xl:col-span-1">
 
           <SafeImage 
           src={tweet.user.photoURL}
@@ -21,7 +21,7 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
           />
 
         </div>
-        <div className=" col-span-10  md:col-span-11">
+        <div className=" col-span-15  tablet:col-span-15 md:col-span-16 xl:col-span-16   3xl:col-span-17">
           <div className="flex items-center space-x-2 ">
             <Link to={`/user/${tweet.user.username}`}>
               {" "}

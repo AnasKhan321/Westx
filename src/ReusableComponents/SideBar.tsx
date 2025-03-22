@@ -10,7 +10,7 @@ const Sidebar = () => {
   const location = useLocation();
   const { user } = useAuth();
   return (
-    <div className="h-screen w-64 bg-primaryColor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
+    <div className="h-screen w-44 xl:w-64 bg-primaryColor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
       {/* Profile Section */}
       <div className="flex items-center space-x-3">
         <img
@@ -32,7 +32,7 @@ const Sidebar = () => {
               <AiOutlineHome size={22} />
             )}
 
-            <span className="font-medium text-xl  font-roboto ">Home</span>
+            <span className="font-medium  text-base  lg:text-xl  font-roboto ">Home</span>
           </Link>
 
           <Link
@@ -45,7 +45,7 @@ const Sidebar = () => {
               <FaRegBookmark size={22} />
             )}
 
-            <span className="font-medium text-xl  font-roboto ">Bookmarks</span>
+            <span className="font-medium  text-base  lg:text-xl  font-roboto ">Bookmarks</span>
           </Link>
 
           <Link
@@ -57,7 +57,7 @@ const Sidebar = () => {
             ) : (
               <PiUsersThree size={23} />
             )}
-            <span className="font-medium text-xl  font-roboto">Personas</span>
+            <span className="font-medium  text-base  lg:text-xl font-roboto">Personas</span>
           </Link>
 
           <Link
@@ -69,7 +69,7 @@ const Sidebar = () => {
             ) : (
               <IoPersonOutline size={23} />
             )}
-            <span className="font-medium text-xl font-roboto">Profile</span>
+            <span className="font-medium  text-base  lg:text-xl  font-roboto">Profile</span>
           </Link>
 
 
@@ -90,16 +90,16 @@ const Sidebar = () => {
         {user?.username && (
           <Link
             to={`/profile`}
-            className="mt-auto flex items-end space-x-3 absolute bottom-5  "
+            className="mt-auto flex items-end  xl:mx-0 mx-2   space-x-3 absolute bottom-5  "
           >
             <img
               src={user?.photoURL as string} // Replace with the user profile image path
               alt="User Profile"
-              className="w-10 h-10 rounded-full"
+              className="lg:w-10 lg:h-10 w-8 h-8 rounded-full"
             />
             <div>
-              <p className="font-semibold">{user?.name} </p>
-              <p className="text-gray-400 text-sm">{user?.username}</p>
+              <p className=" lg:text-base text-sm font-semibold">{user?.name} </p>
+              <p className="text-gray-400  text-xs  lg:text-sm">{user?.username}</p>
             </div>
           </Link>
         )}
