@@ -162,14 +162,14 @@ const PersonaChat = () => {
                 <span className="font-bold "> Chat with {data.data.name} </span>
               </div>
 
-              <div className="w-full h-[76vh]  overflow-y-scroll  mb-3  ">
+              <div className="w-full h-[76vh]  overflow-y-scroll  mb-2  ">
              
                 {chats.map((chat, index) => (
                   <div
                     key={index}
                     className={`flex ${
                       chat.sender === "user" ? "justify-end" : "justify-start"
-                    } my-2 `}
+                    } my-1 `}
                   >
                     <div
                       key={index}
