@@ -14,8 +14,6 @@ const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 export default function Peoples(){
 
     const {isLoading , data } = useQuery({queryKey : ['personas'], queryFn : getPersonas  , 
-
-
         staleTime: Infinity, 
         refetchOnMount: false, 
         refetchOnWindowFocus: false, 

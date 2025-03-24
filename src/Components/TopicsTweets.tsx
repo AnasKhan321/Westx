@@ -21,12 +21,12 @@ interface TopicTweetsResponse {
 
 const getTweets = async ({ topic, pageParam = 1 }: { topic: string, pageParam: number }) => {
     const data = await axios.get<TopicTweetsResponse>(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/topic/${topic}/${pageParam}`)
-    if(data.data.success){
+    if (data.data.success) {
         return {
             data: data.data.data,
             nextCursor: data.data.hasMore ? pageParam + 1 : null, // Ensure null instead of undefined if no more pages
         };
-    }else{
+    } else {
         throw new Error("Something Went Wrong Try Again!")
     }
 
@@ -40,7 +40,7 @@ const TopicsTweets = () => {
 
     const navigate = useNavigate();
     const handleClick = () => {
-      navigate(-1);
+        navigate(-1);
     };
     const {
         data,
@@ -82,27 +82,27 @@ const TopicsTweets = () => {
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
 
-    if (status === 'error') return    (
+    if (status === 'error') return (
         <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
-          <p className="text-center text-gray-200 my-4 font-bold text-xl  ">   {error.message} </p>  
+            <p className="text-center text-gray-200 my-4 font-bold text-xl  ">   {error.message} </p>
         </div>
-      );
+    );
 
-    if(status === "pending"){
+    if (status === "pending") {
 
         return (
-          <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
-            <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl  z-10   bg-primaryColor md:bg-secondaryColor w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
-              <IoCaretBack
-                className="text-xl cursor-pointer"
-                onClick={handleClick}
-              />
-              <span>{capitalizeFirstLetter(topic as string)}</span>
+            <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
+                <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl  z-10   bg-primaryColor md:bg-secondaryColor w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
+                    <IoCaretBack
+                        className="text-xl cursor-pointer"
+                        onClick={handleClick}
+                    />
+                    <span>{capitalizeFirstLetter(topic as string)}</span>
+                </div>
+                <div className="mt-6"></div>
+                <TweetSkeleton />
+
             </div>
-            <div className="mt-6"></div>
-            <TweetSkeleton />
-    
-          </div>
         );
     }
 
@@ -113,13 +113,13 @@ const TopicsTweets = () => {
 
         <div className="max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-2xl overflow-y-scroll ">
 
-<div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
-          <IoCaretBack
-            className="text-xl cursor-pointer"
-            onClick={handleClick}
-          />
-          <span>{capitalizeFirstLetter(topic as string)}</span>
-        </div>
+            <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
+                <IoCaretBack
+                    className="text-xl cursor-pointer"
+                    onClick={handleClick}
+                />
+                <span>{capitalizeFirstLetter(topic as string)}</span>
+            </div>
             <>
 
 

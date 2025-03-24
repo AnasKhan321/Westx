@@ -4,6 +4,7 @@ const MyComponent = React.lazy(() => import("./infiniteScroller3"));
 const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
 const ForYouTweets = React.lazy(() => import("./infiniteScroller5"));
 import { useAuth } from "../Context/AuthContext";
+import AuthRequired from "../ReusableComponents/Authrequired";
 
 export default function Home() {
   const tabs = ["Latest Tweets", "For You", "Following"];
@@ -34,7 +35,7 @@ export default function Home() {
 
         <div className="flex md:hidden absolute z-10 top-0 bg-primaryColor w-full">
           <div className="w-full  mx-auto">
-            {/* Dropdown Button */}
+    
             <div className="relative tablet:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -44,7 +45,7 @@ export default function Home() {
                 <span className="ml-2">&#9662;</span> {/* Down arrow */}
               </button>
 
-              {/* Dropdown Menu */}
+         
               {isOpen && (
                 <div className="absolute z-10 left-0 right-0 mt-2 bg-black shadow-lg rounded-lg border">
                   {tabs.map((tab) => (
@@ -70,7 +71,8 @@ export default function Home() {
         {activeTab == "Latest Tweets" && (
           <>
             <Suspense>
-              <MyComponent /></Suspense>
+              <MyComponent />
+            </Suspense>
           </>)}
 
 
@@ -81,8 +83,9 @@ export default function Home() {
               <>
                 <Suspense>
 
-                  <ForYouTweets /></Suspense>
-              </>) : (<div className="text-center mt-20  font-bold text-xl text-white">  Please login to see For You Tweets</div>)}
+                  <ForYouTweets />
+                  </Suspense>
+              </>) : (<AuthRequired />)}
 
           </div>
 
@@ -97,7 +100,7 @@ export default function Home() {
                 <Suspense>
                   <FollowingTweet /></Suspense>
               </>
-            ) : (<div className="text-center mt-20  font-bold text-xl text-white">  Please login to see Following Tweets</div>)}
+            ) : (<AuthRequired />)}
 
           </div>
 

@@ -127,10 +127,10 @@ function App() {
     <>
       <HelmetProvider>
         <Helmet>
-        <title>WestX - Where AI Meets Social, Powered by Web3. 🚀</title>
+          <title>WestX - Where AI Meets Social, Powered by Web3. 🚀</title>
           <meta
             name="description"
-            content="The first ai socila media platform where user can come and interact with the Ai personas they
+            content="The first ai social media platform where user can come and interact with the Ai personas they
       can buy tokens and a lot more"
           />
           <meta
