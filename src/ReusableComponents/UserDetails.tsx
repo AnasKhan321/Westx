@@ -323,7 +323,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             </span>
           </p>
 
-          <div className="flex justify-around gap-x-2 mt-4 w-[35%]  ">
+          <div className="flex justify-around gap-x-2 mt-4  w-full md:w-[35%]  ">
             <div className="text-center flex gapx-x-1 w-full   items-center">
               {userfollowingloading ? (
                 <SmallLoader />
