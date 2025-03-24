@@ -20,7 +20,8 @@ interface AuthContextType {
   handleLogout: () => void;
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
-  islogin: boolean
+  islogin: boolean 
+  isAuthenticated: boolean
 }
 
 // Create the context with a default value of undefined
@@ -38,6 +39,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [islogin, setislogin] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,12 +55,16 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
           setUser(data.data);
           setIsLoading(false);
+          setIsAuthenticated(true)
           if (isLoading == false) {
             navigate("/")
+            setIsAuthenticated(true)
+
           }
         } else {
           setIsLoading(false);
           navigate("/login")
+          setIsAuthenticated(false)
         }
 
 
@@ -67,7 +73,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
       } else {
         setIsLoading(false);
-        navigate("/login");
+        setIsAuthenticated(false)
+
       }
     });
     return () => unsubscribe();
@@ -127,7 +134,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
       setUser(d.user);
       setislogin(false)
-
+      setIsAuthenticated(true)
       if (islogin == false) {
         navigate("/")
       }
@@ -148,6 +155,8 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     try {
       await auth.signOut();
       setUser(null);
+      setIsAuthenticated(false)
+      navigate("/")
     } catch (error) {
       console.error("Error during logout:", error);
     }
@@ -163,7 +172,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   return (
     <AuthContext.Provider
-      value={{ handleTwitterLogin, handleLogout, user, setUser, islogin }}
+      value={{ handleTwitterLogin, handleLogout, user, setUser, islogin, isAuthenticated }}
     >
       {children}
     </AuthContext.Provider>

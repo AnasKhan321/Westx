@@ -71,9 +71,6 @@ export const getAiResponse = async (user: User2, question: string, message: Mess
     const {data } = await axios.post(`${import.meta.env.VITE_PUBLIC_BACKEND_URL}/chat`, {
         messages : formattedMessages
     })
-
-    console.log(data)
-
     return data.message
 
 

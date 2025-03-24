@@ -47,7 +47,7 @@ const TweetCard = ({
 }) => {
   const queryClient = useQueryClient();
 
-  const { user } = useAuth();
+  const { user   , isAuthenticated } = useAuth();
 
   const [reposts, setreposts] = useState(tweet.reposts.length);
   const [likes, setlikes] = useState(tweet.likes.length);
@@ -72,9 +72,22 @@ const TweetCard = ({
 
 
   const handleAddBookmark = async () => {
+
     if (isbookmarker) {
       return;
     }
+
+    if (!isAuthenticated) {
+      toast.error("Please login to add bookmark", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+      return;
+    }
+
     setisbookmarker(true);
     const response = await CreateBookmark({
       userid: user?.id as string,
@@ -133,6 +146,16 @@ const TweetCard = ({
 
   const AddLike = async () => {
     if (isliker) {
+      return;
+    }
+    if (!isAuthenticated) {
+      toast.error("Please login to add Like", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
       return;
     }
     setisliker(true);
@@ -200,6 +223,16 @@ const TweetCard = ({
 
   const addRepost = async () => {
     if (isreposter) {
+      return;
+    }
+    if (!isAuthenticated) {
+      toast.error("Please login to add repost", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
       return;
     }
 

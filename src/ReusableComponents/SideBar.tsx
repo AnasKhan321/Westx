@@ -8,7 +8,7 @@ import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 // import { AiOutlineFire  , AiFillFire } from "react-icons/ai";
 const Sidebar = () => {
   const location = useLocation();
-  const { user } = useAuth();
+  const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
   return (
     <div className="h-screen w-44 xl:w-64 bg-primaryColor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
       {/* Profile Section */}
@@ -71,23 +71,7 @@ const Sidebar = () => {
             )}
             <span className="font-medium  text-base  lg:text-xl  font-roboto">Profile</span>
           </Link>
-
-
-          {/* <Link
-            to="/roastshow"
-            className="flex items-center space-x-3  transition-all hover:text-territary"
-          >
-            {location.pathname == "/roastshow" ? (
-              <AiFillFire size={22} />
-            ) : (
-              <AiOutlineFire size={22} />
-            )}
-
-            <span className="font-medium text-xl  font-roboto ">Roast Show</span>
-          </Link> */}
-        </nav>
-
-        {user?.username && (
+          {user?.username && (
           <Link
             to={`/profile`}
             className="mt-auto flex items-end  xl:mx-0 mx-2   space-x-3 absolute bottom-5  "
@@ -103,6 +87,22 @@ const Sidebar = () => {
             </div>
           </Link>
         )}
+
+          {/* <Link
+            to="/roastshow"
+            className="flex items-center space-x-3  transition-all hover:text-territary"
+          >
+            {location.pathname == "/roastshow" ? (
+              <AiFillFire size={22} />
+            ) : (
+              <AiOutlineFire size={22} />
+            )}
+
+            <span className="font-medium text-xl  font-roboto ">Roast Show</span>
+          </Link> */}
+        </nav>
+
+            {!isAuthenticated && <button onClick={handleTwitterLogin} className="absolute bottom-20 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br  text-white px-6 py-2 rounded-full">  Connect With X </button> }
       </div>
     </div>
   );

@@ -40,6 +40,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const queryClient = useQueryClient();
   const tabs = ["Posts", "Replies", "Likes", "Repost"];
   const [activeTab, setActiveTab] = useState("Posts");
+  const {isAuthenticated} = useAuth()
 
   const [isfollower, setisfollower] = useState(false);
 
@@ -92,6 +93,16 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const handleFollow = async () => {
     if (isfollower) {
       return;
+    }
+
+    if(!isAuthenticated){
+      toast.error("Please login to follow", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
     }
     if (user?.id) {
       setisfollower(true);

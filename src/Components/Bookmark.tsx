@@ -1,3 +1,5 @@
+import { useAuth } from "../Context/AuthContext";
+import Authrequired from "../ReusableComponents/Authrequired";
 import BookMarks from "./BookMarkScroller";
 
 
@@ -5,13 +7,17 @@ import BookMarks from "./BookMarkScroller";
 
 const Bookmark = () => {
 
+  const {isAuthenticated} = useAuth()
   
 
 
   return (
     <> 
-      
-      <BookMarks/> 
+      {isAuthenticated ? (
+        <BookMarks/> 
+      ) : (
+        <Authrequired/>
+      )}
    
     </>
 

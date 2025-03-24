@@ -9,9 +9,11 @@ import TweetReply from "./ReplyScroller";
 import { IoCaretBack } from "react-icons/io5";
 import Loader2 from "../ReusableComponents/Loader2";
 import SEO from "../ReusableComponents/SEO";
+import { useAuth } from "../Context/AuthContext";
 const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
 export default function TweetDetail() {
   const { id } = useParams();
+  const {isAuthenticated} = useAuth()
 
   const { isLoading, data, isError } = useQuery({
     queryKey: ["tweet", id],
@@ -45,7 +47,9 @@ export default function TweetDetail() {
             </Suspense>
 
             <div className="w-full">
-              <ReplyBox tweetid={data.data.id} />
+              {isAuthenticated  && 
+                <ReplyBox tweetid={data.data.id} />}
+          
             </div>
             <TweetReply tweetid={id as string}/> 
 
