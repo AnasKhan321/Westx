@@ -14,7 +14,7 @@ const ProfileDetail = () => {
       {isAuthenticated ? (
         <ProfilePage  user={user as User}/> 
       ) : (
-        <Authrequired/>
+        <Authrequired description="Showcase your AI interactions & personalize your digital identity."/>
       )}
     </>
   );

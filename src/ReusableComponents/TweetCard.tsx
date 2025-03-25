@@ -285,7 +285,7 @@ const TweetCard = ({
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  fill="#db12ff"
+                  fill="#a200e8"
                   className="size-6"
                 >
                   <path

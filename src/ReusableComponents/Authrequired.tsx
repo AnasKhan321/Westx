@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 
-const AuthRequired = ({isHome = false}) => {
+const AuthRequired = ({isHome = false  , description = "Please sign in to access this page and experience the future of social media with WestX."}) => {
   const navigate = useNavigate();
 const {handleTwitterLogin} = useAuth()
   return (
@@ -34,12 +34,12 @@ const {handleTwitterLogin} = useAuth()
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          <h1 className="text-2xl md:text-3xl font-bold text-center mb-4 bg-gradient-to-r from-purple-400 to-purple-600 text-transparent bg-clip-text">
-            Authentication Required
+          <h1 className="text-xl  md:text-2xl font-bold text-center mb-4 bg-gradient-to-r from-purple-400 to-purple-600 text-transparent bg-clip-text">
+          Unlock with Sign in 
           </h1>
           
           <p className="text-gray-400 text-center mb-8">
-            Please sign in to access this page and experience the future of social media with WestX.
+           {description}
           </p>
 
           {/* Buttons */}

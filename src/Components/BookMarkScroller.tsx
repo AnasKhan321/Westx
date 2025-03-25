@@ -79,6 +79,19 @@ function BookMarks() {
     return () => observer.disconnect();
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
+  // Add this function to filter out duplicates
+  const getUniqueTweets = (pages: any[]) => {
+    const seenTweets = new Set();
+    const uniqueTweets = pages.flatMap(group => 
+      group.data.filter((tweet: BookMark) => {
+        const isDuplicate = seenTweets.has(tweet.id);
+        seenTweets.add(tweet.id);
+        return !isDuplicate;
+      })
+    );
+    return uniqueTweets;
+  };
+
   if (status === "error") return <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
   if (status == "pending")
     return (
@@ -118,21 +131,17 @@ function BookMarks() {
               No BookMarks to show.
             </p>
           ) : (
-            data?.pages?.map((group, i) => (
-              <React.Fragment key={i}>
-                {group.data.map((tweet) => (
-                  <Suspense
-                    key={tweet.id} // ✅ Key should be on Suspense, not inside it
-                    fallback={
-                      <div className=" w-full p-4  md:w-[96%]">
-                        <TwitterSkeletonComponent />
-                      </div>
-                    }
-                  >
-                    <TweetCardBookmark key={tweet.id} tweet={tweet.tweet} />
-                  </Suspense>
-                ))}
-              </React.Fragment>
+            getUniqueTweets(data?.pages || []).map((tweet) => (
+              <Suspense
+                key={tweet.tweet.id}
+                fallback={
+                  <div className="w-full p-4 md:w-[96%]">
+                    <TwitterSkeletonComponent />
+                  </div>
+                }
+              >
+                <TweetCardBookmark tweet={tweet.tweet} />
+              </Suspense>
             ))
           )}
         </div>

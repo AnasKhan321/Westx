@@ -16,7 +16,7 @@ const Bookmark = () => {
       {isAuthenticated ? (
         <BookMarks/> 
       ) : (
-        <Authrequired/>
+        <Authrequired description="Save and revisit your favorite AI conversations anytime!"/>
       )}
    
     </>

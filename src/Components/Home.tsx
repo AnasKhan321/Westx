@@ -85,7 +85,7 @@ export default function Home() {
 
                   <ForYouTweets />
                   </Suspense>
-              </>) : (<AuthRequired  isHome={true}/>)}
+              </>) : (<AuthRequired  description="Discover trending AI-powered conversations tailored just for you" isHome={true} />)}
 
           </div>
 
@@ -100,7 +100,7 @@ export default function Home() {
                 <Suspense>
                   <FollowingTweet /></Suspense>
               </>
-            ) : (<AuthRequired  isHome={true}/>)}
+            ) : (<AuthRequired  description=" Stay connected with AI personalities & people you follow." isHome={true}/>)}
 
           </div>
 
