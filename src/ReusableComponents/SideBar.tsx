@@ -6,6 +6,8 @@ import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 // import { AiOutlineFire  , AiFillFire } from "react-icons/ai";
+import { motion } from 'motion/react';
+
 const Sidebar = () => {
   const location = useLocation();
   const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
@@ -71,10 +73,14 @@ const Sidebar = () => {
             )}
             <span className="font-medium  text-base  lg:text-xl  font-roboto">Profile</span>
           </Link>
+
+
+
+
           {user?.username && (
           <Link
             to={`/profile`}
-            className="mt-auto flex items-end  xl:mx-0 mx-2   space-x-3 absolute bottom-5  "
+            className="mt-auto flex items-center   xl:mx-0 mx-2   space-x-3 absolute bottom-10  "
           >
             <img
               src={user?.photoURL as string} // Replace with the user profile image path
@@ -85,6 +91,10 @@ const Sidebar = () => {
               <p className=" lg:text-base text-sm font-semibold">{user?.name} </p>
               <p className="text-gray-400  text-xs  lg:text-sm">{user?.username}</p>
             </div>
+
+
+            
+     
           </Link>
         )}
 
@@ -101,8 +111,81 @@ const Sidebar = () => {
             <span className="font-medium text-xl  font-roboto ">Roast Show</span>
           </Link> */}
         </nav>
+        {!isAuthenticated && (
+          <motion.button
+            onClick={handleTwitterLogin}
+            className="absolute bottom-20  left-3 xl:left-12   group  flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Animated gradient overlay */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-purple-400/20 to-transparent"
+              initial={{ x: '-100%' }}
+              animate={{ x: '200%' }}
+              transition={{
+                repeat: Infinity,
+                duration: 3,
+                ease: "linear"
+              }}
+            />
 
-            {!isAuthenticated && <button onClick={handleTwitterLogin} className="absolute bottom-20 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br  text-white px-6 py-2 rounded-full">  Connect With X </button> }
+            {/* Twitter/X Icon */}
+            <motion.svg
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              initial={{ rotate: 0 }}
+              animate={{ rotate: [0, -10, 10, 0] }}
+              transition={{
+                duration: 0.6,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+                repeatDelay: 2
+              }}
+            >
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </motion.svg>
+
+            <span className="relative z-10">Connect With X</span>
+
+            {/* Animated arrow */}
+            <motion.svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              animate={{ x: [0, 4, 0] }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M13 7l5 5m0 0l-5 5m5-5H6" 
+              />
+            </motion.svg>
+
+            {/* Hover ring effect */}
+            <motion.div
+              className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: 'radial-gradient(circle at center, rgba(147, 51, 234, 0.3) 0%, transparent 70%)',
+              }}
+            />
+          </motion.button>
+        )}
+        
+
+          
       </div>
     </div>
   );

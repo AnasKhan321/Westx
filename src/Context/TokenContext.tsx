@@ -8,6 +8,7 @@ import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { Keypair } from '@solana/web3.js';
 import axios from 'axios';
+import { useAuth } from './AuthContext';
 interface TokenContextType {
   handlebuy: (token: string  , symbol : string) => void
   handleSell: (token: string  , tokneprice : number) => void
@@ -126,7 +127,10 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const [isLaunching, setisLaunching] = useState(false)
   const [username, setusername] = useState("")
   const [initial, setinitial] = useState(0)
+  
   const [tokenPrice , setTokenPrice] = useState(0)
+
+  const {isAuthenticated} = useAuth()
 
 
   const updateAmountBuy = async (token : string   , amount : number)=>{
@@ -151,6 +155,16 @@ export function TokenProvider({ children }: TokenProviderProps) {
   }
 
   const handlebuy = (token: string  , symbol : string) => {
+    if(!isAuthenticated) {
+      toast.error("Please login to buy tokens", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+      })
+      return
+    }
     if (!publicKey) {
       setIsOpen(true)
       toast.error("Please connect your wallet", {
@@ -243,7 +257,16 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
 
   const handleSell = async (token: string  , tokneprice : number  ) => {
-
+    if(!isAuthenticated) {
+      toast.error("Please login to sell tokens", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+      })
+      return
+    }
     if (!publicKey) {
       setIsOpen(true)
       toast.error("Please connect your wallet", {

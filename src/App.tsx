@@ -143,15 +143,17 @@ function App() {
             <QueryClientProvider client={queryClient}>
               <Toaster />
               <Router>
-                <TokenProvider>
-                  <AuthContextProvider>
+                <AuthContextProvider>
+                  <TokenProvider>
+
                     <SocketProvider>
                       <ActivityProvider>
                         <AppRoutes />
                       </ActivityProvider>
                     </SocketProvider>
-                  </AuthContextProvider>
-                </TokenProvider>
+
+                  </TokenProvider>
+                </AuthContextProvider>
               </Router>
             </QueryClientProvider>
           </WalletProvider>
