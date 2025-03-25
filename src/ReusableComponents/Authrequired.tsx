@@ -2,11 +2,11 @@ import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 
-const AuthRequired = () => {
+const AuthRequired = ({isHome = false}) => {
   const navigate = useNavigate();
 const {handleTwitterLogin} = useAuth()
   return (
-    <div className="min-h-screen bg-primaryColor text-white flex items-center justify-center p-4">
+    <div className={`min-h-screen ${isHome ? 'bg-transparent' : 'bg-primaryColor'} text-white flex items-center justify-center p-4`}>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -61,6 +61,7 @@ const {handleTwitterLogin} = useAuth()
                Connect With X
             </motion.button>
 
+          {!isHome && 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -77,6 +78,7 @@ const {handleTwitterLogin} = useAuth()
               </svg>
               Go Back Home
             </motion.button>
+          }
           </div>
 
           {/* Footer */}

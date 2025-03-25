@@ -85,7 +85,7 @@ export default function Home() {
 
                   <ForYouTweets />
                   </Suspense>
-              </>) : (<AuthRequired />)}
+              </>) : (<AuthRequired  isHome={true}/>)}
 
           </div>
 
@@ -100,7 +100,7 @@ export default function Home() {
                 <Suspense>
                   <FollowingTweet /></Suspense>
               </>
-            ) : (<AuthRequired />)}
+            ) : (<AuthRequired  isHome={true}/>)}
 
           </div>
 
