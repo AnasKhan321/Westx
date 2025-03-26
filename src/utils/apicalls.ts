@@ -153,7 +153,7 @@ export const getUserbyUsername = async(username : string) : Promise<UserbyUserna
 
 //using
 export const getUserFollowerbyuserid = async(userid : string) : Promise<FollowerResponse> =>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/followers/${userid}`)
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/following/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }
@@ -165,7 +165,7 @@ export const getUserFollowerbyuserid = async(userid : string) : Promise<Follower
 
 //using
 export const getUserFollowinguserid = async(userid : string) : Promise<FollowerResponse>  =>{
-    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/following/${userid}`)
+    const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/follower/${userid}`)
     const data  = await res.json()  ; 
     return data 
 }
