@@ -4,6 +4,7 @@ import { timeSince } from "../utils/date";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { motion } from "motion/react";
 import SafeImage from "./SafeImage";
+import { DynamicText2 } from "./DynamicText";
 export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
 
   return (
@@ -30,7 +31,7 @@ export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
             </Link>
           </div>
           <Link to={`/tweet/${tweet.id}`}>  
-          <p className=" text-sm md:text-base">{tweet.text}</p>
+          <p className=" text-sm md:text-base">{ DynamicText2({text : tweet.text as string})}</p>
           
           </Link>
         </div>

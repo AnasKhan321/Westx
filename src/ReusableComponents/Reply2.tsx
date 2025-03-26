@@ -2,6 +2,7 @@ import React from "react";
 import { timeSince } from "../utils/date";
 import { Link } from "react-router-dom";
 import {motion}  from "motion/react"
+import { DynamicText2 } from "./DynamicText";
 
 interface ReplyProps {
   name: string;
@@ -40,7 +41,7 @@ const Reply2: React.FC<ReplyProps> = ({ name, username, content  , photoURL  , c
           </div>
 
           {/* Content */}
-         <Link to={`/tweet/${replyid}`}>  <p className=" text-sm md:text-base text-white mt-1">{content}</p> </Link>
+         <Link to={`/tweet/${replyid}`}>  <p className=" text-sm md:text-base text-white mt-1">{ DynamicText2( {text : content })}</p> </Link>
 
 
         </div>

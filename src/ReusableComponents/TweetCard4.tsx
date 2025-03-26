@@ -24,6 +24,10 @@ const Tweet4: React.FC<TweetProps> = ({ name, username, date, content, photoURL 
           width={48}
           height={48}
           className="rounded-full "
+          onError={(e) => {
+            e.currentTarget.src = "/userdefault.jpg";
+          }}
+
         />
 
         {/* Tweet Content */}

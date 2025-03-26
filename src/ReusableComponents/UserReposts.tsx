@@ -66,6 +66,18 @@ const UserReposts = ({id  }  : {id  : string}) => {
         <TweetSkeleton />
       </div>
     
+
+    const getUniqueTweets = (pages: any[]) => {
+      const seenTweets = new Set();
+      const uniqueTweets = pages.flatMap(group => 
+        group.data.filter((tweet: Tweet) => {
+          const isDuplicate = seenTweets.has(tweet.id);
+          seenTweets.add(tweet.id);
+          return !isDuplicate;
+        })
+      );
+      return uniqueTweets;
+    };
     
     
     
@@ -78,7 +90,7 @@ const UserReposts = ({id  }  : {id  : string}) => {
             data?.pages?.map((group, i) => (
               <React.Fragment key={i}>
                 {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Reposts  </div>  </>}
-                {group?.data?.map((item: Tweet) => (
+                { getUniqueTweets(data?.pages || []).map((item : Tweet) => (
                   <Suspense
                     key={item.id}  // ✅ Key should be on Suspense, not inside it
                     fallback={
