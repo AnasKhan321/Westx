@@ -5,7 +5,7 @@ import Tweet4 from "./TweetCard4";
 import { Tweet, User2 } from "../utils/type";
 import TweetSkeleton, { TwitterSkeletonComponent } from "./TweetSkeleton";
 import { motion } from "motion/react";
-import React, { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import Loader2 from "./Loader2";
 
 interface UserReplies {
@@ -75,74 +75,85 @@ const UserReplies = ({ user }: { user : User2 }) => {
     <TweetSkeleton />
   </div>
 
-const getUniqueTweets = (pages: any[]) => {
-  const seenTweets = new Set();
-  const uniqueTweets = pages.flatMap(group => 
-    group.data.filter((tweet: Tweet) => {
-      const isDuplicate = seenTweets.has(tweet.id);
-      seenTweets.add(tweet.id);
-      return !isDuplicate;
-    })
-  );
-  return uniqueTweets;
-};
+  const getUniqueTweets = (pages: { data: Tweet[] }[]) => {
+    const seenTweets = new Set<string>();
+    return pages.flatMap(group => 
+      group.data.filter((tweet: Tweet) => {
+        const replyKey = `${tweet.id}-${tweet.parentTweetId || ''}`;
+        const isDuplicate = seenTweets.has(replyKey);
+        seenTweets.add(replyKey);
+        return !isDuplicate;
+      })
+    );
+  };
 
 
-return (
-  <div>
-    <>
-      {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
-        <p className="text-center text-gray-200 my-4 font-bold text-xl  ">No tweets to show.</p>
-      ) : (
-        data?.pages?.map((group, i) => (
-          <React.Fragment key={i}>
-            {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Replies  </div>  </>}
-            { getUniqueTweets(data?.pages || []).map((item : Tweet , index : number) => (
+  return (
+    <div>
+      <>
+        {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
+          <p className="text-center text-gray-200 my-4 font-bold text-xl">
+            No tweets to show.
+          </p>
+        ) : (
+          <>
+            {getUniqueTweets(data?.pages || []).map((item: Tweet) => (
               <Suspense
-                key={item.id}  // ✅ Key should be on Suspense, not inside it
+                key={`${item.id}-${item.parentTweetId || ''}`}
                 fallback={
-
                   <div className="text-white p-4 md:w-[96%] w-full mx-auto">
-
                     <TwitterSkeletonComponent />
                   </div>
-
                 }
               >
-                          <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className="border-b border-white/20  py-4  " key={index}>
-            {item.parentTweetId && <Tweet4 createdAt={item.parentTweet?.createdAt as Date} photoURL={item.parentTweet?.user.photoURL as string } tweetid={item.parentTweet?.id as string} content={item.parentTweet?.text as string} username={item.parentTweet?.user.username as string} date={""}  name={item.parentTweet?.user.name as string} />  }
-        
-            <Reply2
-              content={item.text as string}
-              replyid ={item.id}
-              username={user.username}
-              date={item.createdAt}
-              name={user.name}
-              photoURL={user.photoURL}
-              createdAt={item.createdAt}
-            />
-          </motion.div>
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }} 
+                  animate={{ opacity: 1, y: 0 }} 
+                  transition={{ duration: 0.7 }} 
+                  className="border-b border-white/20 py-4"
+                >
+                  {item.parentTweetId && (
+                    <Tweet4 
+                      createdAt={item.parentTweet?.createdAt as Date}
+                      photoURL={item.parentTweet?.user.photoURL as string}
+                      tweetid={item.parentTweet?.id as string}
+                      content={item.parentTweet?.text as string}
+                      username={item.parentTweet?.user.username as string}
+                      date={""}
+                      name={item.parentTweet?.user.name as string}
+                    />
+                  )}
+                  <Reply2
+                    content={item.text as string}
+                    replyid={item.id}
+                    username={user.username}
+                    date={item.createdAt}
+                    name={user.name}
+                    photoURL={user.photoURL}
+                    createdAt={item.createdAt}
+                  />
+                </motion.div>
               </Suspense>
             ))}
-          </React.Fragment>
-        ))
-      )}
 
-      {/* Invisible div to track scrolling and auto-load new data */}
-      <div ref={bottomRef} className="h-10" />
+            {data.pages[data.pages.length - 1].data.length === 0 && (
+              <div className='py-8 text-center font-bold text-xl'>
+                No more Replies
+              </div>
+            )}
+          </>
+        )}
 
-      {isFetchingNextPage && (
-
-        <div className=" flex justify-center items-start h-[14vh] ">
-          <Loader2 />
-        </div>
-
-
-      )}
-    </>
-
-  </div>
-)
+        {/* Infinite scroll elements */}
+        <div ref={bottomRef} className="h-10" />
+        {isFetchingNextPage && (
+          <div className="flex justify-center items-start h-[14vh]">
+            <Loader2 />
+          </div>
+        )}
+      </>
+    </div>
+  );
 };
 
 export default UserReplies;
