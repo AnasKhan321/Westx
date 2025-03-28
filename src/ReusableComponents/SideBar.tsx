@@ -11,7 +11,7 @@ const Sidebar = () => {
   const location = useLocation();
   const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
   return (
-    <div className="h-screen w-44 xl:w-64 bg-primaryColor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
+    <div className="h-screen w-44 xl:w-[225px] bg-primaryColor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
       {/* Profile Section */}
       <div className="flex items-center space-x-3">
         <img
@@ -79,7 +79,7 @@ const Sidebar = () => {
           {user?.username && (
           <Link
             to={`/profile`}
-            className="mt-auto flex items-center   xl:mx-0 mx-2   space-x-3 absolute bottom-10  "
+            className="mt-auto flex    xl:mx-0 mr-2   space-x-2 absolute bottom-10  "
           >
             <img
               src={user?.photoURL as string} // Replace with the user profile image path

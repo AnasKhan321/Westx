@@ -61,7 +61,7 @@ const Login: React.FC = () => {
 
 
 
-          <button disabled={islogin} onClick={handleTwitterLogin} className=" font-bold  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-purple-300 disabled:opacity-50 disabled:cursor-not-allowed  text-white py-2 rounded-lg  ">   {islogin ? "Connecting..." : "Connect with X"} </button>
+          <button disabled={islogin} onClick={handleTwitterLogin} className=" font-bold  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-purple-300 disabled:opacity-50 disabled:cursor-not-allowed  text-white py-2 rounded-lg  ">   {islogin ? "Creating Persona ..." : "Connect with X"} </button>
 
 
           {islogin && <div className="flex text-center my-2  justify-center items-center">        <Loader2 />  </div>}
