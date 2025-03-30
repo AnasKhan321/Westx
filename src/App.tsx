@@ -34,8 +34,7 @@ import PrivacyPolicy from "./Components/PrivacyPolicy";
 import CookiePolicy from "./Components/CookiePolicy";
 import TopicsTweets from "./Components/TopicsTweets";
 import { ActivityProvider } from "./Context/ActivityContext";
-
-
+import AddPersonaWrapper from "./Components/AddPersonaWrappet";
 const queryClient = new QueryClient();
 
 function AppRoutes() {
@@ -68,6 +67,7 @@ function AppRoutes() {
               element={<Explores />}
               key={"Explore"}
             />
+            <Route path="/persona/add" element={<AddPersonaWrapper />} key={"AddPersona"} />
             <Route path="/bookmark" element={<Bookmark />} key={"Bookmark"} />
             <Route path="/profile" element={<Profile />} key={"Profile"} />
             <Route path="/personas" element={<Peoples />} key={"Personas"} />

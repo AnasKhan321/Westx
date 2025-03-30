@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import Loader2 from "../ReusableComponents/Loader2";
 import SEO from "../ReusableComponents/SEO";
 
-interface TwitterUser {
+export interface TwitterUser {
   profile: string;
   name: string;
   avatar: string;
@@ -15,16 +15,17 @@ interface TwitterUser {
   status: string;
 }
 
-interface TwitterResponse {
+export interface TwitterResponse {
   success: boolean;
   data: TwitterUser;
 }
 
-interface CreateUserResponse {
+export interface CreateUserResponse {
   success: boolean;
+  message: string;
 }
 
-const formatTwitterAvatarUrl = (url: string): string => {
+export const formatTwitterAvatarUrl = (url: string): string => {
   if (!url) return "/omi-avatar.svg";
   let formattedUrl = url.replace("http://", "https://");
   formattedUrl = formattedUrl.replace("_normal", "");
