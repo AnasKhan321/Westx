@@ -8,14 +8,14 @@ const UserCard = ({user}  : {user : User}) => {
   return (
     <motion.div initial={{opacity : 0.5 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.5}} className="flex items-center p-4   text-white  rounded-lg w-full  font-roboto">
       {/* Avatar */}
-      <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
+      <Link to={`/user/${user.username}`} className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
         <SafeImage
           src={user.photoURL}
           alt="User Avatar"
           className="w-full h-full object-cover"
         />
 
-      </div>
+      </Link>
       <div className="flex-grow">
         <div className="font-bold flex gap-x-2 items-center"> <Link to={`/user/${user.username}`}> {user.name}</Link>          <span >
 

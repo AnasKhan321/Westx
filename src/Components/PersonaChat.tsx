@@ -17,7 +17,7 @@ interface ChatMessages {
 }
 
 const getChat = async (user1: string, user2: string): Promise<ChatMessages> => {
-  if(user1 == undefined){
+  if (user1 == undefined) {
     return {
       success: false,
       messages: [],
@@ -42,7 +42,7 @@ const PersonaChat = () => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
-  const { user , isAuthenticated} = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const [chats, setchats] = useState<Message[]>([]);
   const [isloading, setisloading] = useState(false);
@@ -53,7 +53,7 @@ const PersonaChat = () => {
     if (isloading) return;
     if (data?.data) {
       const response = await getAiResponse(data?.data, question, chats);
-     setchats((prevChats) => {
+      setchats((prevChats) => {
         const updatedChats = [...prevChats];
         updatedChats.push({
           sender: "assistant",
@@ -85,46 +85,58 @@ const PersonaChat = () => {
 
 
   useEffect(() => {
-    
+
     if (isMounted.current) return; // Prevent multiple executions
     isMounted.current = true;
-  
+
     const initializeChat = async () => {
       // Fetch previous chat
       const chatResponse = await getChat(
         user?.username as string,
         username as string
       );
- 
+
 
       if (chatResponse.success) {
         setchats(chatResponse.messages);
       }
     };
 
-  
-      void initializeChat();
-    
+
+    void initializeChat();
+
   }, [data?.data?.username, user?.username, username]);
 
-  useEffect(()=>{
-      if (chats.length !== 0) {
+  useEffect(() => {
+    if (chats.length !== 0) {
 
-        if(!isAuthenticated) {
-          return;
-        };
-        const updateChat = async () => {
-          await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/saveChat`, {
-            user1: user?.username,
-            user2: username,
-            messages: chats,
-          });
-        };
+      if (!isAuthenticated) {
+        return;
+      };
+      const updateChat = async () => {
+        await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/saveChat`, {
+          user1: user?.username,
+          user2: username,
+          messages: chats,
+        });
+      };
 
-          void updateChat();
-      
-      }
-  },[chats])
+      void updateChat();
+
+    }
+  }, [chats])
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Add this scroll to bottom effect
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Scroll when chats change or loading state changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [chats, isloading]);
 
 
 
@@ -173,21 +185,19 @@ const PersonaChat = () => {
               </div>
 
               <div className="w-full h-[76vh]  overflow-y-scroll  mb-2  ">
-             
+
                 {chats.map((chat, index) => (
                   <div
                     key={index}
-                    className={`flex ${
-                      chat.sender === "user" ? "justify-end" : "justify-start"
-                    } my-1 `}
+                    className={`flex ${chat.sender === "user" ? "justify-end" : "justify-start"
+                      } my-1 `}
                   >
                     <div
                       key={index}
-                      className={`p-3  text-sm  md:text-base rounded-lg ${
-                        chat.sender === "user"
+                      className={`p-3  text-sm  md:text-base rounded-lg ${chat.sender === "user"
                           ? "bg-purple-600 text-white"
                           : "bg-[#474747] text-white"
-                      } max-w-[70%]`}
+                        } max-w-[70%]`}
                     >
                       {chat.content}
                     </div>
@@ -199,6 +209,8 @@ const PersonaChat = () => {
                     <ScaleLoader color="white" />{" "}
                   </div>
                 )}
+
+                <div ref={messagesEndRef} />
               </div>
 
               <div className="w-full h-[10vh] my-auto ">
