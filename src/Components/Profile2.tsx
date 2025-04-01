@@ -17,6 +17,8 @@ import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
 import { useToken } from "../Context/TokenContext";
 import TokenDetail from "../ReusableComponents/TokenDetail";
+import UpdateUserModal from "../ReusableComponents/UpdateUserModel";
+import toast from "react-hot-toast";
 interface Tweetcounts {
   success: boolean;
   data: number;
@@ -34,6 +36,7 @@ const ProfilePage = ({ user }: { user: User }) => {
 
   const { handleLogout } = useAuth();
   const { handleTokenLaucnh } = useToken();
+  const [isEditProfile, setIsEditProfile] = useState(false);
 
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
     queryKey: [`UserFollowing:${user.username}`],
@@ -60,6 +63,7 @@ const ProfilePage = ({ user }: { user: User }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const navigate = useNavigate();
 
@@ -67,12 +71,64 @@ const ProfilePage = ({ user }: { user: User }) => {
     navigate(-1);
   };
 
+  const uploadinfile = async(file : File | undefined , profileKey : string) : Promise<string | null> => {
+
+    if(file){
+      const url = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/GetSignedUrl`, {
+        imageName: file?.name,
+        imageType: file?.type,
+        profileKey: profileKey
+      });
+      await axios.put(url.data.url, file);
+      let uploadedurl = new URL(url.data.url);
+      let uploadedurl2 = `${uploadedurl.origin}${uploadedurl.pathname}`;
+      return uploadedurl2;
+    }else{
+      return null ; 
+    }
+
+  }
+
+  const handleUpdate = async(data: {
+    name?: string;
+    profilePhoto?: File;
+    coverPhoto?: File;
+  }) => {
+    setIsUpdating(true);
+
+    const profilePhotoUrl = await uploadinfile(data.profilePhoto , "ProfilePhoto");
+    const coverPhotoUrl = await uploadinfile(data.coverPhoto , "CoverPhoto");
+
+
+    let updatedata = {
+      name : data.name? data.name : user.name , 
+      profilephoto : profilePhotoUrl? profilePhotoUrl : user.photoURL , 
+      coverPhoto : coverPhotoUrl? coverPhotoUrl : user.coverPhotoURL,
+      username : user.username,
+      bio : user.bio
+    }
+    const  updateUser  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/update/userdata`, updatedata);
+
+    if(updateUser.data.success){
+      toast.success("Profile updated successfully");
+
+    }else{
+      toast.error("Profile update failed");
+    }
+    setIsUpdating(false);
+    setIsEditProfile(false);
+   
+  
+
+
+  };
   return (
     <>
       {user && (
-        <div className="w-full  min-h-[96vh] border border-white/10   overflow-y-scroll  max-h-[96vh]  my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white rounded-xl overflow-hidden  ">
+        <div className="w-full   md:min-h-[96vh] border border-white/10   overflow-y-scroll  md:max-h-[96vh]  md:my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white rounded-xl overflow-hidden  ">
           {/* Cover Photo */}
 
+          <UpdateUserModal isUpdating={isUpdating} initialData={{name : user.name , profilePhotoUrl : user.photoURL as string , coverPhotoUrl : user.coverPhotoURL as string}} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
           <div className="">
             <div className="relative">
               <div className="relative w-full h-48">
@@ -111,9 +167,13 @@ const ProfilePage = ({ user }: { user: User }) => {
                 className="md:w-24 md:h-24 w-20
                h-20  rounded-full border  border-white"
               />
-              <h2 className=" text-base  md:text-xl font-semibold mt-2">
-                {user.name}
-              </h2>
+              <div className="flex items-center gap-x-2 justify-between w-full  ">
+                <h2 className=" text-base  md:text-xl font-semibold mt-2">
+                  {user.name}
+                </h2>
+                <button onClick={() => setIsEditProfile(!isEditProfile)} className="mt-2 px-4 text-sm py-2 transition-all  hover:bg-white/10  rounded-full border border-white/50 ">Edit Profile</button>
+              </div>
+
               <p className="text-white/60 text-sm mt-2 ">
                 @{user.username}{" "}
                 <span className="text-white/30">
@@ -124,7 +184,7 @@ const ProfilePage = ({ user }: { user: User }) => {
 
               <div className="flex justify-between gap-x-2 mt-5 w-[40%] ">
                 <div className="text-center flex gapx-x-1 w-full   items-center">
-                {userfollowingloading ? (
+                  {userfollowingloading ? (
                     <SmallLoader />
                   ) : (
                     <p className="text-base font-semibold mx-1 ">
@@ -138,7 +198,7 @@ const ProfilePage = ({ user }: { user: User }) => {
 
                 </div>
                 <div className="text-center flex gapx-x-1 w-full    items-center">
-                {userfollowerloading ? (
+                  {userfollowerloading ? (
                     <SmallLoader />
                   ) : (
                     <p className="text-base font-semibold  ">
@@ -152,7 +212,7 @@ const ProfilePage = ({ user }: { user: User }) => {
 
                 </div>
                 <div className="text-center flex gapx-x-1 w-full    items-center">
-                {usertweetloading ? (
+                  {usertweetloading ? (
                     <SmallLoader />
                   ) : (
                     <p className="text-base font-semibold mx-1 ">
@@ -169,7 +229,7 @@ const ProfilePage = ({ user }: { user: User }) => {
 
             </div>
 
-          
+
           </div>
 
           <div className="     w-[95%]  mx-auto  mt-4">
@@ -179,8 +239,8 @@ const ProfilePage = ({ user }: { user: User }) => {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={` ${activeTab === tab
-                      ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
-                      : " py-2 text-white/60 hover:text-white   transition-all"
+                    ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
+                    : " py-2 text-white/60 hover:text-white   transition-all"
                     }`}
                 >
                   {tab}

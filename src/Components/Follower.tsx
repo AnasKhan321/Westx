@@ -14,7 +14,7 @@ const UserCard = React.lazy(() => import("../ReusableComponents/UserCard"));
 const getUserFollower = async ({ userid }: { userid: string }): Promise<Followings2[]> => {
   const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/follower/${userid}`)
   const data = await res.json();
-  console.log(data)
+
   return data.data;
 }
 
@@ -50,7 +50,7 @@ const Follower = () => {
       {isError && <div className="text-red-500">Error: {error.message}</div>}
 
       {data?.map((user) => (
-        <Suspense fallback={<PersonaLoading />}>
+        <Suspense fallback={<PersonaLoading />} key={user.id}>
           <UserCard user={user.follower} /> </Suspense>
       ))}
        <div className=" tablet:mb-4 mb-16"> </div>
