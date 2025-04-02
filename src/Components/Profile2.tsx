@@ -93,6 +93,7 @@ const ProfilePage = ({ user }: { user: User }) => {
     name?: string;
     profilePhoto?: File;
     coverPhoto?: File;
+    bio?: string;
   }) => {
     setIsUpdating(true);
 
@@ -105,7 +106,7 @@ const ProfilePage = ({ user }: { user: User }) => {
       profilephoto : profilePhotoUrl? profilePhotoUrl : user.photoURL , 
       coverPhoto : coverPhotoUrl? coverPhotoUrl : user.coverPhotoURL,
       username : user.username,
-      bio : user.bio
+      bio : data.bio? data.bio : user.bio
     }
     const  updateUser  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/update/userdata`, updatedata);
 
@@ -128,7 +129,7 @@ const ProfilePage = ({ user }: { user: User }) => {
         <div className="w-full   md:min-h-[96vh] border border-white/10   overflow-y-scroll  md:max-h-[96vh]  md:my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white rounded-xl overflow-hidden  ">
           {/* Cover Photo */}
 
-          <UpdateUserModal isUpdating={isUpdating} initialData={{name : user.name , profilePhotoUrl : user.photoURL as string , coverPhotoUrl : user.coverPhotoURL as string}} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
+          <UpdateUserModal isUpdating={isUpdating} initialData={{name : user.name , profilePhotoUrl : user.photoURL as string , coverPhotoUrl : user.coverPhotoURL as string  , bio : user.bio}} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
           <div className="">
             <div className="relative">
               <div className="relative w-full h-48">
@@ -146,15 +147,17 @@ const ProfilePage = ({ user }: { user: User }) => {
               </div>
               <div className="absolute top-4 right-4 flex space-x-2">
                 {!user.isToken &&
-                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username)} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
                     Upgrade
                   </button>}
                 <button
                   onClick={handleLogout}
-                  className="border-white  px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black"
+                  className="border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black"
                 >
                   Logout
                 </button>
+
+                <button onClick={() => setIsEditProfile(!isEditProfile)} className=" text-xs px-1 ss:text-sm md:text-base  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">Edit Profile</button>
               </div>
             </div>
           </div>
@@ -171,7 +174,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 <h2 className=" text-base  md:text-xl font-semibold mt-2">
                   {user.name}
                 </h2>
-                <button onClick={() => setIsEditProfile(!isEditProfile)} className="mt-2 px-4 text-sm py-2 transition-all  hover:bg-white/10  rounded-full border border-white/50 ">Edit Profile</button>
+      
               </div>
 
               <p className="text-white/60 text-sm mt-2 ">
@@ -182,7 +185,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 </span>
               </p>
 
-              <div className="flex justify-between gap-x-2 mt-5 w-[40%] ">
+              <div className="flex justify-between gap-x-2 mt-3 w-full  md:w-[40%] ">
                 <div className="text-center flex gapx-x-1 w-full   items-center">
                   {userfollowingloading ? (
                     <SmallLoader />
@@ -223,7 +226,9 @@ const ProfilePage = ({ user }: { user: User }) => {
 
                 </div>
               </div>
-
+              <p className="ml-1 text-white/80 text-sm md:text-base mt-4 leading-relaxed whitespace-pre-wrap">
+                {user.bio || "No bio yet"}
+              </p>
 
               {user.isToken && <TokenDetail publicKey={user.publicKey as string} />}
 

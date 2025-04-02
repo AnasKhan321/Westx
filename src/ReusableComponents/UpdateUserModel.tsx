@@ -7,11 +7,13 @@ interface UpdateUserModalProps {
     name?: string;
     profilePhoto?: File;
     coverPhoto?: File;
+    bio?: string;
   }) => void;
   initialData?: {
     name: string;
     profilePhotoUrl?: string;
     coverPhotoUrl?: string;
+    bio?: string;
   }; 
   isUpdating: boolean;
 }
@@ -28,6 +30,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
   const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
   const [profilePreview, setProfilePreview] = useState(initialData?.profilePhotoUrl);
   const [coverPreview, setCoverPreview] = useState(initialData?.coverPhotoUrl);
+  const [bio, setBio] = useState(initialData?.bio || '');
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -63,6 +66,7 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
       name: name || undefined,
       profilePhoto: profilePhoto || undefined,
       coverPhoto: coverPhoto || undefined,
+      bio: bio || undefined,
     });
  
   };
@@ -111,6 +115,27 @@ const UpdateUserModal: React.FC<UpdateUserModalProps> = ({
             />
           </div>
 
+
+
+          <div>
+            <label 
+              htmlFor="bio" 
+              className="block text-sm font-medium text-gray-300 mb-2"
+            >
+              Bio
+            </label>
+            <textarea
+              id="bio"
+             
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+              className="w-full px-4 py-3 bg-primaryColor border border-gray-700 rounded-lg shadow-sm 
+                       text-white placeholder-gray-400
+                       focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent
+                       transition-all duration-200"
+              placeholder="Enter your bio"
+            />
+          </div>
           {/* Profile Photo */}
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">

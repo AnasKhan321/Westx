@@ -365,7 +365,9 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             </div>
           </div>
 
-
+          <p className="ml-1 text-white/80 text-sm md:text-base mt-4 leading-relaxed whitespace-pre-wrap">
+                {profile.bio || "No bio yet"}
+              </p>
 
           {profile?.isToken && (
             <TokenDetail publicKey={profile.publicKey as string} />
