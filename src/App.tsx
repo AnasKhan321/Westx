@@ -35,6 +35,7 @@ import CookiePolicy from "./Components/CookiePolicy";
 import TopicsTweets from "./Components/TopicsTweets";
 import { ActivityProvider } from "./Context/ActivityContext";
 import AddPersonaWrapper from "./Components/AddPersonaWrappet";
+import MyPersonaWrapper from "./Components/MyPersonaWrapper";
 const queryClient = new QueryClient();
 
 function AppRoutes() {
@@ -71,6 +72,7 @@ function AppRoutes() {
             <Route path="/bookmark" element={<Bookmark />} key={"Bookmark"} />
             <Route path="/profile" element={<Profile />} key={"Profile"} />
             <Route path="/personas" element={<Peoples />} key={"Personas"} />
+            <Route path="/my-personas" element={<MyPersonaWrapper />} key={"MyPersonas"} />
             <Route
               path="/user/:username"
               element={<UserDetail />}

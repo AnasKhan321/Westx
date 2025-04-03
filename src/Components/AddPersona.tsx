@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { useState, KeyboardEvent } from "react";
-import { IoSearchOutline } from 'react-icons/io5';
+import { IoCaretBack, IoSearchOutline } from 'react-icons/io5';
 import { RiCloseLine } from 'react-icons/ri';
 import { CreateUserResponse, formatTwitterAvatarUrl, TwitterResponse, TwitterUser } from './Aiworld';
 import Loader2 from '../ReusableComponents/Loader2';
 import toast from 'react-hot-toast';
 import { useAuth } from '../Context/AuthContext';
 import { ColorRing } from 'react-loader-spinner';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -14,16 +15,20 @@ import { ColorRing } from 'react-loader-spinner';
 const AddPersona = () => {
     const [searchValue, setSearchValue] = useState('');
 
-
+    const navigate = useNavigate();
     const [twitteruser, settwitteruser] = useState<TwitterUser | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [userLoading, setuserLoading] = useState(false);
 
     const handleKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && searchValue.trim()) {
-            searchUser() ; 
+            searchUser();
         }
     };
+
+    const handleClick = () => {
+        navigate(-1);
+      };
 
     const searchUser = async () => {
         if (searchValue.trim()) {
@@ -65,9 +70,9 @@ const AddPersona = () => {
                     },
 
                 });
-            } 
+            }
             if (!data.success) {
- 
+
                 toast.error(data.message, {
                     style: {
                         borderRadius: '20px',
@@ -80,17 +85,20 @@ const AddPersona = () => {
     };
     return (
         <div className="w-full min-h-screen max-h-screen md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10 bg-primaryColor md:bg-secondaryColor rounded-2xl">
+            <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
+                <IoCaretBack
+                    className="text-xl cursor-pointer"
+                    onClick={handleClick}
+                />
+                <span>Add Persona</span>
+            </div>
             <div className="p-4 md:p-6">
-                {/* Header */}
-                <h1 className="text-2xl text-center font-bold mb-6 text-white">
-                    Add Persona
-                </h1>
 
                 {/* Search Container */}
-                <div className="max-w-2xl mx-auto">
+                <div className="w-[90%] mx-auto mt-12">
                     <div className="relative">
                         {/* Search Icon */}
-                        <div onClick={searchUser} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                        <div onClick={searchUser} className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-400">
                             <IoSearchOutline className="w-5 h-5" />
                         </div>
 

@@ -1,12 +1,12 @@
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
+import { IoPersonOutline, IoPersonSharp,  IoPersonCircleOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 import { motion } from 'motion/react';
-
+import { FaUserCircle } from "react-icons/fa";
 const Sidebar = () => {
   const location = useLocation();
   const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
@@ -59,6 +59,19 @@ const Sidebar = () => {
               <PiUsersThree size={23} />
             )}
             <span className="font-medium  text-base  lg:text-xl font-roboto">Personas</span>
+          </Link>
+
+
+          <Link
+            to="/my-personas"
+            className="flex items-center space-x-3  transition-all hover:text-territary"
+          >
+            {location.pathname == "/my-personas" ? (
+              <FaUserCircle size={24} />
+            ) : (
+              <IoPersonCircleOutline size={24} />
+            )}
+            <span className="font-medium  text-base  lg:text-xl font-roboto">My Personas</span>
           </Link>
 
           <Link
