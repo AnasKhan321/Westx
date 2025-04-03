@@ -146,18 +146,23 @@ const ProfilePage = ({ user }: { user: User }) => {
                 <span>Profile</span>
               </div>
               <div className="absolute top-4 right-4 flex space-x-2">
-                {!user.isToken &&
-                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username)} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
-                    Upgrade
-                  </button>}
+
+
+              <button onClick={() => setIsEditProfile(!isEditProfile)} className=" border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black">Edit Profile</button>
+
+
                 <button
                   onClick={handleLogout}
                   className="border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black"
                 >
                   Logout
                 </button>
+                
+                {!user.isToken &&
+                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username)} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
+                    Upgrade
+                  </button>}
 
-                <button onClick={() => setIsEditProfile(!isEditProfile)} className=" text-xs px-1 ss:text-sm md:text-base  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">Edit Profile</button>
               </div>
             </div>
           </div>
