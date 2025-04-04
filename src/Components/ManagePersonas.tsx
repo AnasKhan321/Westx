@@ -52,6 +52,9 @@ const GetUsers = ({ username }: { username: string }) => {
         refetchOnMount: false, 
         refetchOnWindowFocus: false, 
     })
+
+
+    
     console.log(data)
 
     return (
