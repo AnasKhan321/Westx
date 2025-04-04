@@ -10,7 +10,7 @@ import {
   getUserFollowerbyuserid,
   getUserFollowinguserid,
 } from "../utils/apicalls";
-
+import { IoChatboxOutline } from "react-icons/io5";
 import SmallLoader from "./SmallLoader";
 import UserTweets from "./UsertTweets";
 import axios from "axios";
@@ -373,10 +373,20 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
             <Link
               to={`/chat/${profile.username}`}
-              className="   text-white  text-sm  whitespace-nowrap overflow-hidden text-ellipsis   underline  "
+              className="  hidden md:block text-white  text-sm  whitespace-nowrap overflow-hidden text-ellipsis   underline  "
             >
               Talk to Persona
             </Link>
+
+            <Link
+              to={`/chat/${profile.username}`}
+              className="  block  p-3 rounded-full bg-secondaryColor md:hidden  text-white  text-sm  whitespace-nowrap overflow-hidden text-ellipsis   underline  "
+            > 
+            <IoChatboxOutline  size={22}/>
+
+              </Link>
+
+            
 
           </div>
           <p className="text-white/60 text-sm mt-1 ">
