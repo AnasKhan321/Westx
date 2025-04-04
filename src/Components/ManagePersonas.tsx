@@ -53,10 +53,6 @@ const GetUsers = ({ username }: { username: string }) => {
         refetchOnWindowFocus: false, 
     })
 
-
-    
-    console.log(data)
-
     return (
         <div>
             {isLoading && <Loader2 fullScreen={true}/>}

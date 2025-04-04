@@ -53,7 +53,7 @@ const calculateTokenEquivalent = async () => {
   const solInUsd = solPrice * 0.1; // Convert 0.1 SOL to USD
   const nasaEquivalent = solInUsd / nasaPriceUSD; // Convert USD to NASA tokens
 
-  console.log(`0.1 SOL ≈ ${nasaEquivalent.toLocaleString()} NASA (~$${solInUsd.toFixed(2)} USD)`);
+
   
   return { nasaEquivalent, solInUsd };
 };
@@ -179,7 +179,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
     } else {
       setselectedtoken(token)
       setIsBuyOpen(true)
-      console.log(token)
+
       setSymbol(symbol)
       updateAmountBuy(token  , buyAmount)
 
@@ -203,7 +203,6 @@ export function TokenProvider({ children }: TokenProviderProps) {
       const { serializedTransaction } = prepareResponse.data;
 
       const data = await calculateTokenEquivalent();
-      console.log(data)
       const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
       if (sendTransaction) {
         const signature = await sendTransaction(transaction, connection);
@@ -330,7 +329,6 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
       if (sendTransaction) {
         const signature = await sendTransaction(transaction, connection);
-        console.log(signature)
         // const {data}  = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/verifySignature`, {
         //   signature: signature,
         // })

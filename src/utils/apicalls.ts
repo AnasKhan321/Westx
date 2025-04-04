@@ -174,7 +174,6 @@ export const getUserFollowinguserid = async(userid : string) : Promise<FollowerR
 export const getUserFollowing = async(userid : string) : Promise<Followingresponse> =>{
     const res  = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/following/${userid}`)
     const data  = await res.json()  ; 
-    console.log(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/user/following/${userid}`)
     return data 
 }
 
