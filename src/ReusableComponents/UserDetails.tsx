@@ -280,7 +280,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           </div>
           <div className="absolute flex items-center  space-x-2 top-4 left-4 text-white text-lg font-semibold">
             <IoCaretBack className="cursor-pointer" onClick={handleClick} />
-            <span>{profile.name}</span>
+            <span className="whitespace-nowrap overflow-hidden text-ellipsis  ">{profile.name}</span>
           </div>
 
           <div className="absolute top-4 right-4 flex space-x-2">
@@ -307,8 +307,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
 
           <div className=" flex items-center  gap-x-4 mt-4 ">
-            <h2 className=" text-base  md:text-xl font-semibold ">
-
+            <h2 className="text-base md:text-xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
               {profile.name}
             </h2>
 
@@ -374,7 +373,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
             <Link
               to={`/chat/${profile.username}`}
-              className="   text-white  text-sm     underline  "
+              className="   text-white  text-sm  whitespace-nowrap overflow-hidden text-ellipsis   underline  "
             >
               Talk to Persona
             </Link>

@@ -98,7 +98,7 @@ const UserCard = ({ user }: { user: User }) => {
 
             </Link>
             <div className="flex-grow">
-                <div className="font-bold flex gap-x-2 items-center"> <Link to={`/user/${user.username}`}> {user.name}</Link>          <span >
+                <div className="font-bold flex gap-x-2 items-center text-sm  md:text-base"> <Link to={`/user/${user.username}`}> {user.name}</Link>          <span >
 
                     {user.isPremium &&
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#a200e8" className="size-6">

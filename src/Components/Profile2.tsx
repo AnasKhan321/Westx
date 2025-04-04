@@ -176,7 +176,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                h-20  rounded-full border  border-white"
               />
               <div className="flex items-center gap-x-2 justify-between w-full  ">
-                <h2 className=" text-base  md:text-xl font-semibold mt-2">
+                <h2 className="text-sm mt-2  md:text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
                   {user.name}
                 </h2>
       
