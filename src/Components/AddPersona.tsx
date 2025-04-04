@@ -20,6 +20,8 @@ const AddPersona = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [userLoading, setuserLoading] = useState(false);
 
+    const [isCreated , setIsCreated] = useState(false);
+
     const handleKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && searchValue.trim()) {
             searchUser();
@@ -41,6 +43,7 @@ const AddPersona = () => {
                 settwitteruser(data.data);
             }
             setIsLoading(false);
+            setIsCreated(false);
         }
     }
 
@@ -49,7 +52,6 @@ const AddPersona = () => {
 
     const handleCreateUser = async () => {
         if (twitteruser && !userLoading) {
-            console.log("calling ...")
             setuserLoading(true);
             const { data } = await axios.post<CreateUserResponse>(
                 `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/user/nonPremiumUser`,
@@ -70,6 +72,7 @@ const AddPersona = () => {
                     },
 
                 });
+                setIsCreated(true);
             }
             if (!data.success) {
 
@@ -179,6 +182,7 @@ const AddPersona = () => {
                                             </div>
 
                                             <button
+                                                disabled={isCreated}
                                                 onClick={handleCreateUser}
                                                 className="  bg-gradient-to-r via-purple-600 from-purple-500 to-purple-700  transition-all rounded-full    text-white   px-2 py-1  md:text-sm  md:px-4 md:py-2  font-bold text-xs  hover:bg-gradient-to-b "
                                             >

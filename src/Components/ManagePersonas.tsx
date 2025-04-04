@@ -3,13 +3,13 @@ import { useAuth } from "../Context/AuthContext"
 import SEO from "../ReusableComponents/SEO"
 import { IoAddSharp } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
-import Loader from "../ReusableComponents/Loader";
 import { User } from "../utils/type";
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import SafeImage from "../ReusableComponents/SafeImage";
 import { FaArrowUp } from "react-icons/fa6"
 import toast from "react-hot-toast";
+import Loader2 from "../ReusableComponents/Loader2";
 
 const CreatedUser = async (username: string): Promise<User[]> => {
     let sdata = {
@@ -47,13 +47,16 @@ const ManagePersonas = () => {
 const GetUsers = ({ username }: { username: string }) => {
     const { data, isLoading, error } = useQuery({
         queryKey: [`CreatedUser:${username}`],
-        queryFn: () => CreatedUser(username)
+        queryFn: () => CreatedUser(username) , 
+        staleTime: Infinity, 
+        refetchOnMount: false, 
+        refetchOnWindowFocus: false, 
     })
     console.log(data)
 
     return (
         <div>
-            {isLoading && <Loader />}
+            {isLoading && <Loader2 fullScreen={true}/>}
             {error && <div className="text-red-500">Error fetching data</div>}
             {data && <div>
 
