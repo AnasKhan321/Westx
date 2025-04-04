@@ -66,6 +66,7 @@ export interface User {
 	isToken : boolean;
 	publicKey : string | null;
 	interests: string;
+	creator : string | null;
 	oauthToken: string;
 	followers: followings[];
 	followings: followings[];
@@ -167,6 +168,7 @@ export interface User2 {
 	isToken : boolean;
 	publicKey : string | null;
 	verified: boolean;
+	creator : string | null;
 	isActive: boolean;
 	isPremium: boolean;
 	interests: string;

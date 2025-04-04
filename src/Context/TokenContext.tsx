@@ -34,29 +34,29 @@ interface TokenBalanceResponse {
 }
 
 
-const fetchSolPrice = async () => {
-  const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
-  const data = await response.json();
-  return data.solana.usd; // SOL price in USD
-};
+// const fetchSolPrice = async () => {
+//   const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd');
+//   const data = await response.json();
+//   return data.solana.usd; // SOL price in USD
+// };
 
-const fetchTokenPrice = async () => {
-  return 0.000000033; // Hardcoded NASA price in USD
-};
+// const fetchTokenPrice = async () => {
+//   return 0.000000033; // Hardcoded NASA price in USD
+// };
 
-const calculateTokenEquivalent = async () => {
-  const solPrice = await fetchSolPrice();  // SOL price in USD
-  const nasaPriceUSD = await fetchTokenPrice(); // NASA price in USD
+// const calculateTokenEquivalent = async () => {
+//   const solPrice = await fetchSolPrice();  // SOL price in USD
+//   const nasaPriceUSD = await fetchTokenPrice(); // NASA price in USD
 
-  if (!solPrice || !nasaPriceUSD) return 'Price unavailable';
+//   if (!solPrice || !nasaPriceUSD) return 'Price unavailable';
 
-  const solInUsd = solPrice * 0.1; // Convert 0.1 SOL to USD
-  const nasaEquivalent = solInUsd / nasaPriceUSD; // Convert USD to NASA tokens
+//   const solInUsd = solPrice * 0.1; // Convert 0.1 SOL to USD
+//   const nasaEquivalent = solInUsd / nasaPriceUSD; // Convert USD to NASA tokens
 
 
   
-  return { nasaEquivalent, solInUsd };
-};
+//   return { nasaEquivalent, solInUsd };
+// };
 
 
 
@@ -202,7 +202,6 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
       const { serializedTransaction } = prepareResponse.data;
 
-      const data = await calculateTokenEquivalent();
       const transaction = Transaction.from(Buffer.from(serializedTransaction, 'base64'));
       if (sendTransaction) {
         const signature = await sendTransaction(transaction, connection);

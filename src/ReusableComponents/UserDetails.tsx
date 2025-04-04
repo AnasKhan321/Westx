@@ -22,6 +22,7 @@ import { IoCaretBack } from "react-icons/io5";
 import TokenDetail from "./TokenDetail";
 import { useToken } from "../Context/TokenContext";
 import SafeImage from "./SafeImage";
+import UpdateUserModal from "./UpdateUserModel";
 
 interface Tweetcounts {
   success: boolean;
@@ -40,7 +41,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const queryClient = useQueryClient();
   const tabs = ["Posts", "Replies", "Likes", "Repost"];
   const [activeTab, setActiveTab] = useState("Posts");
-  const {isAuthenticated} = useAuth()
+  const { isAuthenticated } = useAuth()
 
   const [isfollower, setisfollower] = useState(false);
 
@@ -78,6 +79,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const [isFollow, setisFollow] = useState(
     userfollower?.data.some((follower) => follower.followingid == user?.id)
   );
+  const [isEditProfile, setIsEditProfile] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     setfollowings(userfollowing?.data.length);
@@ -95,7 +98,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       return;
     }
 
-    if(!isAuthenticated){
+    if (!isAuthenticated) {
       toast.error("Please login to follow", {
         style: {
           borderRadius: '20px',
@@ -184,6 +187,62 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     }
   };
 
+
+
+
+  const uploadinfile = async (file: File | undefined, profileKey: string): Promise<string | null> => {
+
+    if (file) {
+      const url = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/GetSignedUrl`, {
+        imageName: file?.name,
+        imageType: file?.type,
+        profileKey: profileKey
+      });
+      await axios.put(url.data.url, file);
+      let uploadedurl = new URL(url.data.url);
+      let uploadedurl2 = `${uploadedurl.origin}${uploadedurl.pathname}`;
+      return uploadedurl2;
+    } else {
+      return null;
+    }
+
+  }
+
+  const handleUpdate = async (data: {
+    name?: string;
+    profilePhoto?: File;
+    coverPhoto?: File;
+    bio?: string;
+  }) => {
+    setIsUpdating(true);
+
+    const profilePhotoUrl = await uploadinfile(data.profilePhoto, "ProfilePhoto");
+    const coverPhotoUrl = await uploadinfile(data.coverPhoto, "CoverPhoto");
+
+
+    let updatedata = {
+      name: data.name ? data.name : profile.name,
+      profilephoto: profilePhotoUrl ? profilePhotoUrl : profile.photoURL,
+      coverPhoto: coverPhotoUrl ? coverPhotoUrl : profile.coverPhotoURL,
+      username: profile.username,
+      bio: data.bio ? data.bio : profile.bio
+    }
+    const updateUser = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/update/userdata`, updatedata);
+
+    if (updateUser.data.success) {
+      toast.success("Profile updated successfully");
+
+    } else {
+      toast.error("Profile update failed");
+    }
+    setIsUpdating(false);
+    setIsEditProfile(false);
+
+
+
+
+  };
+
   useEffect(() => {
     if (userfollower?.data) {
       setuserfollowing(userfollower.data.length);
@@ -203,6 +262,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   };
   return (
     <div className="w-ful border border-white/10 h-screen   md:min-h-[96vh]  overflow-y-scroll  md:max-h-[96vh]  md:my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  md:rounded-xl overflow-hidden  ">
+      <UpdateUserModal isUpdating={isUpdating} initialData={{ name: profile.name, profilePhotoUrl: profile.photoURL as string, coverPhotoUrl: profile.coverPhotoURL as string, bio: profile.bio }} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
+
       <div className="">
         <div className="relative">
           <div className="relative w-full h-48">
@@ -223,6 +284,9 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           </div>
 
           <div className="absolute top-4 right-4 flex space-x-2">
+            {profile.creator === user?.username &&
+              <button onClick={() => setIsEditProfile(!isEditProfile)}  className=" border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black">Edit Profile</button>
+            }
             {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
               <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
                 Upgrade
@@ -366,8 +430,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           </div>
 
           <p className="ml-1 text-white/80 text-sm md:text-base mt-4 leading-relaxed whitespace-pre-wrap">
-                {profile.bio || "No bio yet"}
-              </p>
+            {profile.bio || "No bio yet"}
+          </p>
 
           {profile?.isToken && (
             <TokenDetail publicKey={profile.publicKey as string} />
