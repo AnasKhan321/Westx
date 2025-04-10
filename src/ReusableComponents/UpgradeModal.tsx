@@ -82,6 +82,22 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
 
   const handleUpgrade = async () => {
     setIsUpgrading(true) ; 
+
+    console.log(user?.Points , upgradeCost)
+    if(user?.Points as number < upgradeCost){
+      console.log("here")
+      toast.error("InSufficient Balance"  ,  {
+        style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+        },
+
+      }) ; 
+      setIsUpgrading(false) ; 
+      return ; 
+    }
+    
     const upgradeData = {
       username : profile.username,
       level : nextLevel.toString() ,
