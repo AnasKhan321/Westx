@@ -8,9 +8,11 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import SafeImage from "../ReusableComponents/SafeImage";
 import { FaArrowUp } from "react-icons/fa6"
-import toast from "react-hot-toast";
-import Loader2 from "../ReusableComponents/Loader2";
 
+import Loader2 from "../ReusableComponents/Loader2";
+import { useState } from "react";
+import { UpgradeModal } from "../ReusableComponents/UpgradeModal";
+import toast from "react-hot-toast";
 const CreatedUser = async (username: string): Promise<User[]> => {
     let sdata = {
         username: username
@@ -62,7 +64,7 @@ const GetUsers = ({ username }: { username: string }) => {
 
                 {data.map((user, index) => {
                     return (
-                        <UserCard key={index} user={user} />
+                        <UserCard key={index} Profile={user} />
                     )
                 })}
 
@@ -75,62 +77,71 @@ const GetUsers = ({ username }: { username: string }) => {
 
 
 
-const UserCard = ({ user }: { user: User }) => {
+const UserCard = ({ Profile }: { Profile: User }) => {
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
     const handleLevelup = () => {
-        toast.success("Coming Soon", {
-            style: {
-                borderRadius: '20px',
-                background: '#333',
-                color: '#fff',
-            },
-        })
+        if(parseInt(Profile.level.toString().split("_")[1]) >= 3){
+            toast.error("Your persona is already at the level 3"  , {
+                style: {
+                    borderRadius: '20px',
+                    background: '#333',
+                    color: '#fff',
+                },
+
+            });
+        }else{
+            setShowUpgradeModal(true);
+           
+        }
     }
+
+
     return (
         <motion.div initial={{ opacity: 0.5, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center  py-6   text-white  rounded-lg w-full  font-roboto">
             {/* Avatar */}
-            <Link to={`/user/${user.username}`} className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
+            <Link to={`/user/${Profile.username}`} className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
                 <SafeImage
-                    src={user.photoURL}
+                    src={Profile.photoURL}
                     alt="User Avatar"
                     className="w-full h-full object-cover"
                 />
-
             </Link>
             <div className="flex-grow">
-                <div className="font-bold flex gap-x-2 items-center text-sm  md:text-base"> <Link to={`/user/${user.username}`}> {user.name}</Link>          <span >
-
-                    {user.isPremium &&
+                <div className="font-bold flex gap-x-2 items-center text-sm  md:text-base"> <Link to={`/user/${Profile.username}`}> {Profile.name}</Link>          <span >
+                    {Profile.isPremium &&
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#a200e8" className="size-6">
                             <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
                         </svg>}
-
                 </span>  </div>
-                <div className="text-gray-400 text-sm"> <Link to={`/user/${user.username}`} > @{user.username} </Link> </div>
-
-
-
-
+                <div className="text-gray-400 text-sm"> <Link to={`/user/${Profile.username}`} > @{Profile.username} </Link> </div>
             </div>
-
-
-
 
             <div className="flex flex-col gap-y-1 mr-5">
                 <p className="text-white/70 text-sm">Currently</p>
-                <p className="text-white text-sm">Level 1</p>
+                <p className="text-white text-sm">Level {Profile.level.toString().split("_")[1]}</p>
             </div>
             <button onClick={handleLevelup}>
                 <button className=" md:block hidden   bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700    transition-all    text-white py-2 px-8  rounded-full font-bold text-sm hover:bg-gradient-to-b ">
                     Level UP
-                </button></button>
-
-
+                </button>
+            </button>
 
             <button onClick={handleLevelup}>
                 <button className=" md:hidden  block   bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700   p-2  transition-all    text-white  rounded-full font-bold text-sm hover:bg-gradient-to-b hover:text-white ">
                     <FaArrowUp className="text-xl " />
-                </button></button>
+                </button>
+            </button>
+
+            <UpgradeModal
+                isOpen={showUpgradeModal}
+                onClose={() => setShowUpgradeModal(false)}
+                profile={Profile} 
+            >
+             
+
+          
+            </UpgradeModal>
         </motion.div>
     )
 }

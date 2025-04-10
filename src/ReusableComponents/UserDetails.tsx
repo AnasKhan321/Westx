@@ -285,7 +285,16 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
           <div className="absolute top-4 right-4 flex space-x-2">
             {profile.creator === user?.username &&
+
+
+              <> 
+              {parseInt(profile.level.toString().split("_")[1]) >= 2 &&
               <button onClick={() => setIsEditProfile(!isEditProfile)}  className=" border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black">Edit Profile</button>
+              }
+              
+              
+              
+              </>
             }
             {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
               <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">

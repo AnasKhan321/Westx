@@ -53,6 +53,7 @@ const AddPersona = () => {
     const handleCreateUser = async () => {
         if (twitteruser && !userLoading) {
             setuserLoading(true);
+            
             const { data } = await axios.post<CreateUserResponse>(
                 `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/user/nonPremiumUser`,
                 {

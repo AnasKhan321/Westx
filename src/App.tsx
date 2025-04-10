@@ -46,7 +46,7 @@ function AppRoutes() {
     location.pathname.startsWith(path.split(":")[0])
   );
 
-  return (
+  return (    
     <>
       {isNoLayout ? (
         <Routes>

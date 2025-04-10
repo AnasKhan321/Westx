@@ -146,7 +146,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 <span>Profile</span>
               </div>
               <div className="absolute top-4 right-4 flex space-x-2">
-
+              <div className="bg-white/10 px-2 py-1 rounded-full">{user.Points}</div>
 
               <button onClick={() => setIsEditProfile(!isEditProfile)} className=" border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black">Edit Profile</button>
 

@@ -64,6 +64,8 @@ export interface User {
 	isActive: boolean;
 	isPremium: boolean;
 	isToken : boolean;
+	level : Level , 
+	Points : number , 
 	publicKey : string | null;
 	interests: string;
 	creator : string | null;
@@ -83,6 +85,15 @@ export interface User {
 	Repost : Repost[]  , 
 	likes : Like[]
 };
+
+enum Level {
+	LEVEL_0,
+	LEVEL_1,
+	LEVEL_2 ,
+	LEVEL_3,
+	LEVEL_4 ,
+	LEVEL_5 
+}
 
 export interface followings {
 
@@ -164,6 +175,8 @@ export interface User2 {
 	geoLocation: Location;
 	username: string;
 	photoURL: string;
+	level : Level , 
+	Points : number , 
 	twitterId: string;
 	isToken : boolean;
 	publicKey : string | null;
