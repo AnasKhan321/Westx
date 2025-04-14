@@ -20,7 +20,7 @@ const AddPersona = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [userLoading, setuserLoading] = useState(false);
 
-    const [isCreated , setIsCreated] = useState(false);
+    const [isCreated, setIsCreated] = useState(false);
 
     const handleKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && searchValue.trim()) {
@@ -30,7 +30,7 @@ const AddPersona = () => {
 
     const handleClick = () => {
         navigate(-1);
-      };
+    };
 
     const searchUser = async () => {
         if (searchValue.trim()) {
@@ -53,7 +53,7 @@ const AddPersona = () => {
     const handleCreateUser = async () => {
         if (twitteruser && !userLoading) {
             setuserLoading(true);
-            
+
             const { data } = await axios.post<CreateUserResponse>(
                 `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/user/nonPremiumUser`,
                 {
@@ -144,53 +144,63 @@ const AddPersona = () => {
                                 )}
 
                                 {twitteruser.status !== "notfound" && (
-                                    <div className="mx-6 my-4">
-                                        <div className="flex items-center bg-white/10  text-white  rounded-lg p-4 max-w-2xl mx-auto  font-sans">
 
-                                            <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
-                                                <img
-                                                    src={formatTwitterAvatarUrl(twitteruser.avatar)}
-                                                    alt="User Avatar"
-                                                    className="w-full h-full object-cover"
-                                                />
-                                            </div>
+                                    <>
+                                        {twitteruser.profile == null ? (<div>Please Try Again</div>) : (
 
-                                            <div className="flex-grow">
-                                                <div className="font-bold md:text-base text-sm  flex gap-x-2 items-center">
-                                                    {" "}
-                                                    {twitteruser.name}{" "}
-                                                    <span>
-                                                        {twitteruser.blue_verified && (
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                viewBox="0 0 24 24"
-                                                                fill="#db12ff"
-                                                                className="size-6"
-                                                            >
-                                                                <path
-                                                                    fillRule="evenodd"
-                                                                    d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                                                                    clipRule="evenodd"
-                                                                />
-                                                            </svg>
-                                                        )}
-                                                    </span>{" "}
+
+
+                                            <div className="mx-6 my-4">
+                                                <div className="flex items-center bg-white/10  text-white  rounded-lg p-4 max-w-2xl mx-auto  font-sans">
+
+                                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
+                                                        <img
+                                                            src={formatTwitterAvatarUrl(twitteruser.avatar)}
+                                                            alt="User Avatar"
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+
+                                                    <div className="flex-grow">
+                                                        <div className="font-bold md:text-base text-sm  flex gap-x-2 items-center">
+                                                            {" "}
+                                                            {twitteruser.name}{" "}
+                                                            <span>
+                                                                {twitteruser.blue_verified && (
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        viewBox="0 0 24 24"
+                                                                        fill="#db12ff"
+                                                                        className="size-6"
+                                                                    >
+                                                                        <path
+                                                                            fillRule="evenodd"
+                                                                            d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
+                                                                            clipRule="evenodd"
+                                                                        />
+                                                                    </svg>
+                                                                )}
+                                                            </span>{" "}
+                                                        </div>
+                                                        <div className="text-gray-400 text-xs md:text-sm">
+                                                            {" "}
+                                                            @{twitteruser.profile}{" "}
+                                                        </div>
+                                                    </div>
+
+                                                    <button
+                                                        disabled={isCreated}
+                                                        onClick={handleCreateUser}
+                                                        className="  bg-gradient-to-r via-purple-600 from-purple-500 to-purple-700  transition-all rounded-full    text-white   px-2 py-1  md:text-sm  md:px-4 md:py-2  font-bold text-xs  hover:bg-gradient-to-b "
+                                                    >
+                                                        Import
+                                                    </button>
                                                 </div>
-                                                <div className="text-gray-400 text-xs md:text-sm">
-                                                    {" "}
-                                                    @{twitteruser.profile}{" "}
-                                                </div>
                                             </div>
+                                        )}
 
-                                            <button
-                                                disabled={isCreated}
-                                                onClick={handleCreateUser}
-                                                className="  bg-gradient-to-r via-purple-600 from-purple-500 to-purple-700  transition-all rounded-full    text-white   px-2 py-1  md:text-sm  md:px-4 md:py-2  font-bold text-xs  hover:bg-gradient-to-b "
-                                            >
-                                                Import
-                                            </button>
-                                        </div>
-                                    </div>
+
+                                    </>
                                 )}
                             </>
                         )}
