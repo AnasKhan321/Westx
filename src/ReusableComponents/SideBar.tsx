@@ -15,7 +15,7 @@ const Sidebar = () => {
       {/* Profile Section */}
       <div className="flex items-center space-x-3">
         <img
-          src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
+          src="/logo-round.png" // Replace with the profile image path
           alt="WestX Logo"
           className="w-20 h-20 rounded-full"
         />

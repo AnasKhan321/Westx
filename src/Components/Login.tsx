@@ -49,7 +49,7 @@ const Login: React.FC = () => {
       <div className=" rounded-t-3xl absolute top-[48vh] md:p-0 p-8    h-[52vh] md:relative md:top-0 bg-primaryColor w-full md:rounded-t-none  md:w-[50%] md:h-screen ">
         <div className=" w-[85%] md:w-[60%]  mx-auto justify-start  flex flex-col md:justify-center h-[90vh]">
           <img
-            src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Replace with the profile image path
+            src="/logo-round.png" // Replace with the profile image path
             alt="Profile Logo"
             className=" hidden md:block md:w-32  md:h-32 rounded-full my-4 "
           />

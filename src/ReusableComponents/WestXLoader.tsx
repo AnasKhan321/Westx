@@ -12,7 +12,7 @@ const WestXLoader = () => {
           className="relative z-10"
         >
           <img
-            src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png" // Make sure to use your actual logo path
+            src="/logo-round.png" // Make sure to use your actual logo path
             alt="WestX Logo"
             className="w-24 h-24 md:w-32 md:h-32 rounded-full"
           />

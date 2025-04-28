@@ -85,7 +85,6 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
 
     console.log(user?.Points , upgradeCost)
     if(user?.Points as number < upgradeCost){
-      console.log("here")
       toast.error("InSufficient Balance"  ,  {
         style: {
             borderRadius: '20px',
