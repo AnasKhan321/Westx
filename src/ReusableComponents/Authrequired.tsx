@@ -20,7 +20,7 @@ const {handleTwitterLogin} = useAuth()
           transition={{ delay: 0.2 }}
         >
           <img
-            src="https://codewithbat.s3.ap-south-1.amazonaws.com/logo-round.png"
+            src="/logo-round.png"
             alt="WestX Logo"
             className="w-24 h-24 rounded-full mb-6"
           />
