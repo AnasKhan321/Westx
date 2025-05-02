@@ -82,7 +82,7 @@ const UserCard = ({ Profile }: { Profile: User }) => {
 
     const handleLevelup = () => {
         if(parseInt(Profile.level.toString().split("_")[1]) >= 6){
-            toast.error("Your persona is already at the level 3"  , {
+            toast.error("Your persona is already at the level 6"  , {
                 style: {
                     borderRadius: '20px',
                     background: '#333',

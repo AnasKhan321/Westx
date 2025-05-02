@@ -9,6 +9,7 @@ import { useConnection } from '@solana/wallet-adapter-react';
 import { Keypair } from '@solana/web3.js';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
+import { useQueryClient } from '@tanstack/react-query';
 interface TokenContextType {
   handlebuy: (token: string  , symbol : string) => void
   handleSell: (token: string  , tokneprice : number) => void
@@ -118,7 +119,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
 
   const [isTokenLaucnhOpen, setIsTokenLaucnhOpen] = useState(false)
 
-
+  const queryClient = useQueryClient();
   const [tokenname, settokename] = useState("")
   const [tokenimage, settokenimage] = useState("")
   const [tokenSymbol, settokenSymbol] = useState("")
@@ -484,6 +485,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
               },
             })
           }
+
+          queryClient.invalidateQueries({ queryKey: [`CreatedUser:${creator}`] });
           
         }
 
