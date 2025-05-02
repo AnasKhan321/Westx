@@ -7,7 +7,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { useQueryClient } from "@tanstack/react-query";
-
+import { useToken } from "../Context/TokenContext";
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,8 +20,9 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
   const currentLevel = parseInt(profile.level.toString().split("_")[1]);
   const nextLevel = currentLevel + 1;
   const [isUpgrading, setIsUpgrading] = useState(false);
-  const {user} = useAuth() ; 
-  const queryClient = useQueryClient() ; 
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const {handleTokenLaucnh } = useToken();
 
   // Get level descriptions based on the next level
   const getLevelDescription = (level: number) => {
@@ -29,8 +30,11 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
       1: "Now Your Persona Starts Tweeting Once Per Day",
       2: "You Persona Also Post Photo Once A Week And You can Customize Your Persona ",
       3: "He Will Became a Supreme Persona Which will Start interacting with other Personas",
+      4: "Persona Gets X Account and posts replies on X tweet  ",
+      5: " Persona Also Posts Photos On X",
+      6: "You can Launch Your Persona as a Token on Solana"
     };
-    
+
     return descriptions[level as keyof typeof descriptions] || `Congratulations on reaching level ${level}! You've unlocked new features and benefits.`;
   };
 
@@ -40,8 +44,11 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
       1: 100,
       2: 150,
       3: 250,
+      4: 300,
+      5: 400,
+      6: 500
     };
-    
+
     return costs[level as keyof typeof costs] || 1000;
   };
 
@@ -80,58 +87,82 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
     };
   }, [onClose]);
 
-  const handleUpgrade = async () => {
-    setIsUpgrading(true) ; 
-
-    console.log(user?.Points , upgradeCost)
-    if(user?.Points as number < upgradeCost){
-      toast.error("InSufficient Balance"  ,  {
-        style: {
-            borderRadius: '20px',
-            background: '#333',
-            color: '#fff',
-        },
-
-      }) ; 
-      setIsUpgrading(false) ; 
-      return ; 
-    }
-    
-    const upgradeData = {
-      username : profile.username,
-      level : nextLevel.toString() ,
-      creator : user?.username
-    }
-
-
-
-    const {data} = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/upgrade`, upgradeData) ; 
-
-    if(data.success){
-      toast.success("Persona Upgraded Successfully"  ,  {
-        style: {
-            borderRadius: '20px',
-            background: '#333',
-            color: '#fff',
-        },
-
-    }) ; 
-      onClose() ; 
-      queryClient.invalidateQueries({queryKey : [`CreatedUser:${user?.username}`]}) ; 
-    }else{
-      toast.error(data.error  ,  {
-        style: {
-            borderRadius: '20px',
-            background: '#333',
-            color: '#fff',
-        },
-
-    } ) ; 
-    }
-    
-    setIsUpgrading(false) ; 
+  const handleLaunch = async () => {
+    onClose();
+    handleTokenLaucnh(profile.name, profile.photoURL, profile.username, user?.username || null)
   }
-  
+
+  const handleUpgrade = async () => {
+    setIsUpgrading(true);
+
+    console.log(user?.Points, upgradeCost)
+    if (user?.Points as number < upgradeCost) {
+      toast.error("InSufficient Balance", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+
+      });
+      setIsUpgrading(false);
+      return;
+    }
+
+    const upgradeData = {
+      username: profile.username,
+      level: nextLevel.toString(),
+      creator: user?.username
+    }
+
+
+
+    const { data } = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/upgrade`, upgradeData);
+
+    if (data.success) {
+
+
+
+
+      if (nextLevel === 4) {
+        toast.success("Persona Will Get X Account Soon", {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+
+        });
+      } else {
+        toast.success("Persona Upgraded Successfully", {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+
+        });
+
+      }
+
+
+
+      onClose();
+      queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
+    } else {
+      toast.error(data.error, {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+
+      });
+    }
+
+    setIsUpgrading(false);
+  }
+
 
   return (
     <AnimatePresence>
@@ -168,7 +199,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                     className="relative"
                   >
                     <img src={profile.photoURL} alt="profile" className="w-16 h-16 rounded-full border-4 border-white/20" />
-                    <motion.div 
+                    <motion.div
                       className="absolute -bottom-2 -right-2 bg-primaryColor rounded-full p-1"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -177,7 +208,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                       <FaStar className="text-yellow-400 text-sm" />
                     </motion.div>
                   </motion.div>
-                  <motion.span 
+                  <motion.span
                     className="text-xl font-bold text-white"
                     initial={{ y: -10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -188,17 +219,17 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                 </div>
 
                 {/* Level transition */}
-                <motion.div 
+                <motion.div
                   className="flex flex-col items-center justify-center py-6"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
                 >
                   <h2 className="text-2xl font-bold text-white mb-6">Level Up!</h2>
-                  
+
                   <div className="flex items-center justify-center gap-4">
                     {/* Current level */}
-                    <motion.div 
+                    <motion.div
                       className="flex flex-col items-center"
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -211,7 +242,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                     </motion.div>
 
                     {/* Arrow */}
-                    <motion.div 
+                    <motion.div
                       className="flex items-center"
                       initial={{ x: -20, opacity: 0 }}
                       animate={{ x: 0, opacity: 1 }}
@@ -221,17 +252,17 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                     </motion.div>
 
                     {/* Next level */}
-                    <motion.div 
+                    <motion.div
                       className="flex flex-col items-center"
                       initial={{ scale: 0.8, opacity: 0 }}
                       animate={{ scale: showAnimation ? 1.2 : 1, opacity: 1 }}
-                      transition={{ 
-                        delay: 0.8, 
-                        scale: { 
-                          repeat: showAnimation ? 1 : 0, 
-                          repeatType: "reverse", 
-                          duration: 0.5 
-                        } 
+                      transition={{
+                        delay: 0.8,
+                        scale: {
+                          repeat: showAnimation ? 1 : 0,
+                          repeatType: "reverse",
+                          duration: 0.5
+                        }
                       }}
                     >
                       <div className="w-16 h-16 rounded-full bg-primaryColor flex items-center justify-center text-2xl font-bold text-white">
@@ -264,13 +295,13 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                   </motion.div>
 
                   {/* Progress bar */}
-                  <motion.div 
+                  <motion.div
                     className="w-full max-w-xs h-2 bg-white/10 rounded-full mt-8 overflow-hidden"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
                   >
-                    <motion.div 
+                    <motion.div
                       className="h-full bg-white rounded-full"
                       initial={{ width: "0%" }}
                       animate={{ width: "100%" }}
@@ -279,6 +310,25 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                   </motion.div>
 
                   {/* Upgrade button */}
+
+                  {nextLevel == 6  &&
+                  
+                  <motion.button
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 1.8 }}
+                  onClick={handleLaunch}
+                  className="mt-6 px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white/20 hover:bg-white/30 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-b text-white rounded-full transition-colors"
+                  disabled={isUpgrading}
+                >
+                  {isUpgrading ? "Launching..." : "Launch Token"}
+                </motion.button>
+                  
+                  }
+
+                  {nextLevel <=5  && 
+
+
                   <motion.button
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -288,7 +338,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
                     disabled={isUpgrading}
                   >
                     {isUpgrading ? "Upgrading..." : "Upgrade"}
-                  </motion.button>
+                  </motion.button>}
                 </motion.div>
               </div>
             </div>

@@ -12,7 +12,7 @@ import { useAuth } from './AuthContext';
 interface TokenContextType {
   handlebuy: (token: string  , symbol : string) => void
   handleSell: (token: string  , tokneprice : number) => void
-  handleTokenLaucnh: (name: string, image: string, username: string) => void
+  handleTokenLaucnh: (name: string, image: string, username: string  , creator : string | null) => void 
   isChecking: boolean
 }
 
@@ -131,6 +131,8 @@ export function TokenProvider({ children }: TokenProviderProps) {
   const [tokenPrice , setTokenPrice] = useState(0)
 
   const {isAuthenticated} = useAuth()
+
+  const [creator, setCreator] = useState<string | null>(null)
 
 
   const updateAmountBuy = async (token : string   , amount : number)=>{
@@ -371,7 +373,7 @@ export function TokenProvider({ children }: TokenProviderProps) {
   }
 
 
-  const handleTokenLaucnh = async (name: string, image: string, username: string) => {
+  const handleTokenLaucnh = async (name: string, image: string, username: string , creator : string | null) => {
     if (!publicKey) {
       setIsOpen(true)
       toast.error("Please connect your wallet", {
@@ -387,7 +389,10 @@ export function TokenProvider({ children }: TokenProviderProps) {
       settokename(name)
       settokenimage(image)
       setusername(username)
+      setCreator(creator)
+  
     }
+
   }
 
 
@@ -459,6 +464,28 @@ export function TokenProvider({ children }: TokenProviderProps) {
         })
         setIsTokenLaucnhOpen(false)
         setisLaunching(false)
+
+
+        if(creator){
+          const upgradeData = {
+            username: username,
+            level: "6",
+            creator: creator
+          }
+          const {data} = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/upgrade`, upgradeData);
+          if(!data.success){
+            throw new Error("issues in upgrading creator in database")
+          }else{
+            toast.success("Level Upgraded Successfully", {
+              style: {
+                borderRadius: '20px',
+                background: '#333',
+                color: '#fff',
+              },
+            })
+          }
+          
+        }
 
 
       }

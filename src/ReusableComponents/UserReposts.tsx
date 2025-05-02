@@ -51,7 +51,7 @@ const UserReposts = ({ id }: { id: string }) => {
       { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
     );
 
-    const currentRef = bottomRef.current;
+    const currentRef = bottomRef.current; 
     observer.observe(currentRef);
 
     return () => {

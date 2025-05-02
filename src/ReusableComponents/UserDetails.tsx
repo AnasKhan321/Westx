@@ -297,7 +297,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
               </>
             }
             {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
-              <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+              <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username  , null)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
                 Upgrade
               </button>}
 

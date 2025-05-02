@@ -81,7 +81,7 @@ const UserCard = ({ Profile }: { Profile: User }) => {
     const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
     const handleLevelup = () => {
-        if(parseInt(Profile.level.toString().split("_")[1]) >= 3){
+        if(parseInt(Profile.level.toString().split("_")[1]) >= 6){
             toast.error("Your persona is already at the level 3"  , {
                 style: {
                     borderRadius: '20px',
