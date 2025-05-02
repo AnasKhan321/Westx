@@ -159,7 +159,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 </button>
                 
                 {!user.isToken &&
-                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username)} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
+                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username  ,null)} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
                     Upgrade
                   </button>}
 
