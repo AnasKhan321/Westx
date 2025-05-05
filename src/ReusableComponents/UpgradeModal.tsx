@@ -88,14 +88,28 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
   }, [onClose]);
 
   const handleLaunch = async () => {
-    onClose();
-    handleTokenLaucnh(profile.name, profile.photoURL, profile.username, user?.username || null)
+    if (user?.Points as number < upgradeCost) {
+      toast.error("InSufficient Balance", {
+        style: {
+          borderRadius: '20px',
+          background: '#333',
+          color: '#fff',
+        },
+
+      });
+      setIsUpgrading(false);
+      return;
+    }else{
+      onClose();
+      handleTokenLaucnh(profile.name, profile.photoURL, profile.username, user?.username || null)
+    }
+   
   }
 
   const handleUpgrade = async () => {
     setIsUpgrading(true);
 
-    console.log(user?.Points, upgradeCost)
+
     if (user?.Points as number < upgradeCost) {
       toast.error("InSufficient Balance", {
         style: {

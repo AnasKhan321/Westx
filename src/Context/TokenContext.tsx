@@ -85,7 +85,11 @@ const TokenContext = createContext<TokenContextType | undefined>(undefined);
 const convertImageUrlToFile = async (imageUrl: string, fileName: string): Promise<File> => {
   try {
     // Fetch the image
-    const response = await fetch(imageUrl);
+    const response = await fetch(imageUrl  , {
+      
+  mode: 'no-cors'
+}
+    );
     const blob = await response.blob();
 
     // Create a File from the blob
