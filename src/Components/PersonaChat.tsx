@@ -5,11 +5,11 @@ import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { BsSend } from "react-icons/bs";
 import { useAuth } from "../Context/AuthContext";
 import { ScaleLoader } from "react-spinners";
-import Loader from "../ReusableComponents/Loader";
 import { Message } from "../utils/type";
 import { getAiResponse } from "../ai";
 import { IoCaretBack } from "react-icons/io5";
 import axios from "axios";
+import { ColorRing } from "react-loader-spinner";
 
 interface ChatMessages {
   success: boolean;
@@ -148,7 +148,16 @@ const PersonaChat = () => {
 
   return (
     <>
-      {isLoaddingg && <Loader />}
+      {isLoaddingg && <div className="min-h-screen min-w-screen flex items-center bg-black justify-center" > 
+        <ColorRing
+          visible={true}
+          height="70"
+          width="70"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
+        /> </div> }
       {error && (
         <div className="min-h-screen min-w-screen flex items-center bg-primary justify-center">
           {" "}
@@ -156,7 +165,13 @@ const PersonaChat = () => {
         </div>
       )}
       {data && (
-        <div className="grid grid-cols-16  bg-primaryColor text-secondary min-h-screen max-h-screen overflow-x-hidden font-roboto  ">
+        <div className="grid grid-cols-16  bg-primaryColor text-secondary min-h-screen max-h-screen overflow-x-hidden font-roboto  "  style={{
+          backgroundImage: `url('/chatb.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          
+        }} >
           <div className="   tablet:col-span-3">
             <Link to={"/"}>
               <img
