@@ -1,9 +1,11 @@
-import { AiFillHome, AiOutlineHome } from "react-icons/ai";
-import { FaBookmark, FaRegBookmark, FaUserCircle } from "react-icons/fa";
-import { IoPersonCircleOutline, IoPersonOutline, IoPersonSharp } from "react-icons/io5";
+
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { IoSearchOutline, IoSearchSharp } from "react-icons/io5";
+import { GoHomeFill   , GoHome  } from "react-icons/go";
+import { PiUserList  , PiUserListFill  } from "react-icons/pi";
 const HorizontalBar = () => {
   const location = useLocation();
 
@@ -16,7 +18,28 @@ const HorizontalBar = () => {
             to="/"
             className="flex items-center space-x-3 transition-all hover:text-territary"
           >
-            {location.pathname === "/" ? <AiFillHome size={24} /> : <AiOutlineHome size={24} />}
+            {location.pathname === "/" ? <GoHomeFill size={24} /> : <GoHome size={24} />}
+          </Link>
+          <Link to={`/search`}>
+            {location.pathname === "/search" ? <IoSearchSharp size={23} /> : <IoSearchOutline size={23} />}
+          </Link>
+          <Link
+            to="/personas"
+            className="flex items-center space-x-3 transition-all hover:text-territary"
+          >
+            {location.pathname === "/personas" ? <PiUserListFill size={25} /> : <PiUserList size={25} />}
+          </Link>
+
+
+          <Link
+            to="/my-personas"
+            className="flex items-center space-x-3 transition-all hover:text-territary"
+          >
+            {location.pathname == "/my-personas" ? (
+              <PiUsersThreeFill size={24} />
+            ) : (
+              <PiUsersThree size={24} />
+            )}
           </Link>
 
           <Link
@@ -26,28 +49,11 @@ const HorizontalBar = () => {
             {location.pathname === "/bookmark" ? <FaBookmark size={22} /> : <FaRegBookmark size={22} />}
           </Link>
 
-          <Link to={`/search`}>
-            {location.pathname === "/search" ? <IoSearchSharp size={23} /> : <IoSearchOutline size={23} />}
-          </Link>
-
-          <Link
-            to="/personas"
-            className="flex items-center space-x-3 transition-all hover:text-territary"
-          >
-            {location.pathname === "/personas" ? <PiUsersThreeFill size={25} /> : <PiUsersThree size={25} />}
-          </Link>
 
 
-          <Link
-            to="/my-personas"
-            className="flex items-center space-x-3 transition-all hover:text-territary"
-          >
-            {location.pathname == "/my-personas" ? (
-              <FaUserCircle size={24} />
-            ) : (
-              <IoPersonCircleOutline size={24} />
-            )}
-          </Link>
+
+
+
           <Link
             to="/profile"
             className="flex items-center space-x-3 transition-all hover:text-territary"

@@ -26,7 +26,7 @@ export default function MainLayout({
         </Link> */}
 
         {!(location.pathname === "/roastshow" && live) ? (
-          <div className="block h-[8vh]  tablet:hidden w-full  fixed bottom-0  ">
+          <div className="block h-[8vh]  tablet:hidden w-full  fixed bottom-[5px]  ">
             <HorizontalBar />
           </div>
         ) : null}
