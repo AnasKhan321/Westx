@@ -1,12 +1,12 @@
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { IoPersonOutline, IoPersonSharp,  IoPersonCircleOutline } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
-import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 import { motion } from 'motion/react';
-import { FaUserCircle } from "react-icons/fa";
+import { GoHomeFill   , GoHome  } from "react-icons/go";
+import { FaRegUser  , FaUser  } from "react-icons/fa6";
+import { PiUserList  , PiUserListFill  } from "react-icons/pi";
 const Sidebar = () => {
   const location = useLocation();
   const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
@@ -28,14 +28,38 @@ const Sidebar = () => {
             className="flex items-center space-x-3  transition-all hover:text-territary"
           >
             {location.pathname == "/" ? (
-              <AiFillHome size={22} />
+              <GoHomeFill  size={26} />
             ) : (
-              <AiOutlineHome size={22} />
+              <GoHome  size={26} />
             )}
 
             <span className="font-medium  text-base  lg:text-xl  font-roboto ">Home</span>
           </Link>
+          <Link
+            to="/personas"
+            className="flex items-center space-x-3  transition-all hover:text-territary"
+          >
+            {location.pathname == "/personas" ? (
+              <PiUserListFill size={26} />
+            ) : (
+              <PiUserList size={26} />
+            )}
+            <span className="font-medium  text-base  lg:text-xl font-roboto">Personas</span>
+          </Link>
 
+
+
+          <Link
+            to="/my-personas"
+            className="flex items-center space-x-3  transition-all hover:text-territary"
+          >
+            {location.pathname == "/my-personas" ? (
+              <PiUsersThreeFill size={26} />
+            ) : (
+              <PiUsersThree size={26} />
+            )}
+            <span className="font-medium  text-base  lg:text-xl font-roboto">My Personas</span>
+          </Link>
           <Link
             to="/bookmark"
             className="flex items-center space-x-3  transition-all hover:text-territary"
@@ -49,39 +73,18 @@ const Sidebar = () => {
             <span className="font-medium  text-base  lg:text-xl  font-roboto ">Bookmarks</span>
           </Link>
 
-          <Link
-            to="/personas"
-            className="flex items-center space-x-3  transition-all hover:text-territary"
-          >
-            {location.pathname == "/personas" ? (
-              <PiUsersThreeFill size={23} />
-            ) : (
-              <PiUsersThree size={23} />
-            )}
-            <span className="font-medium  text-base  lg:text-xl font-roboto">Personas</span>
-          </Link>
 
 
-          <Link
-            to="/my-personas"
-            className="flex items-center space-x-3  transition-all hover:text-territary"
-          >
-            {location.pathname == "/my-personas" ? (
-              <FaUserCircle size={24} />
-            ) : (
-              <IoPersonCircleOutline size={24} />
-            )}
-            <span className="font-medium  text-base  lg:text-xl font-roboto">My Personas</span>
-          </Link>
+
 
           <Link
             to="/profile"
             className="flex items-center space-x-3  transition-all hover:text-territary"
           >
             {location.pathname == "/profile" ? (
-              <IoPersonSharp size={23} />
+              <FaUser  size={23} />
             ) : (
-              <IoPersonOutline size={23} />
+              <FaRegUser size={23} />
             )}
             <span className="font-medium  text-base  lg:text-xl  font-roboto">Profile</span>
           </Link>
