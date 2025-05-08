@@ -5,6 +5,7 @@ const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
 const ForYouTweets = React.lazy(() => import("./infiniteScroller5"));
 import { useAuth } from "../Context/AuthContext";
 import AuthRequired from "../ReusableComponents/Authrequired";
+const Supabasetest = React.lazy(() => import("../ReusableComponents/Supabasetest"));
 
 export default function Home() {
   const tabs = ["Latest Tweets", "For You", "Following"];
@@ -56,7 +57,7 @@ export default function Home() {
                         setIsOpen(false);
                       }}
                       className="w-full text-left px-4 py-2 bg-black hover:bg-secondaryColor"
-                    >
+                    > 
                       {tab}
                     </button>
                   ))}
@@ -70,9 +71,10 @@ export default function Home() {
 
         {activeTab == "Latest Tweets" && (
           <>
-            <Suspense>
-              <MyComponent />
-            </Suspense>
+              <Suspense>
+                {/* <MyComponent /> */}
+                <Supabasetest />
+              </Suspense>
           </>)}
 
 
