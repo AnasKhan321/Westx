@@ -1,4 +1,4 @@
-import { BiMessageRounded, BiRepost } from "react-icons/bi";
+import { BiRepost } from "react-icons/bi";
 import { Tweet } from "../utils/type";
 import { Link } from "react-router-dom";
 import { timeSince } from "../utils/date";
@@ -21,10 +21,11 @@ import { ColorRing } from "react-loader-spinner";
 import { useApp } from "../Context/ActivityContext";
 import SafeImage from "./SafeImage";
 import { motion } from "motion/react";
+import { BsChatSquareText } from "react-icons/bs";
 
 const SmallestLoader = () => {
   return (
-    <div className="bg-neutral-700 rounded-full p-2 text-white">
+    <div className="bg-newcolor rounded-full p-2 text-white">
       <ColorRing
         visible={true}
         height="20"
@@ -278,7 +279,7 @@ const TweetCard = ({
 
 
   return (
-    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white w-full  md:w-[96%]  grid  grid-cols-18  mx-auto  py-4 px-2   md:p-4 border-b border-white/20  ">
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white w-full bg-newcolor  md:w-[96%]  grid  grid-cols-18  mx-auto  py-4 px-2   md:p-4 border-2 border-[#13161B] my-2 rounded-lg   ">
       <div className=" col-span-3  tablet:col-span-3 md:col-span-2  xl:col-span-2 3xl:col-span-1">
         <SafeImage
           src={tweet.user.photoURL}
@@ -338,20 +339,20 @@ const TweetCard = ({
         )}
 
         {!isBookmark && (
-          <div className="flex items-center justify-between w-full  xl:w-[60%]     mt-5  text-xl text-gray-500">
+          <div className="flex items-center justify-between w-full  xl:w-full  bg-[#13181b]  p-2 rounded-xl    mt-5  text-xl text-gray-500">
             <Link to={`/tweet/${tweet.id}`}>
               <div className="flex gap-x-1 group hover:text-blue-500  transition-all items-center ">
                 <span className="text-sm">
                   {tweet.replies.length == 0 ? "" : tweet.replies.length}
                 </span>
-                <BiMessageRounded className=" cursor-pointer  rounded-full p-2 text-white hover:bg-neutral-800 transition-all   bg-neutral-700    text-4xl " />
+                <BsChatSquareText  className=" cursor-pointer   p-2 text-white hover:bg-neutral-800 transition-all     text-4xl " />
               </div>
             </Link>
 
             {isreposted || contextreposts.some((id) => id === tweet.id) ? (
               <div className="flex gap-x-1 items-center">
                 <span className="text-sm">{reposts == 0 ? "" : reposts}</span>
-                <BiRepost className=" text-green-500    bg-neutral-700  transition-all cursor-pointer   hover:bg-neutral-800  p-2 rounded-full text-4xl   " />
+                <BiRepost className=" text-green-500     transition-all cursor-pointer   hover:bg-neutral-800  p-2 rounded-full text-4xl   " />
               </div>
             ) : (
               <div onClick={addRepost} className="flex gap-x-1 items-center">
@@ -359,7 +360,7 @@ const TweetCard = ({
                 {isreposter ? (
                   <SmallestLoader />
                 ) : (
-                  <BiRepost className=" transition-all cursor-pointer  text-white  hover:bg-neutral-800     bg-neutral-700 p-2 rounded-full text-4xl   " />
+                  <BiRepost className=" transition-all cursor-pointer  text-white  hover:bg-neutral-800      p-2 rounded-full text-4xl   " />
                 )}
               </div>
             )}
@@ -381,7 +382,7 @@ const TweetCard = ({
                       {isliker ? (
                         <SmallestLoader />
                       ) : (
-                        <FaRegHeart className="group-hover:bg-neutral-800 text-white transition-all   bg-neutral-700   cursor-pointer text-4xl p-2 rounded-full " />
+                        <FaRegHeart className="group-hover:bg-neutral-800 text-white transition-all      cursor-pointer text-4xl p-2 rounded-full " />
                       )}
                     </div>
                   ) : (
@@ -394,7 +395,7 @@ const TweetCard = ({
                         {isliker ? (
                           <SmallestLoader />
                         ) : (
-                          <FaHeart className=" text-red-500 group-hover:bg-neutral-800  transition-all    bg-neutral-700   cursor-pointer text-4xl p-2 rounded-full " />
+                          <FaHeart className=" text-red-500 group-hover:bg-neutral-800  transition-all     cursor-pointer text-4xl p-2 rounded-full " />
                         )}
                       </div>
                     </>)
@@ -413,7 +414,7 @@ const TweetCard = ({
                   {isliker ? (
                     <SmallestLoader />
                   ) : (
-                    <FaRegHeart className="group-hover:bg-neutral-800 text-white transition-all   bg-neutral-700   cursor-pointer text-4xl p-2 rounded-full " />
+                    <FaRegHeart className="group-hover:bg-neutral-800 text-white transition-all     cursor-pointer text-4xl p-2 rounded-full " />
                   )}
                 </div>
               )}
@@ -435,7 +436,7 @@ const TweetCard = ({
                     {isbookmarker ? (
                       <SmallestLoader />
                     ) : (
-                      <IoBookmarkOutline className=" text-white  transition-all   bg-neutral-700 rounded-full cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
+                      <IoBookmarkOutline className=" text-white  transition-all    rounded-full cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
                     )}
                   </div>
 
@@ -454,7 +455,7 @@ const TweetCard = ({
                     {isbookmarker ? (
                       <SmallestLoader />
                     ) : (
-                      <IoBookmark className="text-territary rounded-full  transition-all  bg-neutral-700  cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
+                      <IoBookmark className="text-territary rounded-full  transition-all    cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
                     )}
                   </div>
 
@@ -474,7 +475,7 @@ const TweetCard = ({
                 {isbookmarker ? (
                   <SmallestLoader />
                 ) : (
-                  <IoBookmarkOutline className=" text-white  transition-all   bg-neutral-700 rounded-full cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
+                  <IoBookmarkOutline className=" text-white  transition-all    rounded-full cursor-pointer hover:bg-neutral-800 text-4xl p-2" />
                 )}
               </div>
             )}

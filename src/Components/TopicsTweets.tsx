@@ -83,7 +83,7 @@ const TopicsTweets = () => {
 
 
     if (status === 'error') return (
-        <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
+        <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl  border-2 border-white/10">
             <p className="text-center text-gray-200 my-4 font-bold text-xl  ">   {error.message} </p>
         </div>
     );
@@ -91,7 +91,7 @@ const TopicsTweets = () => {
     if (status === "pending") {
 
         return (
-            <div className="w-full min-h-screen max-h-screen   md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl ">
+            <div className="w-full min-h-screen max-h-screen   md:min-h-[98vh] md:max-h-[98vh] overflow-y-scroll md:mt-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-2xl  border-2 border-white/10">
                 <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl  z-10   bg-primaryColor md:bg-secondaryColor w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
                     <IoCaretBack
                         className="text-xl cursor-pointer"
@@ -111,7 +111,7 @@ const TopicsTweets = () => {
 
     return (
 
-        <div className="max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-2xl overflow-y-scroll ">
+        <div className="max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:mt-[2vh]  md:border md:border-white/10  md:max-h-[98vh]  md:min-h-[98vh]  md:rounded-l-2xl overflow-y-scroll ">
 
             <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
                 <IoCaretBack
@@ -123,7 +123,7 @@ const TopicsTweets = () => {
             <>
 
 
-                <div className=" mt-12"></div>
+                <div className=" mt-14"></div>
 
                 {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
                     <p className="text-center text-gray-200 mt-16 font-bold text-xl  ">No tweets to show.</p>

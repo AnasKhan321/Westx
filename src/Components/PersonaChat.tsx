@@ -148,7 +148,7 @@ const PersonaChat = () => {
 
   return (
     <>
-      {isLoaddingg && <div className="min-h-screen min-w-screen flex items-center bg-black justify-center" > 
+      {isLoaddingg && <div className="min-h-screen min-w-screen flex items-center bg-newcolor justify-center" > 
         <ColorRing
           visible={true}
           height="70"
@@ -159,19 +159,13 @@ const PersonaChat = () => {
           colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
         /> </div> }
       {error && (
-        <div className="min-h-screen min-w-screen flex items-center bg-primary justify-center">
+        <div className="min-h-screen min-w-screen flex items-center bg-newcolor justify-center">
           {" "}
           Error ..{" "}
         </div>
       )}
       {data && (
-        <div className="grid grid-cols-16  bg-primaryColor text-secondary min-h-screen max-h-screen overflow-x-hidden font-roboto  "  style={{
-          backgroundImage: `url('/chatb.png')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          
-        }} >
+        <div className="grid grid-cols-16   text-secondary min-h-screen max-h-screen overflow-x-hidden font-roboto  bg-newcolor "  >
           <div className="   tablet:col-span-3">
             <Link to={"/"}>
               <img
@@ -211,7 +205,7 @@ const PersonaChat = () => {
                       key={index}
                       className={`p-3  text-sm  md:text-base rounded-lg ${chat.sender === "user"
                           ? "bg-purple-600 text-white"
-                          : "bg-[#474747] text-white"
+                          : "bg-[#21272a] text-white"
                         } max-w-[70%]`}
                     >
                       {chat.content}
@@ -236,7 +230,7 @@ const PersonaChat = () => {
                   >
                     <input
                       type="text"
-                      className=" col-span-10 md:col-span-11 text-white border bg-white/10 border-white/60 bg-[#1c1c1c]  rounded-3xl  px-4 py-2 focus:outline-none "
+                      className=" col-span-10 md:col-span-11 text-white border  border-white/60 bg-[#13181b]  rounded-3xl  px-4 py-2 focus:outline-none "
                       placeholder="Type your message..."
                       value={message}
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {

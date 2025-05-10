@@ -4,9 +4,9 @@ import { IoChatboxOutline } from "react-icons/io5";
 import SafeImage from "./SafeImage";
 import { motion } from "motion/react";
 
-const UserCard = ({user}  : {user : User}) => {
+const UserCard = ({user}  : {user : User}) => { 
   return (
-    <motion.div  initial={{opacity : 0.5 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.5}} className="flex items-center p-4   text-white  rounded-lg w-full  font-roboto">
+    <motion.div  initial={{opacity : 0.5 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.5}} className="flex items-center p-4  bg-newcolor  border-2 border-[#13161B] my-4   text-white  rounded-lg w-[95%]  mx-auto  font-roboto">
       {/* Avatar */}
       <Link to={`/user/${user.username}`} className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
         <SafeImage
@@ -32,7 +32,7 @@ const UserCard = ({user}  : {user : User}) => {
 
       </div>
      <Link to={`/chat/${user.username}`}> 
-      <button className=" md:block hidden  bg-primaryColor/50 border-white border  transition-all    text-white p-4  rounded-full font-bold text-sm hover:bg-white hover:text-black">
+      <button className=" md:block hidden  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700       transition-all    text-white p-4  rounded-full font-bold text-sm  hover:bg-gradient-to-b">
         Talk to Persona
       </button></Link>
 

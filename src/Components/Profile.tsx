@@ -5,6 +5,7 @@ import ProfilePage from "./Profile2";
 import SEO from "../ReusableComponents/SEO";
 import Authrequired from "../ReusableComponents/Authrequired";
 
+
 const ProfileDetail = () => {
   const { user } = useAuth();
   const {isAuthenticated} = useAuth()

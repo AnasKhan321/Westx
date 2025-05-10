@@ -8,7 +8,7 @@ import { DynamicText2 } from "./DynamicText";
 export default function TweetDetailTweet({ tweet }: { tweet: Tweet }) {
 
   return (
-    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white  py-4   w-[93%]   mx-auto  rounded-lg border-b border-borderColor ">
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white bg-newcolor my-4  px-4  py-4   w-[97%]   mx-auto  rounded-lg border-2 border-[#13161B]  ">
       {/* Header */}
       <div className="flex items-start space-x-3">
         <SafeImage

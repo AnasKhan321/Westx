@@ -8,7 +8,7 @@ const CookiePolicy = () => {
   }, []);
 
   return (
-    <div className="min-h-[96vh]  max-h-[96vh] my-[2vh]  overflow-y-scroll bg-secondaryColor rounded-lg border border-white/10 text-white">
+    <div className="min-h-[98vh]  max-h-[98vh] my-[2vh]  overflow-y-scroll bg-secondaryColor rounded-l-lg border border-white/10 text-white">
       <SEO title={"Cookie Policy"} description={"Cookie Policy for WestX"} />
       <div className="w-full mx-auto px-4 py-16">
         {/* Header */}
@@ -21,8 +21,8 @@ const CookiePolicy = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }} className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm mb-8">
-          <p className="leading-relaxed text-gray-300">
+          transition={{ duration: 0.5 }} className="bg-newcolor border-2 border-[#13181b] p-6 rounded-xl backdrop-blur-sm mb-8">
+          <p className="leading-relaxed ">
             At WestX, we use cookies to enhance your experience on our platform.
             This Cookie Policy explains how and why we use cookies, specifically Firebase cookies,
             and how you can manage your preferences.
@@ -92,7 +92,7 @@ const CookiePolicy = () => {
           />
 
           {/* Contact Section */}
-          <div className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm">
+          <div className="bg-newcolor border-2 border-[#13181b] p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-2xl font-semibold mb-4">5. Contact Us</h2>
             <p className="mb-4 text-gray-300">For any questions or concerns about our use of cookies, you can contact us at:</p>
             <div className="flex flex-col md:flex-row gap-4 text-purple-300">
@@ -122,7 +122,7 @@ const Section = ({ title, content }: { title: string; content: string | JSX.Elem
   <motion.section
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }} className="bg-[#2d2d2d] p-6 rounded-xl backdrop-blur-sm">
+    transition={{ duration: 0.5 }} className="bg-newcolor border-2 border-[#13181b] p-6 rounded-xl backdrop-blur-sm">
     <h2 className="text-2xl font-semibold mb-4 ">{title}</h2>
     {typeof content === 'string' ? (
       <p className=" leading-relaxed">{content}</p>

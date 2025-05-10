@@ -15,10 +15,10 @@ import SmallLoader from "../ReusableComponents/SmallLoader";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
-import { useToken } from "../Context/TokenContext";
 import TokenDetail from "../ReusableComponents/TokenDetail";
 import UpdateUserModal from "../ReusableComponents/UpdateUserModel";
 import toast from "react-hot-toast";
+import { UpgradeModal } from "../ReusableComponents/UpgradeModal";
 interface Tweetcounts {
   success: boolean;
   data: number;
@@ -35,7 +35,7 @@ const ProfilePage = ({ user }: { user: User }) => {
   const [activeTab, setActiveTab] = useState("Posts");
 
   const { handleLogout } = useAuth();
-  const { handleTokenLaucnh } = useToken();
+
   const [isEditProfile, setIsEditProfile] = useState(false);
 
   const { data: userfollowing, isLoading: userfollowingloading } = useQuery({
@@ -46,6 +46,26 @@ const ProfilePage = ({ user }: { user: User }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  const [isUpgrading , setIsUpgrading]  = useState(false)
+
+
+  const handleLevelup = () => {
+    if(parseInt(user.level.toString().split("_")[1]) >= 6){
+        toast.error("Your persona is already at the level 6"  , {
+            style: {
+                borderRadius: '20px',
+                background: '#333',
+                color: '#fff',
+            },
+
+        });
+    }else{
+      setIsUpgrading(true);
+       
+    }
+}
+
 
   const { data: userfollower, isLoading: userfollowerloading } = useQuery({
     queryKey: [`UserFollower:${user.username}`],
@@ -126,8 +146,10 @@ const ProfilePage = ({ user }: { user: User }) => {
   return (
     <>
       {user && (
-        <div className="w-full   md:min-h-[96vh] border border-white/10   overflow-y-scroll  md:max-h-[96vh]  md:my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white rounded-xl overflow-hidden  ">
+        <div className="w-full   md:min-h-[98vh]  border-white/10   overflow-y-scroll  md:max-h-[98vh]  md:mt-[2vh]  mx-auto bg-primaryColor md:bg-newcolor2 text-white rounded-l-xl overflow-hidden  border-2 border-[#13181b]  ">
           {/* Cover Photo */}
+
+          <UpgradeModal isOpen={isUpgrading} onClose={() => setIsUpgrading(false)} profile={user} isProfile={true} />
 
           <UpdateUserModal isUpdating={isUpdating} initialData={{name : user.name , profilePhotoUrl : user.photoURL as string , coverPhotoUrl : user.coverPhotoURL as string  , bio : user.bio}} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
           <div className="">
@@ -159,7 +181,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 </button>
                 
                 {!user.isToken &&
-                  <button onClick={() => handleTokenLaucnh(user.name, user.photoURL, user.username  ,null)} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
+                  <button onClick={handleLevelup} className=" px-1  ss:text-sm md:text-base bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br ss:px-2  md:px-4 py-1 rounded-full border border-white">
                     Upgrade
                   </button>}
 
@@ -167,7 +189,7 @@ const ProfilePage = ({ user }: { user: User }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-18 pb-2 md:pb-10 border-b border-white/40 w-[95%]  mx-auto ">
+          <div className="grid grid-cols-18 pb-2 md:pb-10  w-[95%]  mx-auto ">
             <div className="relative flex flex-col  items-start  col-span-18    md:col-span-18    -mt-12">
               <img
                 src={user.photoURL as string}
@@ -175,11 +197,23 @@ const ProfilePage = ({ user }: { user: User }) => {
                 className="md:w-24 md:h-24 w-20
                h-20  rounded-full border  border-white"
               />
-              <div className="flex items-center gap-x-2 justify-between w-full  ">
+              <div className="flex items-center gap-x-2  w-full  ">
                 <h2 className="text-sm mt-2  md:text-base font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
                   {user.name}
                 </h2>
-      
+                <div className="flex items-center mt-2">
+                  <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    user.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
+                    user.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
+                    user.level.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white' :
+                    user.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
+                    user.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
+                    user.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
+                    'bg-red-500 text-white'
+                  }`}>
+                    {user.level.toString().split('_')[1]}
+                  </div>
+                </div>
               </div>
 
               <p className="text-white/60 text-sm mt-2 ">
@@ -216,7 +250,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                   <Link to={`/follower/${user.id}`}>
                     {" "}
                     <p className="text-white/60 text-sm mx-1 ">Followers</p>
-                  </Link>
+                  </Link> 
 
                 </div>
                 <div className="text-center flex gapx-x-1 w-full    items-center">
@@ -242,8 +276,8 @@ const ProfilePage = ({ user }: { user: User }) => {
 
           </div>
 
-          <div className="     w-[95%]  mx-auto  mt-4">
-            <div className=" w-full  md:w-[50%] flex justify-between   ">
+          <div className="     w-[96%]  mx-auto  mt-4">
+            <div className=" w-full  md:w-full  px-4 py-2  flex justify-between mx-auto bg-newcolor rounded-lg border-2 border-[#13161B]   ">
               {tabs.map((tab) => (
                 <button
                   key={tab}

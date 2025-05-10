@@ -13,9 +13,10 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   profile: User;
+  isProfile : boolean
 }
 
-export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
+export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProps) => {
   const [showAnimation, setShowAnimation] = useState(false);
   const currentLevel = parseInt(profile.level.toString().split("_")[1]);
   const nextLevel = currentLevel + 1;
@@ -123,57 +124,109 @@ export const UpgradeModal = ({ isOpen, onClose, profile }: ModalProps) => {
       return;
     }
 
-    const upgradeData = {
-      username: profile.username,
-      level: nextLevel.toString(),
-      creator: user?.username
-    }
-
-
-
-    const { data } = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/upgrade`, upgradeData);
-
-    if (data.success) {
-
-
-
-
-      if (nextLevel === 4) {
-        toast.success("Persona Will Get X Account Soon", {
-          style: {
-            borderRadius: '20px',
-            background: '#333',
-            color: '#fff',
-          },
-
-        });
-      } else {
-        toast.success("Persona Upgraded Successfully", {
-          style: {
-            borderRadius: '20px',
-            background: '#333',
-            color: '#fff',
-          },
-
-        });
-
+    if(isProfile){
+      const data = {
+        username : profile.username,
+        level : nextLevel.toString(),
       }
 
-
-
-      onClose();
-      queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
-    } else {
-      toast.error(data.error, {
-        style: {
-          borderRadius: '20px',
-          background: '#333',
-          color: '#fff',
-        },
-
-      });
+      const {data : data2} = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/upgrade/myself`, data)
+      if (data2.success) {
+  
+  
+  
+  
+        if (nextLevel === 4) {
+          toast.success("Persona Will Get X Account Soon", {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+  
+          });
+        } else {
+          toast.success("Persona Upgraded Successfully", {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+  
+          });
+  
+        }
+  
+  
+  
+        onClose();
+        queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
+      } else {
+        toast.error(data2.error, {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+  
+        });
+      }
+      
+    }else{
+      const upgradeData = {
+        username: profile.username,
+        level: nextLevel.toString(),
+        creator: user?.username
+      }
+  
+  
+  
+      const { data } = await axios.post(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/upgrade`, upgradeData);
+  
+      if (data.success) {
+  
+  
+  
+  
+        if (nextLevel === 4) {
+          toast.success("Persona Will Get X Account Soon", {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+  
+          });
+        } else {
+          toast.success("Persona Upgraded Successfully", {
+            style: {
+              borderRadius: '20px',
+              background: '#333',
+              color: '#fff',
+            },
+  
+          });
+  
+        }
+  
+  
+  
+        onClose();
+        queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
+      } else {
+        toast.error(data.error, {
+          style: {
+            borderRadius: '20px',
+            background: '#333',
+            color: '#fff',
+          },
+  
+        });
+      }
+  
     }
 
+   
     setIsUpgrading(false);
   }
 

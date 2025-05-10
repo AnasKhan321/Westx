@@ -30,9 +30,9 @@ export default function TweetDetail() {
 
 
   return (
-    <div  className=" min-h-screen max-h-screen  md:max-h-[96vh] md:min-h-[96vh]  border border-white/10  md:my-[2vh]  w-full bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-2xl   ">
+    <div  className=" min-h-screen max-h-screen  md:max-h-[98vh] md:min-h-[98vh]  border border-white/10  md:mt-[2vh]  w-full bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-l-2xl   ">
         <SEO title={ `Tweet - ${id}`} description={`Tweet page for ${id}`} />
-          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl  w-full  bg-secondaryColor/20  md:w-[50%] rounded-2xl font-bold   "> 
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl  w-full  bg-newcolor border-2 border-[#13181b] xl:w-[50%] rounded-l-2xl font-bold   "> 
             <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
             <span>Tweet</span>
            </div>

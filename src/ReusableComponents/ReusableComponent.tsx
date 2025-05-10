@@ -44,8 +44,8 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
   };
 
   return (
-    <div className="border-b border-borderColor  mx-auto  my-4  ">
-      <div className="p-4  w-[98%] md:w-[93%]  mx-auto  grid grid-cols-12 gap-x-2  justify-center items-center">
+    <div className=" w-full  xl:w-[96%]  bg-newcolor rounded-lg xl:border-2 xl:border-[#13161B] mx-auto  my-4  ">
+      <div className="p-4  w-[98%] md:w-[98%]  mx-auto  grid grid-cols-12 gap-x-3  justify-center items-center">
 
       <img
           src={user?.photoURL}

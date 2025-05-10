@@ -24,17 +24,19 @@ const CreatedUser = async (username: string): Promise<User[]> => {
 const ManagePersonas = () => {
     const { user } = useAuth()
     return (
-        <div className="md:min-h-[96vh] min-h-screen max-h-screen  md:max-h-[96vh]  md:my-[2vh] bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-xl border border-white/10 ">
+        <div className="md:min-h-[98vh] min-h-screen max-h-screen  md:max-h-[98vh]  md:mt-[2vh] bg-primaryColor md:bg-newcolor2 overflow-y-scroll rounded-l-xl border-2  border-white/10 ">
             <SEO title={`Manage Personas - ${user?.username} `} description={"Manage Personas page where you can manage your personas"} />
 
 
-            <div className="w-[93%] mx-auto mt-4 ">
+            <div className="w-[93%] mx-auto mt-4  ">
                 <div className="flex  justify-between   items-center">
                     <h1 className=" lg:text-xl   font-roboto font-bold  ">My Personas</h1>
-                    <div className="hidden md:block"><Link to={"/persona/add"} className="  hover:bg-white/10 transition-all duration-300 cursor-pointer border-white border-2 rounded-full flex items-center space-x-2  px-4 py-2"> <IoAddSharp size={22} className="text-white" />  <span className="text-medium"> Add new Persona </span> </Link></div> 
+                    <div className="hidden md:block"><Link to={"/persona/add"} className="  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-white/10 transition-all duration-300 cursor-pointer  hover:bg-gradient-to-b rounded-full flex items-center space-x-2  px-4 py-2"> <IoAddSharp size={22} className="text-white" />  <span className="text-medium"> Add new Persona </span> </Link></div> 
                     <div className="block  md:hidden"><Link to={"/persona/add"} className="   bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700   hover:bg-gradient-to-b transition-all duration-300 cursor-pointer  rounded-full flex items-center space-x-2  px-4 py-2"> <IoAddSharp size={22} className="text-white" />  <span className="text-medium"> Add new  </span> </Link></div> 
 
                 </div>
+
+                <div className="mt-8"></div>
 
                 {user?.username && <GetUsers username={user.username} />}
 
@@ -98,7 +100,7 @@ const UserCard = ({ Profile }: { Profile: User }) => {
 
 
     return (
-        <motion.div initial={{ opacity: 0.5, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center  py-6   text-white  rounded-lg w-full  font-roboto">
+        <motion.div initial={{ opacity: 0.5, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center  py-6  bg-newcolor  border-2  my-4   text-white  rounded-lg w-full px-2  border-[#13161B]    font-roboto">
             {/* Avatar */}
             <Link to={`/user/${Profile.username}`} className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
                 <SafeImage
@@ -108,13 +110,13 @@ const UserCard = ({ Profile }: { Profile: User }) => {
                 />
             </Link>
             <div className="flex-grow">
-                <div className="font-bold flex gap-x-2 items-center text-sm  md:text-base"> <Link to={`/user/${Profile.username}`}> {Profile.name}</Link>          <span >
+                <div className="font-bold flex gap-x-2 items-center text-xs  md:text-base"> <Link to={`/user/${Profile.username}`}> {Profile.name}</Link>          <span >
                     {Profile.isPremium &&
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#a200e8" className="size-6">
                             <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
                         </svg>}
                 </span>  </div>
-                <div className="text-gray-400 text-sm"> <Link to={`/user/${Profile.username}`} > @{Profile.username} </Link> </div>
+                <div className="text-gray-400 text-xs"> <Link to={`/user/${Profile.username}`} > @{Profile.username} </Link> </div>
             </div>
 
             <div className="flex flex-col gap-y-1 mr-5">
@@ -137,6 +139,7 @@ const UserCard = ({ Profile }: { Profile: User }) => {
                 isOpen={showUpgradeModal}
                 onClose={() => setShowUpgradeModal(false)}
                 profile={Profile} 
+                isProfile={false}
             >
              
 

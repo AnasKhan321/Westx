@@ -88,7 +88,7 @@ const AddPersona = () => {
         }
     };
     return (
-        <div className="w-full min-h-screen max-h-screen md:min-h-[96vh] md:max-h-[96vh] overflow-y-scroll md:my-[2vh] z-10 bg-primaryColor md:bg-secondaryColor rounded-2xl">
+        <div className="w-full min-h-screen max-h-screen md:min-h-[96vh] md:max-h-[96vh] border border-white/10 overflow-y-scroll md:my-[2vh] z-10 bg-primaryColor md:bg-secondaryColor rounded-l-2xl">
             <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
                 <IoCaretBack
                     className="text-xl cursor-pointer"
@@ -112,7 +112,7 @@ const AddPersona = () => {
                             value={searchValue}
                             onChange={(e) => setSearchValue(e.target.value)}
                             placeholder="Search user on X ..."
-                            className="w-full pl-12 pr-12 py-3 bg-[#1a1a1a] text-white rounded-lg
+                            className="w-full pl-12 pr-12 py-3 bg-newcolor text-white rounded-lg
                 border border-white/10 focus:outline-none focus:border-purple-500
                 placeholder:text-gray-500"
                             onKeyDown={handleKeyDown}
@@ -151,9 +151,9 @@ const AddPersona = () => {
 
 
                                             <div className="mx-6 my-4">
-                                                <div className="flex items-center bg-white/10  text-white  rounded-lg p-4 max-w-2xl mx-auto  font-sans">
+                                                <div className="flex items-center  bg-newcolor  border border-white/10 text-white  rounded-lg p-4 max-w-2xl mx-auto  font-sans">
 
-                                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
+                                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-newcolor  mr-4">
                                                         <img
                                                             src={formatTwitterAvatarUrl(twitteruser.avatar)}
                                                             alt="User Avatar"

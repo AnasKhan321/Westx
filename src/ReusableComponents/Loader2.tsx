@@ -28,7 +28,7 @@ interface LoaderProps {
     // If fullScreen, wrap in a fixed container
     if (fullScreen) {
       return (
-        <div className="flex h-[96vh] my-[2vh] w-full justify-center items-center bg-primaryColor  md:bg-secondaryColor backdrop-blur-sm z-50">
+        <div className="flex h-[96vh] my-[2vh] w-full justify-center items-center bg-primaryColor  border border-white/10  md:bg-secondaryColor backdrop-blur-sm z-50">
           {loaderContent}
         </div>
       );

@@ -44,9 +44,9 @@ const Login: React.FC = () => {
           src="/loginpage.png"
           alt="Login Image"
           className="w-full h-full object-cover"
-        />
+         />
       </div>
-      <div className=" rounded-t-3xl absolute top-[48vh] md:p-0 p-8    h-[52vh] md:relative md:top-0 bg-primaryColor w-full md:rounded-t-none  md:w-[50%] md:h-screen ">
+      <div className=" rounded-t-3xl absolute top-[48vh] md:p-0 p-8    h-[52vh] md:relative md:top-0 bg-newcolor w-full md:rounded-t-none  md:w-[50%] md:h-screen ">
         <div className=" w-[85%] md:w-[60%]  mx-auto justify-start  flex flex-col md:justify-center h-[90vh]">
           <img
             src="/logo-round.png" // Replace with the profile image path

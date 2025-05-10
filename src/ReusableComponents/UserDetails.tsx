@@ -261,7 +261,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     navigate(-1);
   };
   return (
-    <div className="w-ful border border-white/10 h-screen   md:min-h-[96vh]  overflow-y-scroll  md:max-h-[96vh]  md:my-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  md:rounded-xl overflow-hidden  ">
+    <div className="w-ful border border-white/10 h-screen   md:min-h-[98vh]  overflow-y-scroll  md:max-h-[98vh]  md:mt-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  md:rounded-l-xl overflow-hidden  ">
       <UpdateUserModal isUpdating={isUpdating} initialData={{ name: profile.name, profilePhotoUrl: profile.photoURL as string, coverPhotoUrl: profile.coverPhotoURL as string, bio: profile.bio }} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
 
       <div className="">
@@ -305,7 +305,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-18 pb-0 md:pb-10 border-b border-white/40 w-[95%]  mx-auto ">
+      <div className="grid grid-cols-18 pb-0 md:pb-10 w-[95%]  mx-auto ">
         <div className="relative flex flex-col  items-start col-span-18  md:col-span-18    -mt-12">
 
           <SafeImage
@@ -467,8 +467,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
 
 
-      <div className="     w-[95%]  mx-auto  mt-4">
-        <div className=" w-full  md:w-[50%] flex justify-between   ">
+      <div className="     w-[96%]  mx-auto  mt-4">
+        <div className=" w-full   md:w-full flex justify-between bg-newcolor rounded-lg border-2 border-[#13161B] px-4 py-2   ">
           {tabs.map((tab) => (
             <button
               key={tab}

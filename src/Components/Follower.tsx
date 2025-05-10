@@ -34,7 +34,7 @@ const Follower = () => {
 
 
   return (
-    <div className="md:min-h-[96vh] min-h-screen max-h-screen  md:max-h-[96vh]  md:my-[2vh] bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-xl border border-white/10 ">
+    <div className="md:min-h-[98vh] min-h-screen max-h-screen  md:max-h-[98vh]  md:mt-[2vh] bg-primaryColor md:bg-secondaryColor overflow-y-scroll rounded-l-xl border border-white/10 ">
       <SEO title={`Followers - ${username} `} description={"Followers page where you can see all your followers"} />
       <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
         <IoCaretBack

@@ -7,12 +7,14 @@ export default {
   theme: {
     extend: {
       colors  : {
-        primary: '#000000',
+        primary: '#0C0E12',
         secondary: 'white'  , 
         borderColor : "#2e2e2d"  , 
         territary : "#9915eb",
         primaryColor : "#0A0A0A" , 
-        secondaryColor : "#1A1A1A"
+        secondaryColor : "#0E1014"  , 
+        newcolor : "#0C0E12",
+        newcolor2 : "#0E1014"
       },
       fontFamily: {
         roboto: ['roboto', 'sans-serif'],

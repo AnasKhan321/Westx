@@ -6,7 +6,7 @@ const AuthRequired = ({isHome = false  , description = "Please sign in to access
   const navigate = useNavigate();
 const {handleTwitterLogin} = useAuth()
   return (
-    <div className={`min-h-screen ${isHome ? 'bg-transparent' : 'bg-primaryColor'} text-white flex items-center justify-center p-4`}>
+    <div className={`min-h-screen ${isHome ? 'bg-transparent' : 'bg-newcolor'} text-white flex items-center justify-center p-4`}>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

@@ -7,9 +7,9 @@ import SafeImage from "./SafeImage";
 import { motion } from "motion/react";
 const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
   return (
-    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}}>
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className="bg-newcolor   border-2 border-[#13161B] my-4   text-white  rounded-lg w-[95%]  mx-auto  font-roboto">
     <div>
-      <div className="  text-white w-full  md:w-[96%] grid grid-cols-18  mx-auto   p-4  border-b border-white/20   ">
+      <div className="  text-white w-full  md:w-[96%] grid grid-cols-18  mx-auto   p-4   ">
         <div className=" col-span-3 tablet:col-span-3 md:col-span-2  xl:col-span-2  3xl:col-span-1">
 
           <SafeImage 
@@ -26,7 +26,7 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
             <Link to={`/user/${tweet.user.username}`}>
               {" "}
               <div className="flex items-center gap-x-2">
-                <span className=" text-sm md:text-base font-bold  hover:underline">
+                <span className=" text-xs md:text-base font-bold  hover:underline">
                   {tweet.user.name}
                 </span>{" "}
                 {tweet.user.isPremium && (

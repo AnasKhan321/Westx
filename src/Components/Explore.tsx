@@ -51,9 +51,13 @@ const RightSidebar = () => {
   };
 
   return (
-    <div className=" min-h-screen  w-full bg-primaryColor text-white flex flex-col  px-4 py-6 space-y-6">
-      <div className="flex items-center w-full ">
-        <div className="bg-[#191919] p-3 rounded-l-full border-l border-t border-b border-white/10  ">
+    <div className=" min-h-screen  w-full bg-newcolor text-white flex flex-col  ">
+
+
+
+      <div className="h-[98vh]  mt-[2vh] bg-newcolor2   px-4  space-y-6 border-r-[#1C2027] border-r-2 w-[97%] rounded-r-2xl border-t-[#1C2027] border-t-2  ">
+      <div className="flex items-center w-full mt-4   ">
+        <div className="bg-newcolor  p-3 rounded-l-full border-l border-t border-b border-white/10  ">
           <FaSearch className="text-gray-400" />
         </div>
         <input
@@ -63,7 +67,7 @@ const RightSidebar = () => {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
          pattern="[^#]*"
-          className="w-full px-4 py-2 bg-[#191919] border-b border-t border-r  border-white/10   text-white placeholder-gray-400 rounded-r-full focus:outline-none"
+          className="w-full px-4 py-2 bg-newcolor  border-b border-t border-r  border-white/10   text-white placeholder-gray-400 rounded-r-full focus:outline-none"
         />
       </div>
 
@@ -93,6 +97,7 @@ const RightSidebar = () => {
         </p>
         <p>© 2025 WestX AI</p>
       </footer>
+      </div>
     </div>
   );
 };

@@ -15,10 +15,11 @@ export default function Home() {
   return (
     <>
       <SEO title=" WestX -  Home" description="Home page" />
-      <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:my-[2vh]  md:border md:border-white/10  md:max-h-[96vh]  md:min-h-[96vh]  md:rounded-2xl overflow-y-scroll ">
+      <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-[#0E1014] md:mt-[2vh]  md:border md:border-white/10  md:max-h-[98vh]  md:min-h-[98vh] md:rounded-l-2xl  overflow-y-scroll ">
         <div
-          className={`md:flex justify-between  w-full tablet:w-[49.9%]  hidden  backdrop-blur-xl   rounded-2xl absolute  z-10 bg-secondaryColor/10  transition-all duration-300 `}
+          className={`md:flex justify-between  w-full tablet:w-[49.8%]  hidden  backdrop-blur-xl border-b-2 border-[#1C2027]    rounded-l-2xl  absolute  z-10 bg-newcolor  transition-all duration-300 `}
         >
+          
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -72,7 +73,7 @@ export default function Home() {
         {activeTab == "Latest Tweets" && (
           <>
               <Suspense>
-                {/* <MyComponent /> */}
+                
                 <Supabasetest />
               </Suspense>
           </>)}

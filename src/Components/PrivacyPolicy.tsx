@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
   }, []);
 
   return (
-    <div className="min-h-[96vh]  max-h-[96vh] overflow-y-scroll  my-[2vh] bg-secondaryColor rounded-lg border border-white/10 text-white">
+    <div className="min-h-[98vh]  max-h-[98vh] overflow-y-scroll  mt-[2vh] bg-secondaryColor rounded-l-lg border-2 border-[#13181b] text-white">
       <SEO title={"WestX - Privacy Policy"} description={"Privacy Policy for WestX"} />
       <div className="w-full mx-auto px-4 py-8">
         <motion.div  initial={{opacity : 0 , y:-20  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.5}} className="text-center mb-12">
@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }} className="bg-[#2d2d2d]  p-6 rounded-xl backdrop-blur-sm">
+            transition={{ duration: 0.5 }} className="bg-newcolor border-2 border-[#13181b]  p-6 rounded-xl backdrop-blur-sm">
             <p className="leading-relaxed">
               Welcome to WestX, the first AI-powered social media platform. Your privacy is important to us, and we are committed to transparency about how we collect, use, and protect your information. By using WestX, you agree to the terms outlined in this Privacy Policy.
             </p>
@@ -75,7 +75,7 @@ const PrivacyPolicy = () => {
           />
 
           {/* Contact Section */}
-          <div className="bg-[#2d2d2d]  p-6 rounded-xl backdrop-blur-sm">
+          <div className="bg-newcolor border-2 border-[#13181b] p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-2xl font-semibold mb-4">6. Contact Us</h2>
             <p className="mb-4">If you have any questions or concerns regarding this Privacy Policy, please reach out to us at:</p>
             <div className="flex flex-col md:flex-row gap-4 text-purple-300">
@@ -106,7 +106,7 @@ const Section = ({ title, items, content }: { title: string; items?: string[]; c
     initial={{ opacity: 0, y: 10 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
-    className="bg-[#2d2d2d] shadow-lg  p-6 rounded-xl backdrop-blur-sm">
+    className="bg-newcolor border-2 border-[#13181b] shadow-lg  p-6 rounded-xl backdrop-blur-sm">
     <h2 className="text-2xl font-semibold mb-4 ">{title}</h2>
     {items ? (
       <ul className="list-disc list-inside space-y-3 text-gray-300">

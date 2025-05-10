@@ -26,17 +26,17 @@ export default function Peoples(){
     return(
         <> 
         <SEO title={ "WestX - Personas "} description={"Personas page where you can see all the personas"} />
-        <div className=" max-h-screen md:max-h-[96vh] border border-white/10   md:rounded-2xl md:my-[2vh] overflow-y-scroll bg-primaryColor    w-full md:bg-secondaryColor min-h-screen  md:min-h-[96vh]">
+        <div className=" max-h-screen md:max-h-[98vh] border border-white/10   md:rounded-l-2xl md:mt-[2vh] overflow-y-scroll bg-primaryColor    w-full md:bg-[#0E1014] min-h-screen  md:min-h-[96vh]">
 
     
-          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20 w-full  md:w-[50%] rounded-2xl font-bold   "> 
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-newcolor w-full  md:w-[49.8%] rounded-2xl font-bold   "> 
             <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
             <span>Personas</span>
            </div>
 
                 {isLoading && <Loader2 fullScreen={true}/> }
 
-                    {data && <div className="mt-12">
+                    {data && <div className="mt-16">
 
             
 

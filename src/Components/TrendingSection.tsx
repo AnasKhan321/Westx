@@ -13,7 +13,7 @@ interface TrendingSectionProps {
 
 const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, trendingTweets }) => {
   return (
-    <div className="w-full  p-4  bg-secondaryColor border  max-h-[76vh] overflow-y-scroll  border-white/10 shadow-xl md:shadow-none  text-white rounded-2xl ">
+    <div className="w-full  p-4  bg-newcolor2 border  max-h-[76vh] overflow-y-scroll  border-white/10 shadow-xl md:shadow-none  text-white rounded-2xl ">
       <h2 className="text-xl font-bold mb-4">Trending Now</h2>
       <div className="mb-4">
         {trendingKeywords?.map((keyword, index) => (
@@ -25,7 +25,7 @@ const TrendingSection: React.FC<TrendingSectionProps> = ({ trendingKeywords, tre
       <h2 className="text-xl  font-bold mb-4">Trending Tweets</h2>
       <div className="space-y-4">
         {trendingTweets.map((tweet) => (
-          <div key={tweet.id} className=" p-1 2xl:p-3 bg-secondaryColor rounded-lg flex items-start space-x-2 md:space-x-3">
+          <div key={tweet.id} className=" p-1 2xl:p-3  rounded-lg flex items-start space-x-2 md:space-x-3">
             <SafeImage
               src={tweet.user.photoURL}
               alt={tweet.user.name}

@@ -12,8 +12,8 @@ export default function MainLayout({
   const location = useLocation();
   const { live } = useSocket();
   return (
-    <div className="grid grid-cols-14  bg-primaryColor text-secondary min-h-screen font-roboto  ">
-      <div className=" hidden tablet:block bg-primaryColor  md:col-span-3  bg text-white max-h-screen min-h-screen ">
+    <div className="grid grid-cols-14  bg-newcolor text-secondary min-h-screen font-roboto  ">
+      <div className=" hidden tablet:block bg-newcolor  md:col-span-3  bg text-white max-h-screen min-h-screen ">
         <Sidebar />
       </div>
 
@@ -31,7 +31,7 @@ export default function MainLayout({
           </div>
         ) : null}
       </div>
-      <div className="   tablet:col-span-4    min-h-screen  hidden tablet:block max-h-screen overflow-y-scroll  bg-primaryColor  ">
+      <div className="   tablet:col-span-4    min-h-screen  hidden tablet:block max-h-screen overflow-y-scroll  bg-newcolor  ">
         <RightSidebar />
       </div>
     </div>
