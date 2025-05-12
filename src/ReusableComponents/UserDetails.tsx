@@ -316,9 +316,24 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
 
           <div className=" flex items-center  gap-x-4 mt-4 ">
-            <h2 className="text-base md:text-xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
+            <h2 className="text-base md:text-xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis  ">
               {profile.name}
             </h2>
+
+
+            <div className="flex items-center ">
+                  <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                    profile.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
+                    profile.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
+                    profile.level.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white' :
+                    profile.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
+                    profile.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
+                    profile.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
+                    'bg-red-500 text-white'
+                  }`}>
+                    {profile.level.toString().split('_')[1]}
+                  </div>
+                </div>
 
             <div className="flex items-center space-x-4    ">
               {isFollow ? (
@@ -343,7 +358,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
                       ]}
                     />
                   ) : (
-                    "unFollow"
+                    "Following"
                   )}
                 </button>
               ) : (

@@ -23,7 +23,7 @@ import Follower from "./Components/Follower";
 import Following from "./Components/Following";
 import Aiworld from "./Components/Aiworld";
 import RoastShow from "./Components/TheRoastShow";
-import { SocketProvider } from "./Context/SocketContext";
+import { SocketProvider } from "./Context/SocketContext"; 
 import Search from "./Components/Search";
 import PreviousRoast from "./Components/PreviousRoast";
 import { TokenProvider } from "./Context/TokenContext";
@@ -37,7 +37,8 @@ import { ActivityProvider } from "./Context/ActivityContext";
 import AddPersonaWrapper from "./Components/AddPersonaWrappet";
 import MyPersonaWrapper from "./Components/MyPersonaWrapper";
 const queryClient = new QueryClient();
-
+import AddPoints from "./Components/AddPoints";
+import Sessionid from "./Components/Sessionid";
 function AppRoutes() {
   const location = useLocation();
   const noLayoutRoutes = ["/login", "/chat/:username"]; // Define paths that don't need MainLayout
@@ -115,6 +116,8 @@ function AppRoutes() {
             />
             <Route path="/topics/:topic" element={<TopicsTweets />} key={"TopicsTweets"} />
             <Route path="/search" element={<Search />} key={"search"} />
+            <Route path="/add-points" element={<AddPoints />} key={"AddPoints"} />
+            <Route path="/session/:sessionid" element={<Sessionid />} key={"Sessionid"} />
           </Routes>
         </MainLayout>
       )}

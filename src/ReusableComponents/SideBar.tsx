@@ -7,6 +7,7 @@ import { motion } from 'motion/react';
 import { GoHomeFill   , GoHome  } from "react-icons/go";
 import { FaRegUser  , FaUser  } from "react-icons/fa6";
 import { PiUserList  , PiUserListFill  } from "react-icons/pi";
+import { IoStorefrontOutline   , IoStorefront } from "react-icons/io5";
 const Sidebar = () => {
   const location = useLocation();
   const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
@@ -51,15 +52,30 @@ const Sidebar = () => {
 
           <Link
             to="/my-personas"
-            className= {`flex items-center space-x-3 pl-2  py-2 ${location.pathname == "/my-personas" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
+            className= {`flex items-center space-x-3 pl-2  py-2  pr-3 ${location.pathname == "/my-personas" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
           >
             {location.pathname == "/my-personas" ? (
               <PiUsersThreeFill size={26} />
             ) : (
               <PiUsersThree size={26} />
             )}
-            <span className="font-medium  text-base  lg:text-xl font-roboto">My Personas</span>
+              <span className="font-medium  text-base  lg:text-xl font-roboto">My Personas</span>
           </Link>
+
+
+          <Link
+            to="/add-points"
+            className= {`flex items-center w-full    space-x-3 pl-2  py-2 ${location.pathname == "/add-points" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
+          >
+            {location.pathname == "/add-points" ? (
+              <IoStorefront  size={26} />
+            ) : (
+              <IoStorefrontOutline  size={26} />
+            )}
+
+            <span className="font-medium  text-base  lg:text-xl  font-roboto ">Add Points</span>
+          </Link>
+
           <Link
             to="/bookmark"
             className= {`flex items-center space-x-3 pl-2  py-2 ${location.pathname == "/bookmark" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
