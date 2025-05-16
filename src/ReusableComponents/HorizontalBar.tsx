@@ -1,6 +1,6 @@
 
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
+import { IoPersonOutline, IoPersonSharp, IoStorefront, IoStorefrontOutline } from "react-icons/io5";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { IoSearchOutline, IoSearchSharp } from "react-icons/io5";
@@ -20,6 +20,9 @@ const HorizontalBar = () => {
           >
             {location.pathname === "/" ? <GoHomeFill size={24} /> : <GoHome size={24} />}
           </Link>
+
+
+
           <Link to={`/search`}>
             {location.pathname === "/search" ? <IoSearchSharp size={23} /> : <IoSearchOutline size={23} />}
           </Link>
@@ -28,6 +31,15 @@ const HorizontalBar = () => {
             className="flex items-center space-x-3 transition-all hover:text-territary"
           >
             {location.pathname === "/personas" ? <PiUserListFill size={25} /> : <PiUserList size={25} />}
+          </Link>
+
+
+
+          <Link
+            to="/add-points"
+            className="flex items-center space-x-3 transition-all hover:text-territary"
+          >
+            {location.pathname === "/add-points" ? <IoStorefront size={25} /> : <IoStorefrontOutline size={25} />}
           </Link>
 
 

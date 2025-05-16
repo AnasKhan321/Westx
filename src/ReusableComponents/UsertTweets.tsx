@@ -1,22 +1,24 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
-import { Tweet } from '../utils/type'
+
 import SmallLoader from '../ReusableComponents/SmallLoader'
 import TweetSkeleton from './TweetSkeleton'
 import { ColorRing } from 'react-loader-spinner'
+import { SupabaseTweet } from '../ReusableComponents/SupabaseTweet'
 
-const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+
+const TwetCARD = React.lazy(() => import("../ReusableComponents/SupabaseTweet"));
 
 interface TweetResponse {
   success: boolean
-  data: Tweet[]
+  data: SupabaseTweet[]
   hasMore: boolean // API must return this
 }
 
 const fetchTweets = async ({ pageParam = 1, userId }: { pageParam?: number, userId: string }) => {
   const { data } = await axios.get<TweetResponse>(
-    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/tweet/v2/${userId}/${pageParam}`
+    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/supabase/getTweets/${userId}/${pageParam}`
   );
 
   return {
