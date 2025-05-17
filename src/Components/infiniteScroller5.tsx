@@ -1,24 +1,25 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
-import { Tweet } from '../utils/type'
 import { useAuth } from '../Context/AuthContext'
 import { BiRepost } from 'react-icons/bi'
 import TweetSkeleton, { TwitterSkeletonComponent } from '../ReusableComponents/TweetSkeleton'
 import Loader2 from '../ReusableComponents/Loader2'
+import { SupabaseTweet } from '../ReusableComponents/SupabaseTweet'
 
 
-const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+const TwetCARD = React.lazy(() => import("../ReusableComponents/SupabaseTweet"));
 interface TweetResponse {
   success: boolean
-  data: Tweet[]
+  data: SupabaseTweet[]
   hasMore: boolean // API must return this
 }
 
 const fetchTweets = async ({ pageParam = 1, userid }: { pageParam: number, userid: string | undefined }) => {
   const { data } = await axios.get<TweetResponse>(
-    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/foryou/${userid}/${pageParam}`
+    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/supabase/getTweetBasedonInterest/${userid}/${pageParam}`
   )
+  console.log(data)
 
   return {
     data: data.data,
@@ -37,7 +38,7 @@ function ForYouTweets() {
     status,
   } = useInfiniteQuery({
     queryKey: [`foryou:tweets:${user?.username}`],
-    queryFn: ({ pageParam }) => fetchTweets({ pageParam, userid: user?.username }),
+    queryFn: ({ pageParam }) => fetchTweets({ pageParam, userid: user?.id }),
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Ensures undefined if no more pages
     initialPageParam: 1,
     staleTime: Infinity,
@@ -106,9 +107,9 @@ function ForYouTweets() {
                   <>
                     <div className="flex items-center pl-8 py-2 space-x-2 text-gray-500 font-bold">
                       <BiRepost className="text-xl" />
-                      <span className="text-xs">{tweet.user.name} reposted</span>
+                      <span className="text-xs">{tweet.User.name} reposted</span>
                     </div>
-                    <TwetCARD tweet={tweet.originalTweet as Tweet} isBookmark={false} />
+                    <TwetCARD tweet={tweet.originalTweet as unknown as SupabaseTweet} isBookmark={false} />
                   </>
                 ) : (
                   <TwetCARD tweet={tweet} isBookmark={false} />

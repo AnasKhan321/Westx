@@ -1,6 +1,5 @@
 import React, { Suspense, useState } from "react";
 import SEO from "../ReusableComponents/SEO";
-// const MyComponent = React.lazy(() => import("./infiniteScroller3"));
 const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
 const ForYouTweets = React.lazy(() => import("./infiniteScroller5"));
 import { useAuth } from "../Context/AuthContext";
@@ -101,7 +100,8 @@ export default function Home() {
             {isAuthenticated ? (
               <>
                 <Suspense>
-                  <FollowingTweet /></Suspense>
+                  <FollowingTweet />
+                </Suspense>
               </>
             ) : (<AuthRequired  description=" Stay connected with AI personalities & people you follow." isHome={true}/>)}
 

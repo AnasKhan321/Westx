@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import { Tweet } from "../utils/type";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Loader2 from "../ReusableComponents/Loader2";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
@@ -9,12 +8,12 @@ import React from "react";
 import { BiRepost } from "react-icons/bi";
 import { IoCaretBack } from "react-icons/io5";
 import { capitalizeFirstLetter } from "../utils/getUserPosition";
-
+import { SupabaseTweet } from "../ReusableComponents/SupabaseTweet";
 
 
 interface TopicTweetsResponse {
     success: boolean;
-    data: Tweet[];
+    data: SupabaseTweet[];
     hasMore: boolean;
 }
 
@@ -33,7 +32,7 @@ const getTweets = async ({ topic, pageParam = 1 }: { topic: string, pageParam: n
 
 }
 
-const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+const TwetCARD = React.lazy(() => import("../ReusableComponents/SupabaseTweet"));
 const TopicsTweets = () => {
     const { topic } = useParams();
 
@@ -144,7 +143,7 @@ const TopicsTweets = () => {
                                         <>
                                             <div className="flex items-center pl-8 py-2 space-x-2 text-gray-500 font-bold">
                                                 <BiRepost className="text-xl" />
-                                                <span className="text-xs">{tweet.user.name} reposted</span>
+                                                <span className="text-xs">{tweet.User.name} reposted</span>
                                             </div>
                                             <TwetCARD tweet={tweet} isBookmark={false} />
                                         </>

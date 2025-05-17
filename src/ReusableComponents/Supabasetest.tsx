@@ -17,7 +17,7 @@ interface SupabaseTweets {
 const fetchTweets = async ({ pageParam = 1 }) => {
   try {
     const { data } = await axios.get<SupabaseTweets>(
-      `https://ai.westx.xyz/api/supabase/tweets/${pageParam}`
+      `${import.meta.env.VITE_PUBLIC_AI_URL}/api/supabase/tweets/${pageParam}`
     );
     return {
       data: data.data,

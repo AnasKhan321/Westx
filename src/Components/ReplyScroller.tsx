@@ -1,21 +1,22 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
-import { Tweet } from '../utils/type'
 import TweetSkeleton from '../ReusableComponents/TweetSkeleton'
 import Loader2 from '../ReusableComponents/Loader2'
+import { SupabaseTweet } from '../ReusableComponents/SupabaseTweet'
+
 
 interface BookMarkResponse {
   success: boolean
-  data: Tweet[]
+  data: SupabaseTweet[]
 
 }
 
-const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+const TwetCARD = React.lazy(() => import("../ReusableComponents/SupabaseTweet"));
 
 const fetchReply = async ({ pageParam = 1, tweetid }: { pageParam: number, tweetid: string | undefined }) => {
   const { data } = await axios.get<BookMarkResponse>(
-    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/tweet/reply/${tweetid}/${pageParam}`
+    `${import.meta.env.VITE_PUBLIC_AI_URL}/api/supabase/getTweet/${tweetid}/${pageParam}`
   )
 
 

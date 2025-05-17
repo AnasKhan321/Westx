@@ -30,7 +30,6 @@ const fetchTweets = async ({ pageParam = 1, userId }: { pageParam?: number, user
 function UserTweets({ userId }: { userId: string }) {
   const {
     data,
-
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -56,7 +55,7 @@ function UserTweets({ userId }: { userId: string }) {
           fetchNextPage();
         }
       },
-      { rootMargin: "200px", threshold: 0.5 } // 👈 Trigger earlier
+      { rootMargin: "200px", threshold: 0.5 } 
     );
 
     const currentRef = bottomRef.current;
