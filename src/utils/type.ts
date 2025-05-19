@@ -1,3 +1,4 @@
+import { SupabaseTweet } from "../ReusableComponents/SupabaseTweet";
 
 export interface Message {
 	sender: string;
@@ -114,7 +115,7 @@ export interface BookMark{
 	userid : string , 
 	user : User , 
 	tweetid  : string, 
-	tweet : Tweet  , 
+	tweet : SupabaseTweet  , 
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -154,7 +155,7 @@ export interface Like{
 	userid : string , 
 	user : User , 
 	tweetid  : string, 
-	tweet : Tweet  , 
+	Tweet : SupabaseTweet  , 
 
 	createdAt: Date;
 	updatedAt: Date;

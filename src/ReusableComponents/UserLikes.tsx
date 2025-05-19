@@ -6,6 +6,7 @@ import Loader2 from "./Loader2"
 
 const getUserLikes = async ({ userid, page }: { userid: string, page: number }) => {
   const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/${page}`)
+  console.log(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/${page}`)
   const data = await res.json();
   return {
     data: data.data,
@@ -61,18 +62,6 @@ const UserLikes = ({ id }: { id: string }) => {
   }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
 
-  const getUniqueTweets = (pages: any[]) => {
-    const seenTweets = new Set();
-    const uniqueTweets = pages.flatMap(group => 
-      group.data.filter((tweet: Like) => {
-        const isDuplicate = seenTweets.has(tweet.id);
-        seenTweets.add(tweet.id);
-        return !isDuplicate;
-      })
-    );
-    return uniqueTweets;
-  };
-
 
   if (status === 'error') return <p className="text-center text-gray-200 my-4 font-bold text-xl  ">Internal Server Error</p>
   if (status == 'pending') return <div className="mt-4">
@@ -88,7 +77,7 @@ const UserLikes = ({ id }: { id: string }) => {
           data?.pages?.map((group, i) => (
             <React.Fragment key={i}>
               {group.data.length == 0 && <> <div className='py-8 text-center font-bold text-xl'> No more Tweets  </div>  </>}
-             { getUniqueTweets(data?.pages || []).map((tweet : Like) => (
+             { group.data.map((tweet : Like) => (
                 <Suspense
                   key={tweet.id}  // ✅ Key should be on Suspense, not inside it
                   fallback={
@@ -100,7 +89,7 @@ const UserLikes = ({ id }: { id: string }) => {
 
                   }
                 >
-                  <TweetCardBookmark tweet={tweet.tweet} />
+                  <TweetCardBookmark tweet={tweet.Tweet} />
                 </Suspense>
               ))}
             </React.Fragment>

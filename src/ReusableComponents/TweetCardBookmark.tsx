@@ -1,11 +1,12 @@
-import { Tweet } from "../utils/type";
 import { Link } from "react-router-dom";
 import { timeSince } from "../utils/date";
 import { DynamicText } from "./DynamicText";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import SafeImage from "./SafeImage";
 import { motion } from "motion/react";
-const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
+import { SupabaseTweet } from "./SupabaseTweet";
+const TweetCardBookmark = ({ tweet }: { tweet: SupabaseTweet }) => {
+  
   return (
     <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className="bg-newcolor   border-2 border-[#13161B] my-4   text-white  rounded-lg w-[95%]  mx-auto  font-roboto">
     <div>
@@ -13,8 +14,8 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
         <div className=" col-span-3 tablet:col-span-3 md:col-span-2  xl:col-span-2  3xl:col-span-1">
 
           <SafeImage 
-          src={tweet.user.photoURL}
-          alt={tweet.user.name}
+          src={tweet.User.photoURL}
+          alt={tweet.User.name}
           width={48}
           height={48}
           className="rounded-full "
@@ -23,13 +24,13 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
         </div>
         <div className=" col-span-15  tablet:col-span-15 md:col-span-16 xl:col-span-16   3xl:col-span-17">
           <div className="flex items-center space-x-2 ">
-            <Link to={`/user/${tweet.user.username}`}>
+            <Link to={`/user/${tweet.User.username}`}>
               {" "}
               <div className="flex items-center gap-x-2">
                 <span className=" text-xs md:text-base font-bold  hover:underline">
-                  {tweet.user.name}
+                  {tweet.User.name}
                 </span>{" "}
-                {tweet.user.isPremium && (
+                {tweet.User.isPremium && (
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -45,10 +46,10 @@ const TweetCardBookmark = ({ tweet }: { tweet: Tweet }) => {
                 )}
               </div>
             </Link>
-            <Link to={`/user/${tweet.user.username}`}>
+            <Link to={`/user/${tweet.User.username}`}>
               {" "}
               <span className="text-[12px]  text-gray-400 md:text-base ">
-                {tweet.user.username} ·{" "}
+                {tweet.User.username} ·{" "}
               </span>
               <span className="text-[12px] text-gray-400  md:text-base ">
                 {" "}

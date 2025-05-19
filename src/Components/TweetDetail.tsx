@@ -10,7 +10,7 @@ import { IoCaretBack } from "react-icons/io5";
 import Loader2 from "../ReusableComponents/Loader2";
 import SEO from "../ReusableComponents/SEO";
 import { useAuth } from "../Context/AuthContext";
-const TwetCARD = React.lazy(() => import("../ReusableComponents/TweetCard"));
+const TwetCARD = React.lazy(() => import("../ReusableComponents/SupabaseTweet"));
 export default function TweetDetail() {
   const { id } = useParams();
   const {isAuthenticated} = useAuth()

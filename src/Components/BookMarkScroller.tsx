@@ -133,14 +133,14 @@ function BookMarks() {
           ) : (
             getUniqueTweets(data?.pages || []).map((tweet) => (
               <Suspense
-                key={tweet.tweet.id}
+                key={tweet.Tweet.id}
                 fallback={
                   <div className="w-full p-4 md:w-[96%]">
                     <TwitterSkeletonComponent />
                   </div>
                 }
               >
-                <TweetCardBookmark tweet={tweet.tweet} />
+                <TweetCardBookmark tweet={tweet.Tweet} />
               </Suspense>
             ))
           )}

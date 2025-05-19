@@ -1,3 +1,4 @@
+import { SupabaseTweet } from "../ReusableComponents/SupabaseTweet";
 import { followings, Like, Tweet, User, User2 } from "./type";
 import axios  from "axios";
 export interface UserResponse{
@@ -8,7 +9,7 @@ export interface UserResponse{
 
 interface TweetDetail {
     success : boolean ,
-    data : Tweet
+    data : SupabaseTweet
 }
 
 export interface Followings {

@@ -66,7 +66,6 @@ const TweetCard = ({
   isBookmark: boolean;
 }) => {
   const queryClient = useQueryClient();
-
   const { user   , isAuthenticated } = useAuth();
 
   const [reposts, setreposts] = useState(tweet.originalTweet.length);
