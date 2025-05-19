@@ -83,13 +83,13 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
-    console.log(userfollowing?.data)
+
     setisFollow(
       userfollowing?.data.some((follower) => follower.followerid == user?.id)
     );
     setfollowings(userfollowing?.data.length);
 
-  }, [userfollowing?.data]);
+  }, [userfollowing?.data]); 
 
   useEffect(() => {
     setfollowings(userfollower?.data.length);

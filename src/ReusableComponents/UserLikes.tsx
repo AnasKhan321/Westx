@@ -6,7 +6,6 @@ import Loader2 from "./Loader2"
 
 const getUserLikes = async ({ userid, page }: { userid: string, page: number }) => {
   const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/${page}`)
-  console.log(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/alllikes/${userid}/${page}`)
   const data = await res.json();
   return {
     data: data.data,

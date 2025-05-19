@@ -29,7 +29,7 @@ const Sessionid = () => {
           `${import.meta.env.VITE_PUBLIC_AI_URL}/api/payment/session/${sessionid}`
         );
 
-        console.log(response.data.metadata);
+     
         setSessionData(response.data.metadata);
         
         // Only show toast if it hasn't been shown yet
@@ -93,7 +93,7 @@ const Sessionid = () => {
 
   if (loading) {
     return (
-      <div className="h-screen bg-primaryColor flex flex-col items-center justify-center">
+      <div className="h-screen bg-newcolor flex flex-col items-center justify-center">
         <div className="w-full max-w-md p-6 bg-secondaryColor rounded-lg">
           <div className="flex items-center justify-center mb-4">
             <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
@@ -128,10 +128,10 @@ const Sessionid = () => {
   const pointsAdded = parseInt(sessionData?.amount || "0") * 100;
 
   return (
-    <div className="h-screen bg-secondaryColor  md:h-[98vh] md:mt-[2vh] w-full md:bg-primaryColor border border-white/10 rounded-l-lg  overflow-auto">
+    <div className="h-screen bg-newcolor2  md:h-[98vh] md:mt-[2vh] w-full md:bg-newcolor2 border border-white/10 rounded-l-lg  overflow-auto">
 
 
-      <div className="w-full max-w-md p-6 mx-auto  mt-10 bg-secondaryColor rounded-lg">
+      <div className="w-full max-w-md p-6 mx-auto  mt-10 bg-newcolor rounded-lg">
         <div className="flex flex-col items-center">
           {/* Success Icon */}
           <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mb-4">

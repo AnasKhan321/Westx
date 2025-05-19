@@ -19,7 +19,7 @@ const fetchTweets = async ({ pageParam = 1, userid }: { pageParam: number, useri
   const { data } = await axios.get<TweetResponse>(
     `${import.meta.env.VITE_PUBLIC_AI_URL}/api/supabase/getTweetBasedonInterest/${userid}/${pageParam}`
   )
-  console.log(data)
+
 
   return {
     data: data.data,
