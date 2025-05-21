@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPersonas } from "../utils/apicalls";
-import { useAuth } from "../Context/AuthContext";
+// import { useAuth } from "../Context/AuthContext";
 import { IoCaretBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Suspense } from "react";
@@ -22,7 +22,7 @@ export default function Peoples(){
     const handleClick = ()=>{
             navigate(-1);
     }
-    const {user} = useAuth() ; 
+    // const {user} = useAuth() ; 
     return(
         <> 
         <SEO title={ "WestX - Personas "} description={"Personas page where you can see all the personas"} />
