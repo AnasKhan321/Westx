@@ -1,3 +1,6 @@
+
+
+
 interface LoaderProps {
     size?: 'sm' | 'md' | 'lg';
     text?: string;

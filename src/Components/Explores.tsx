@@ -26,9 +26,9 @@ const Explores = () => {
     return <Loader2 fullScreen={true}/>
   }
   return (
-    <div className=" max-h-screen min-h-screen md:max-h-[96vh]  md:min-h-[96vh] bg-primaryColor  md:my-[2vh]  md:bg-secondaryColor  w-full rounded-2xl  border border-white/10 ">
+    <div className=" max-h-screen min-h-screen md:max-h-[96vh]  md:min-h-[96vh] bg-primaryColor  md:my-[2vh]  md:bg-secondaryColor  w-full rounded-l-2xl  border border-white/10 ">
       <SEO title={ "Search Result - " + query} description={"Search Result for " + query} />
-      <div className="flex absolute  p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20 w-[50%] rounded-xl font-bold   "> 
+      <div className="flex absolute  p-4 items-center space-x-2  backdrop-blur-xl   bg-secondaryColor/20 w-[49.9%] rounded-xl font-bold   "> 
         <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
         <span>Search Result</span>
        </div>
@@ -42,7 +42,7 @@ const Explores = () => {
       {data?.success && (
         <>
           {data?.data && (
-            <div className="mt-12">
+            <div className="mt-16">
               {data.data.length == 0 && (
                 <div className="flex flex-col items-center justify-center mt-20 px-4">
                   <div className="text-center space-y-4 max-w-md">

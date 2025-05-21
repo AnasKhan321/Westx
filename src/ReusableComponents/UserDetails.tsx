@@ -89,7 +89,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     );
     setfollowings(userfollowing?.data.length);
 
-  }, [userfollowing?.data]); 
+  }, [userfollowing?.data]);
 
   useEffect(() => {
     setfollowings(userfollower?.data.length);
@@ -289,17 +289,17 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             {profile.creator === user?.username &&
 
 
-              <> 
-              {parseInt(profile.level.toString().split("_")[1]) >= 2 &&
-              <button onClick={() => setIsEditProfile(!isEditProfile)}  className=" border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black">Edit Profile</button>
-              }
-              
-              
-              
+              <>
+                {parseInt(profile.level.toString().split("_")[1]) >= 2 &&
+                  <button onClick={() => setIsEditProfile(!isEditProfile)} className=" border-white text-xs px-1 ss:text-sm md:text-base ss:px-2  md:px-4 py-1 rounded-full border hover:bg-white hover:text-black transition-all hover:border-black">Edit Profile</button>
+                }
+
+
+
               </>
             }
             {(!profile.isToken && user?.username === import.meta.env.VITE_PUBLIC_ADMIN_USERNAME) &&
-              <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username  , null)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
+              <button onClick={() => handleTokenLaucnh(profile.name, profile.photoURL, profile.username, null)} className="bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br px-4 py-1 rounded-full border border-white">
                 Upgrade
               </button>}
 
@@ -322,20 +322,25 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
               {profile.name}
             </h2>
 
+            {profile.isVerified && <div className="">
 
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#a200e8" className="size-6">
+                <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 0 1 3.498 1.307 4.491 4.491 0 0 1 1.307 3.497A4.49 4.49 0 0 1 21.75 12a4.49 4.49 0 0 1-1.549 3.397 4.491 4.491 0 0 1-1.307 3.497 4.491 4.491 0 0 1-3.497 1.307A4.49 4.49 0 0 1 12 21.75a4.49 4.49 0 0 1-3.397-1.549 4.49 4.49 0 0 1-3.498-1.306 4.491 4.491 0 0 1-1.307-3.498A4.49 4.49 0 0 1 2.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 0 1 1.307-3.497 4.49 4.49 0 0 1 3.497-1.307Zm7.007 6.387a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd" />
+              </svg>
+
+            </div>}
             <div className="flex items-center ">
-                  <div className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                    profile.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
-                    profile.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
+              <div className={`px-2 py-1 rounded-full text-xs font-semibold ${profile.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
+                  profile.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
                     profile.level.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white' :
-                    profile.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
-                    profile.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
-                    profile.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
-                    'bg-red-500 text-white'
-                  }`}>
-                    {profile.level.toString().split('_')[1]}
-                  </div>
-                </div>
+                      profile.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
+                        profile.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
+                          profile.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
+                            'bg-red-500 text-white'
+                }`}>
+                {profile.level.toString().split('_')[1]}
+              </div>
+            </div>
 
             <div className="flex items-center space-x-4    ">
               {isFollow ? (
@@ -407,12 +412,12 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             <Link
               to={`/chat/${profile.username}`}
               className="  block  p-3 rounded-full bg-secondaryColor md:hidden  text-white  text-sm  whitespace-nowrap overflow-hidden text-ellipsis   underline  "
-            > 
-            <IoChatboxOutline  size={22}/>
+            >
+              <IoChatboxOutline size={22} />
 
-              </Link>
+            </Link>
 
-            
+
 
           </div>
           <p className="text-white/60 text-sm mt-1 ">

@@ -295,9 +295,8 @@ const TweetCard = ({
   };
 
 
-
   return (
-    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white w-full bg-newcolor my-4    md:w-[92%]  grid  grid-cols-18  mx-auto  py-4 px-2   md:p-4 border-2  border-[#13161B] rounded-xl  ">
+    <motion.div initial={{opacity : 0 , y:10  }} animate={{opacity : 1 , y:0  }} transition={{duration : 0.7}} className=" text-white w-full  md:bg-newcolor  my-6  md:my-4     md:w-[92%]  grid  grid-cols-18  mx-auto  py-4 px-2   md:p-4 border-2  border-[#13161B] md:rounded-xl  ">
       <div className=" col-span-3  tablet:col-span-3 md:col-span-2  xl:col-span-2 3xl:col-span-1">
         <SafeImage
           src={tweet.User.photoURL}
@@ -315,7 +314,7 @@ const TweetCard = ({
               <span className=" text-sm md:text-base font-semibold  hover:underline">
                     {tweet.User.name}
               </span>{" "}
-              {tweet.User.isPremium && (
+              {tweet.User.isVerified && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

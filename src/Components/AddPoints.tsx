@@ -189,7 +189,7 @@ const AddPoints = () => {
           </div>
         </div>
 
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between  flex-col gap-y-3 md:flex-row md:gap-y-0'>
 
           <p className="text-white/60 mt-2">Use points to upgrade personas and access premium features</p>
 

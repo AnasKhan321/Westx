@@ -8,6 +8,7 @@ import { GoHomeFill   , GoHome  } from "react-icons/go";
 import { FaRegUser  , FaUser  } from "react-icons/fa6";
 import { PiUserList  , PiUserListFill  } from "react-icons/pi";
 import { IoStorefrontOutline   , IoStorefront } from "react-icons/io5";
+import SafeImage from "./SafeImage";
 const Sidebar = () => {
   const location = useLocation();
   const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
@@ -113,7 +114,7 @@ const Sidebar = () => {
             to={`/profile`}
             className="mt-auto flex    xl:mx-0 mr-2   space-x-2 absolute bottom-10  "
           >
-            <img
+            <SafeImage
               src={user?.photoURL as string} // Replace with the user profile image path
               alt="User Profile"
               className="lg:w-10 lg:h-10 w-8 h-8 rounded-full"

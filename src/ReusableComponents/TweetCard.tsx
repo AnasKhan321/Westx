@@ -286,7 +286,7 @@ const TweetCard = ({
           width={48}
           height={48}
           className="rounded-full"
-        />
+        /> 
       </div>
 
       <div className=" col-span-15 tablet:col-span-15 md:col-span-16  xl:col-span-16 3xl:col-span-17">
@@ -297,7 +297,7 @@ const TweetCard = ({
               <span className=" text-sm md:text-base font-semibold  hover:underline">
                 {tweet.user.name}
               </span>{" "}
-              {tweet.user.isPremium && (
+              {tweet.user.isVerified && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

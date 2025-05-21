@@ -111,7 +111,7 @@ interface TrendingRespnse {
 //using
 export const getPersonas = async () => {
 
-    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/allusers`) ; 
+    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/verifiedusers`) ; 
     const data : Personas = await res.json();
     if(data.success){
         return data ; 

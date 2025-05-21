@@ -155,6 +155,8 @@ export const addReplyParent = async (body: ParentBody): Promise<ReplyResponse | 
         console.error('There was a problem with the fetch operation:', error);
     }
 }
+
+
 export const followuser = async (body: Followuser): Promise<followResponse | undefined> => {
     try {
         const response = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/follow`, {
@@ -173,10 +175,6 @@ export const followuser = async (body: Followuser): Promise<followResponse | und
         console.error('There was a problem with the fetch operation:', error);
     }
 }
-
-
-
-
 
 
 export const unfollowuser = async (body: Followuser): Promise<followResponse | undefined> => {

@@ -70,6 +70,7 @@ export interface User {
 	publicKey : string | null;
 	interests: string;
 	creator : string | null;
+	isVerified : boolean;
 	oauthToken: string;
 	followers: followings[];
 	followings: followings[];
@@ -185,6 +186,7 @@ export interface User2 {
 	creator : string | null;
 	isActive: boolean;
 	isPremium: boolean;
+	isVerified : boolean;
 	interests: string;
 	oauthToken: string;
 	totalTweets: number;

@@ -173,7 +173,7 @@ export default function ReplyCard({reply}  : {reply : Tweet}){
                   <span className="font-bold  hover:underline">
                     {reply.user.name}
                   </span>{" "}
-                  {reply.user.isPremium && (
+                  {reply.user.isVerified && (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
