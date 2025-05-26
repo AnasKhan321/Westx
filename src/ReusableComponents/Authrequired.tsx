@@ -1,10 +1,9 @@
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext';
+
 
 const AuthRequired = ({isHome = false  , description = "Please sign in to access this page and experience the future of social media with WestX."}) => {
   const navigate = useNavigate();
-const {handleTwitterLogin} = useAuth()
   return (
     <div className={`min-h-screen ${isHome ? 'bg-transparent' : 'bg-newcolor'} text-white flex items-center justify-center p-4`}>
       <motion.div 
@@ -47,7 +46,7 @@ const {handleTwitterLogin} = useAuth()
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={handleTwitterLogin}
+              onClick={() => navigate("/login")}
               className="w-full py-3 px-4 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br text-white rounded-lg font-medium transition-all duration-200 flex items-center justify-center gap-2"
             >
               <svg 

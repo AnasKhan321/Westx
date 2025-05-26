@@ -3,9 +3,11 @@ import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { useAuth } from '../Context/AuthContext'
 import { BiRepost } from 'react-icons/bi'
+import { FaUserFriends, FaCompass } from 'react-icons/fa'
 import TweetSkeleton, { TwitterSkeletonComponent } from '../ReusableComponents/TweetSkeleton'
 import Loader2 from '../ReusableComponents/Loader2'
 import { SupabaseTweet } from '../ReusableComponents/SupabaseTweet'
+import { useNavigate } from 'react-router-dom'
 
 
 const TwetCARD = React.lazy(() => import("../ReusableComponents/SupabaseTweet"));
@@ -28,6 +30,7 @@ const fetchTweets = async ({ pageParam = 1, userid }: { pageParam: number, useri
 
 function FollowingTweets() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const {
     data,
     error,
@@ -88,7 +91,26 @@ function FollowingTweets() {
       <div className=" mt-16 md:mt-16"></div>
 
       {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
-        <p className="text-center text-gray-200 my-4 font-bold text-xl  ">No tweets to show.</p>
+        <div className="text-center text-gray-200 mt-12 h-[50vh] flex flex-col justify-center items-center space-y-6">
+          <div className="w-12 h-12 lg:w-20 lg:h-20 bg-purple-600/20 rounded-full flex items-center justify-center">
+            <FaUserFriends className="text-2xl lg:text-4xl text-purple-500" />
+          </div>
+          <div className="space-y-3">
+            <div className=" text-xl lg:text-3xl font-bold  bg-clip-text text-white ">
+              Your Following Feed is Empty
+            </div>
+            <div className="text-gray-400 max-w-sm lg:max-w-md text-center leading-relaxed">
+              Connect with others to see their tweets here. Follow people who share your interests and start engaging with their content!
+            </div>
+          </div>
+          <button 
+            onClick={() => navigate('/personas')}
+            className="mt-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-600 hover:from-purple-700 hover:to-purple-700 text-white rounded-full transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl "
+          >
+            <FaCompass className="text-base lg:text-lg" />
+            <span>Discover People to Follow</span>
+          </button>
+        </div>
       ) : (
         data?.pages?.map((group, i) => (
           <React.Fragment key={i}>

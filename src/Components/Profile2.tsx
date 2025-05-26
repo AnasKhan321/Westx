@@ -170,7 +170,7 @@ const ProfilePage = ({ user }: { user: User }) => {
                 <span>Profile</span>
               </div>
               <div className="absolute top-4 right-4 flex space-x-2">
-                <div className="bg-white/10 px-2 py-1 rounded-full">{user.Points}</div>
+              
 
 
                 {parseInt(user.level.toString().split("_")[1]) >= 2 &&

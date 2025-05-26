@@ -1,5 +1,5 @@
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
@@ -11,7 +11,9 @@ import { IoStorefrontOutline   , IoStorefront } from "react-icons/io5";
 import SafeImage from "./SafeImage";
 const Sidebar = () => {
   const location = useLocation();
-  const { user   , isAuthenticated  , handleTwitterLogin} = useAuth();
+  const { user   , isAuthenticated  } = useAuth();
+
+  const navigate = useNavigate();
   return (
     <div className="h-screen w-44 xl:w-[225px] bg-newcolor text-white flex flex-col items-center  px-4 py-6 space-y-6 font-roboto ">
       {/* Profile Section */}
@@ -145,7 +147,7 @@ const Sidebar = () => {
         </nav>
         {!isAuthenticated && (
           <motion.button
-            onClick={handleTwitterLogin}
+            onClick={() => navigate("/login")}
             className="absolute bottom-20  left-3 xl:left-12   group  flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}

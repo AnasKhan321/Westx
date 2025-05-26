@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useAuth } from "../Context/AuthContext"
 import SEO from "../ReusableComponents/SEO"
-import { IoAddSharp } from "react-icons/io5";
+import { IoAddSharp, IoCaretBack } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { User } from "../utils/type";
 import { motion } from "motion/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SafeImage from "../ReusableComponents/SafeImage";
 import { FaArrowUp } from "react-icons/fa6"
 
@@ -25,6 +25,10 @@ const CreatedUser = async (username: string): Promise<User[]> => {
 
 const ManagePersonas = () => {
     const { user } = useAuth()
+    const navigate = useNavigate()
+    const handleClick = () => {
+        navigate("/")
+    }
     return (
         <div className="md:min-h-[98vh] min-h-screen max-h-screen mb-16 xl:mb-0  md:max-h-[98vh]  md:mt-[2vh] bg-primaryColor md:bg-newcolor2 overflow-y-scroll rounded-l-xl border-2  border-white/10 ">
             <SEO title={`Manage Personas - ${user?.username} `} description={"Manage Personas page where you can manage your personas"} />
@@ -32,7 +36,11 @@ const ManagePersonas = () => {
 
             <div className="w-[93%] mx-auto mt-4  ">
                 <div className="flex  justify-between   items-center">
-                    <h1 className=" lg:text-xl   font-roboto font-bold  ">My Personas</h1>
+                    <div className="flex items-center gap-x-2">
+                    <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
+                    <h1 className=" lg:text-lg   font-roboto font-bold  ">My Personas</h1>
+                    </div>
+ 
                     <div className="hidden md:block"><Link to={"/persona/add"} className="  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-white/10 transition-all duration-300 cursor-pointer  hover:bg-gradient-to-b rounded-full flex items-center space-x-2  px-4 py-2"> <IoAddSharp size={22} className="text-white" />  <span className="text-medium"> Add new Persona </span> </Link></div> 
                     <div className="block  md:hidden"><Link to={"/persona/add"} className="   bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700   hover:bg-gradient-to-b transition-all duration-300 cursor-pointer  rounded-full flex items-center space-x-2  px-4 py-2"> <IoAddSharp size={22} className="text-white" />  <span className="text-medium"> Add new  </span> </Link></div> 
 

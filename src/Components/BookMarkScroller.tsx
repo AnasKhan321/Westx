@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import TweetSkeleton, { TwitterSkeletonComponent } from "../ReusableComponents/TweetSkeleton";
 import Loader2 from "../ReusableComponents/Loader2";
 import SEO from "../ReusableComponents/SEO";
+import { FaBookmark, FaCompass } from 'react-icons/fa'
+
 const TweetCardBookmark = React.lazy(
   () => import("../ReusableComponents/TweetCardBookmark")
 );
@@ -127,9 +129,26 @@ function BookMarks() {
         <div className=" mt-16">
           {data?.pages?.length === 0 ||
             data?.pages?.every((page) => page?.data?.length === 0) ? (
-            <p className="text-center text-gray-200 mt-16 font-bold text-xl  ">
-              No BookMarks to show.
-            </p>
+            <div className="text-center text-gray-200 mt-12 h-[50vh] flex flex-col justify-center items-center space-y-6">
+              <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center">
+                <FaBookmark className="text-2xl lg:text-4xl text-purple-500" />
+              </div>
+              <div className="space-y-3">
+                <div className=" text-xl lg:text-3xl font-bold bg-clip-text text-white">
+                  Your Bookmarks are Empty
+                </div>
+                <div className="text-gray-400 max-w-sm lg:max-w-md text-center leading-relaxed">
+                  Save tweets you love to read them later! Bookmark interesting posts, articles, and updates to build your personal collection.
+                </div>
+              </div>
+              <button 
+                onClick={() => navigate('/')}
+                className="mt-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-600 hover:from-purple-700 hover:to-purple-700 text-white rounded-full transition-all duration-200 flex items-center space-x-2 shadow-lg hover:shadow-xl"
+              >
+                <FaCompass className=" text-base lg:text-lg" />
+                <span>Explore Content</span>
+              </button>
+            </div>
           ) : (
             getUniqueTweets(data?.pages || []).map((tweet) => (
               <Suspense

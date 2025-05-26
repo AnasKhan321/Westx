@@ -4,7 +4,7 @@ import { ReactTyped } from 'react-typed';
 import Loader2 from "../ReusableComponents/Loader2";
 import Modal from "../ReusableComponents/Modal";
 import SEO from "../ReusableComponents/SEO";
-
+ 
 const Login: React.FC = () => {
   const { handleTwitterLogin, islogin } = useAuth();
   const [showTermsModal, setShowTermsModal] = useState(false);
