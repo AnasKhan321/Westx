@@ -178,7 +178,7 @@ const AddPoints = () => {
 
   return (
     <div className=' w-full bg-secondaryColor  rounded-l-lg p-2 overflow-auto  mb-16 xl:mb-0'>
-      <div className="mb-8 p-6 bg-[#0C0E12]  border border-white/10 rounded-lg">
+      <div className="mb-4 p-6 bg-[#0C0E12]  border border-white/10 rounded-lg">
         <h2 className="text-xl font-bold text-white mb-2">Your Balance</h2>
         <div className="flex items-center gap-2 my-2 ">
           <span className="text-3xl font-bold text-white">
@@ -210,7 +210,7 @@ const AddPoints = () => {
 
       </div>
 
-      <div className="p-3  rounded-lg">
+      <div className="py-2  px-3   rounded-lg">
         <h3 className="text-xl font-bold text-white mb-6">Benefits of Purchasing Points</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex flex-col items-center text-center gap-4 p-4 bg-[#0C0E12] rounded-lg border border-white/10">

@@ -149,14 +149,23 @@ export const formatDateTime = (dateTime: string | Date): string => {
 
 export const timeSince = (timestamp: string | Date): string => {
     const now = new Date();
-    const date = typeof timestamp === "string" ? new Date(timestamp) : timestamp;
+    let date: Date;
+
+    if (typeof timestamp === "string") {
+        // Parse the ISO string
+        date = new Date(timestamp);
+    } else {
+        date = timestamp;
+    }
 
     if (isNaN(date.getTime())) {
         console.error("Invalid Date:", timestamp);
         return "Invalid date";
     }
 
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    // Get the time difference in milliseconds
+    const diff = now.getTime() - date.getTime();
+    const seconds = Math.floor(diff / 1000);
 
     if (seconds < 60) {
         return `${seconds}s`;
@@ -184,7 +193,7 @@ export const timeSince = (timestamp: string | Date): string => {
 
     const months = Math.floor(days / 30);
     if (months < 12) {
-        return `${months}m`;
+        return `${months}mo`;
     }
 
     const years = Math.floor(days / 365);

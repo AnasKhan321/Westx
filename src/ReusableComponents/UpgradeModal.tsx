@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToken } from "../Context/TokenContext";
+import SafeImage from "./SafeImage";
 
 interface ModalProps {
   isOpen: boolean;
@@ -250,22 +251,26 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed max-h-[94vh] md:left-1/4 transform -translate-x-1/2 overflow-y-auto my-[3vh] w-full md:w-[90%] max-w-[28rem] md:max-w-2xl z-50 top-0"
+            className="fixed max-h-[90vh] md:left-1/4 transform -translate-x-1/2 overflow-y-auto my-[3vh] w-full md:w-[90%] max-w-[28rem] md:max-w-2xl z-50 top-0"
           >
             <div className="w-[95%] md:w-full min-h-[300px] bg-gradient-to-b from-secondaryColor to-secondaryColor/80 rounded-xl shadow-2xl border border-white/10">
               <div className="flex items-center justify-end cursor-pointer" onClick={onClose}>
                 <IoMdClose className="text-white/40 text-2xl absolute top-2 right-8 md:right-2" />
               </div>
-              <div className="flex flex-col items-center justify-center p-6">
+              <div className="flex flex-col items-center justify-center p-4">
                 {/* profile info */}
-                <div className="flex items-center gap-3 justify-center flex-col py-4">
+                <div className="flex items-center gap-3 justify-center flex-col py-3">
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.2 }}
                     className="relative"
                   >
-                    <img src={profile.photoURL} alt="profile" className="w-16 h-16 rounded-full border-4 border-white/20" />
+                  <SafeImage
+            src={profile.photoURL as string}
+            alt="user"
+            className=" w-20 h-20  md:w-24 md:h-24 rounded-full border  border-white"
+          />
                     <motion.div
                       className="absolute -bottom-2 -right-2 bg-primaryColor rounded-full p-1"
                       initial={{ scale: 0 }}
@@ -287,12 +292,12 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
 
                 {/* Level transition */}
                 <motion.div
-                  className="flex flex-col items-center justify-center py-6"
+                  className="flex flex-col items-center justify-center py-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
                 >
-                  <h2 className="text-2xl font-bold text-white mb-6">Level Up!</h2>
+                  <h2 className="text-2xl font-bold text-white mb-4">Level Up!</h2>
 
                   <div className="flex items-center justify-center gap-4">
                     {/* Current level */}
@@ -363,7 +368,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
 
                   {/* Progress bar */}
                   <motion.div
-                    className="w-full max-w-xs h-2 bg-white/10 rounded-full mt-8 overflow-hidden"
+                    className="w-full max-w-xs h-2 bg-white/10 rounded-full mt-6 overflow-hidden"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
@@ -385,7 +390,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 1.8 }}
                   onClick={handleLaunch}
-                  className="mt-6 px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white/20 hover:bg-white/30 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-b text-white rounded-full transition-colors"
+                  className="mt-4 px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white/20 hover:bg-white/30 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-b text-white rounded-full transition-colors"
                   disabled={isUpgrading}
                 >
                   {isUpgrading ? "Launching..." : "Launch Token"}
@@ -401,7 +406,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 1.8 }}
                     onClick={handleUpgrade}
-                    className="mt-6 px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white/20 hover:bg-white/30 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-b text-white rounded-full transition-colors"
+                    className="mt-4 px-6 py-2 disabled:opacity-50 disabled:cursor-not-allowed bg-white/20 hover:bg-white/30 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-b text-white rounded-full transition-colors"
                     disabled={isUpgrading}
                   >
                     {isUpgrading ? "Upgrading..." : "Upgrade"}
