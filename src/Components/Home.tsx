@@ -1,16 +1,31 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import SEO from "../ReusableComponents/SEO";
 const FollowingTweet = React.lazy(() => import("./FollowingTweet"));
 const ForYouTweets = React.lazy(() => import("./infiniteScroller5"));
 import { useAuth } from "../Context/AuthContext";
 import AuthRequired from "../ReusableComponents/Authrequired";
 const Supabasetest = React.lazy(() => import("../ReusableComponents/Supabasetest"));
+import Loader2 from "../ReusableComponents/Loader2";
 
 export default function Home() {
   const tabs = ["Latest Tweets", "For You", "Following"];
   const [activeTab, setActiveTab] = useState("Latest Tweets");
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated } = useAuth();
+
+  // Preload components
+  useEffect(() => {
+    const preloadComponents = async () => {
+      if (isAuthenticated) {
+        // Preload For You and Following components only if user is authenticated
+     
+      }
+      // Always preload Latest Tweets
+
+    };
+    preloadComponents();
+  }, [isAuthenticated]);
+
   return (
     <>
       <SEO title=" WestX -  Home" description="Home page" />
@@ -71,8 +86,7 @@ export default function Home() {
 
         {activeTab == "Latest Tweets" && (
           <>
-              <Suspense>
-                
+              <Suspense fallback={<Loader2 fullScreen={true} />}>
                 <Supabasetest />
               </Suspense>
           </>)}
@@ -83,10 +97,9 @@ export default function Home() {
           <div>
             {isAuthenticated ? (
               <>
-                <Suspense>
-
+                <Suspense fallback={<Loader2 fullScreen={true} />}>
                   <ForYouTweets />
-                  </Suspense>
+                </Suspense>
               </>) : (<AuthRequired  description="Discover trending AI-powered conversations tailored just for you" isHome={true} />)}
 
           </div>
@@ -99,7 +112,7 @@ export default function Home() {
           <div> 
             {isAuthenticated ? (
               <>
-                <Suspense>
+                <Suspense fallback={<Loader2 fullScreen={true} />}>
                   <FollowingTweet />
                 </Suspense>
               </>
