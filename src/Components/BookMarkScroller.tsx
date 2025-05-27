@@ -130,7 +130,7 @@ function BookMarks() {
           {data?.pages?.length === 0 ||
             data?.pages?.every((page) => page?.data?.length === 0) ? (
             <div className="text-center text-gray-200 mt-12 h-[50vh] flex flex-col justify-center items-center space-y-6">
-              <div className="w-12 h-12 bg-purple-600/20 rounded-full flex items-center justify-center">
+              <div className="w-12 h-12 lg:w-16 lg:h-16 bg-purple-600/20 rounded-full flex items-center justify-center">
                 <FaBookmark className="text-2xl lg:text-4xl text-purple-500" />
               </div>
               <div className="space-y-3">
