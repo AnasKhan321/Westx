@@ -66,6 +66,7 @@ const Sidebar = () => {
           </Link>
 
 
+
           <Link
             to="/add-points"
             className= {`flex items-center w-full    space-x-3 pl-2  py-2 ${location.pathname == "/add-points" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
@@ -109,12 +110,23 @@ const Sidebar = () => {
           </Link>
 
 
+          {/* <div className="px-2 py-4">
+            <button
+              onClick={() => navigate("/persona/add")}
+              className="w-full flex items-center justify-center space-x-2 px-4 py-3.5 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-semibold shadow-lg border-2 border-purple-800 transition"
+            >
+              <IoAdd className="w-5 h-5" />
+              <span className="text-base">Add Persona</span>
+            </button>
+          </div> */}
+
+          {/* New Persona Button Design */}
 
 
           {user?.username && (
           <Link
             to={`/profile`}
-            className="mt-auto flex    xl:mx-0 mr-2   space-x-2 absolute bottom-10  "
+            className="mt-auto flex    xl:mx-0 mr-2   space-x-2 absolute bottom-5  "
           >
             <SafeImage
               src={user?.photoURL as string} // Replace with the user profile image path
@@ -148,7 +160,7 @@ const Sidebar = () => {
         {!isAuthenticated && (
           <motion.button
             onClick={() => navigate("/login")}
-            className="absolute bottom-20  left-3 xl:left-12   group  flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
+            className="absolute bottom-5  left-3 xl:left-12   group  flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             initial={{ opacity: 0, y: 20 }}
