@@ -160,7 +160,7 @@ const Sidebar = () => {
         {!isAuthenticated && (
           <motion.button
             onClick={() => navigate("/login")}
-            className="absolute bottom-5  left-3 xl:left-12   group  flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
+            className="absolute bottom-5  left-3 xl:left-10   group  flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             initial={{ opacity: 0, y: 20 }}
