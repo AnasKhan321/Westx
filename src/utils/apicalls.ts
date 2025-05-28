@@ -1,5 +1,5 @@
 import { SupabaseTweet } from "../ReusableComponents/SupabaseTweet";
-import { followings, Like, Tweet, User, User2 } from "./type";
+import { followings, Like, Tweet, User, User2, UserPoints } from "./type";
 import axios  from "axios";
 export interface UserResponse{
     success : boolean , 
@@ -141,6 +141,13 @@ export const searchUser = async(query : string) : Promise<userresponse>  =>{
 }
 
 
+
+export const getUserPoints = async(user: string) : Promise<UserPoints> =>{
+
+    const res = await fetch(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/persona/balance/${user}`)
+    const data = await res.json()
+    return data
+}
 
 
 

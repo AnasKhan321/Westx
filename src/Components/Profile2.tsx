@@ -8,6 +8,7 @@ import UserReplies from "../ReusableComponents/UserReplies";
 import {
   getUserFollowerbyuserid,
   getUserFollowinguserid,
+  getUserPoints,
 } from "../utils/apicalls";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -47,6 +48,11 @@ const ProfilePage = ({ user }: { user: User }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  const { data, isLoading,  } = useQuery({
+    queryKey: [`POINTS:${user?.username}`],
+    queryFn: () => getUserPoints(user?.username as string),
+  })
 
   const [isUpgrading, setIsUpgrading] = useState(false)
 
@@ -282,7 +288,9 @@ const ProfilePage = ({ user }: { user: User }) => {
 
               <div className="flex items-center gap-x-2  mt-4  ml-1 ">
                 <span className="text-xl   text-white text-white/60 ">
-                  {(user?.Points || 0).toLocaleString()}
+
+                {isLoading ? <SmallLoader /> : data?.balance.toLocaleString()}
+  
                 </span>
                 <div className="bg-white/10 py-1 px-2  rounded-full">
                   <span className="text-white/60 text-xs">points</span>

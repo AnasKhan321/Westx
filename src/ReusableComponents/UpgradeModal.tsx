@@ -162,6 +162,7 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
   
         onClose();
         queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
+        queryClient.invalidateQueries({ queryKey: [`POINTS:${user?.username}`] });
       } else {
         toast.error(data2.error, {
           style: {

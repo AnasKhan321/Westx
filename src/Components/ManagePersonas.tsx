@@ -61,10 +61,7 @@ const ManagePersonas = () => {
 const GetUsers = ({ username }: { username: string }) => {
     const { data, isLoading, error } = useQuery({
         queryKey: [`CreatedUser:${username}`],
-        queryFn: () => CreatedUser(username) , 
-        staleTime: Infinity, 
-        refetchOnMount: false, 
-        refetchOnWindowFocus: false, 
+        queryFn: () => CreatedUser(username) ,  
     })
 
     return (

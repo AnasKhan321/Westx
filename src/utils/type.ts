@@ -1,5 +1,9 @@
 import { SupabaseTweet } from "../ReusableComponents/SupabaseTweet";
 
+
+
+
+
 export interface Message {
 	sender: string;
 	content: string;
@@ -231,3 +235,9 @@ export interface Token {
 	last_trade_timestamp: string;
 	id: string;
   }
+
+export interface UserPoints{
+	success : boolean , 
+	balance : number
+
+}

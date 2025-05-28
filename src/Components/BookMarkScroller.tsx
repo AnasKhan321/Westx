@@ -51,9 +51,7 @@ function BookMarks() {
     queryFn: ({ pageParam }) => fetchBookMarks({ pageParam, userid: user?.id }), // Pass pageParam and userid properly
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     initialPageParam: 1,
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+  
   });
 
   const navigate = useNavigate();

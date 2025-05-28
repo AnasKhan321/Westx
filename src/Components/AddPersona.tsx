@@ -8,6 +8,8 @@ import toast from 'react-hot-toast';
 import { useAuth } from '../Context/AuthContext';
 import { ColorRing } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+
 
 
 
@@ -21,6 +23,8 @@ const AddPersona = () => {
     const [userLoading, setuserLoading] = useState(false);
 
     const [isCreated, setIsCreated] = useState(false);
+    const queryClient = useQueryClient();
+
 
     const handleKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && searchValue.trim()) {
@@ -73,6 +77,10 @@ const AddPersona = () => {
                     },
 
                 });
+                queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
+                queryClient.invalidateQueries({ queryKey: [`POINTS:${user?.username}`] });
+                navigate("/my-personas")
+
                 setIsCreated(true);
             }
             if (!data.success) {

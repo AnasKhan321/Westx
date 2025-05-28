@@ -9,9 +9,14 @@ import { IoCaretBack } from 'react-icons/io5'
 import axios from "axios"
 import { motion, AnimatePresence } from 'motion/react'
 import { loadStripe } from '@stripe/stripe-js';
-
+import { getUserPoints } from '../utils/apicalls'
+import { useQuery } from '@tanstack/react-query'
+import SmallLoader from '../ReusableComponents/SmallLoader'
 
 const stripePromise = loadStripe('pk_test_51RLmMSEErj9V1eYd6C8zbIafoj0ogt1ifgCRkGzlHHYpz7HofnVP62rRZhYeTIQ3b6he16PElkXHBHFe95VAqTt400CyNvbCZx'); // Replace with your public key
+
+
+
 
 interface BuyPointsModalProps {
   isOpen: boolean;
@@ -134,6 +139,12 @@ const AddPoints = () => {
     setCustomPrice(value / 100)
   }
 
+
+  const { data, isLoading,  } = useQuery({
+    queryKey: [`POINTS:${user?.username}`],
+    queryFn: () => getUserPoints(user?.username as string),
+  })
+
   const handleCustomPriceChange = (value: number) => {
     setCustomPrice(value)
     // $1 = 100 points conversion rate
@@ -182,7 +193,9 @@ const AddPoints = () => {
         <h2 className="text-xl font-bold text-white mb-2">Your Balance</h2>
         <div className="flex items-center gap-2 my-2 ">
           <span className="text-3xl font-bold text-white">
-            {(user?.Points || 0).toLocaleString()}
+
+            {isLoading ?<SmallLoader/> : data?.balance.toLocaleString()}
+    
           </span>
           <div className="bg-white/10 px-3 py-1  rounded-full">
             <span className="text-white/60 text-sm">points</span>
