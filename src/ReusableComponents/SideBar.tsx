@@ -26,7 +26,7 @@ const Sidebar = () => {
       </div>
 
       <div className="flex justify-end  w-[225px] xl:w-[225px] ">
-        <nav className="space-y-4  ">
+        <nav className="space-y-[2vh]  ">
           <Link
             to="/"
             className= {`flex items-center w-full    space-x-3 pl-2  py-2 ${location.pathname == "/" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
@@ -126,7 +126,7 @@ const Sidebar = () => {
           {user?.username && (
           <Link
             to={`/profile`}
-            className="mt-auto flex    xl:mx-0 mr-2   space-x-2 absolute bottom-5  "
+            className="mt-auto flex    xl:mx-0 mr-2   space-x-2 absolute bottom-[2vh]  "
           >
             <SafeImage
               src={user?.photoURL as string} // Replace with the user profile image path
@@ -160,7 +160,7 @@ const Sidebar = () => {
         {!isAuthenticated && (
           <motion.button
             onClick={() => navigate("/login")}
-            className="absolute bottom-5  left-3 xl:left-10   group  flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
+            className="absolute bottom-[2vh]  left-3 xl:left-10   group  flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-purple-700 to-purple-800 text-white font-medium overflow-hidden transition-all duration-300 hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] hover:scale-[1.02]"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             initial={{ opacity: 0, y: 20 }}
