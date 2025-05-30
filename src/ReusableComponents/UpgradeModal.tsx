@@ -29,8 +29,8 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
 
 
   const {data : leveldata  }  = useQuery({
-    queryKey : [`level:${user?.username}`],
-    queryFn : ()=> GetLevel(user?.username as string)
+    queryKey : [`level:${profile?.username}`],
+    queryFn : ()=> GetLevel(profile?.username as string)
   })
 
   useEffect(()=>{
