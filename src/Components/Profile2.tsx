@@ -93,17 +93,12 @@ const ProfilePage = ({ user }: { user: User }) => {
     queryKey: [`UserFollower:${user.username}`],
 
     queryFn: () => getUserFollowerbyuserid(user.id),
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
+
   });
 
   const { data: usertweetscount, isLoading: usertweetloading } = useQuery({
     queryKey: [`tweetCount:${user.username}`],
     queryFn: () => GetTweetCount(user.id),
-    staleTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
   });
   
   const [isUpdating, setIsUpdating] = useState(false);
