@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 import { GoHomeFill   , GoHome  } from "react-icons/go";
 import { FaRegUser  , FaUser  } from "react-icons/fa6";
 import { PiUserList  , PiUserListFill  } from "react-icons/pi";
-import { IoStorefrontOutline   , IoStorefront } from "react-icons/io5";
+import { HiOutlineCurrencyDollar   , HiCurrencyDollar } from "react-icons/hi";
 import SafeImage from "./SafeImage";
 const Sidebar = () => {
   const location = useLocation();
@@ -72,12 +72,12 @@ const Sidebar = () => {
             className= {`flex items-center w-full    space-x-3 pl-2  py-2 ${location.pathname == "/add-points" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
           >
             {location.pathname == "/add-points" ? (
-              <IoStorefront  size={26} />
+              <HiCurrencyDollar  size={30} />
             ) : (
-              <IoStorefrontOutline  size={26} />
+              <HiOutlineCurrencyDollar  size={30} />
             )}
 
-            <span className="font-medium  text-base  lg:text-xl  font-roboto ">Add Points</span>
+            <span className="font-medium  text-base  lg:text-xl  font-roboto ">Points</span>
           </Link>
 
           <Link

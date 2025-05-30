@@ -1,11 +1,12 @@
 
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
-import { IoPersonOutline, IoPersonSharp, IoStorefront, IoStorefrontOutline } from "react-icons/io5";
+import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 import { PiUsersThree, PiUsersThreeFill } from "react-icons/pi";
 import { Link, useLocation } from "react-router-dom";
 import { IoSearchOutline, IoSearchSharp } from "react-icons/io5";
 import { GoHomeFill   , GoHome  } from "react-icons/go";
 import { PiUserList  , PiUserListFill  } from "react-icons/pi";
+import { HiOutlineCurrencyDollar   , HiCurrencyDollar } from "react-icons/hi";
 const HorizontalBar = () => {
   const location = useLocation();
 
@@ -39,7 +40,7 @@ const HorizontalBar = () => {
             to="/add-points"
             className="flex items-center space-x-3 transition-all hover:text-territary"
           >
-            {location.pathname === "/add-points" ? <IoStorefront size={25} /> : <IoStorefrontOutline size={25} />}
+            {location.pathname === "/add-points" ? <HiCurrencyDollar size={29} /> : <HiOutlineCurrencyDollar size={29} />}
           </Link>
 
 

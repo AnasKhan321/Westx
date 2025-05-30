@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-const API_URL = 'https://web3.westx.xyz/api';
+const API_URL = 'http://localhost:3000/api';
 
 export const api = {
   
   prepareLaunchTransaction: async (formData: FormData) => {
     try {
+      console.log(formData);
       const response = await axios.post(
         `${API_URL}/transactions/prepare-launch-transaction`, 
         formData,
@@ -73,7 +74,7 @@ export const api = {
         publicKey
       });
       return response.data;
-    } catch (error) {
+    } catch  (error) {
       console.error('Error preparing sell transaction:', error);
       throw error;
     }
