@@ -263,7 +263,7 @@ const ProfilePage = ({ user }: { user: User }) => {
 
               
           {user?.level && parseInt(user.level.toString().split("_")[1]) >=4 && (
-            <Level4 username={user.username} />
+            <Level4 username={user.username}  isMyprofile={true}/>
           )}
 
               <div className="flex justify-between gap-x-2 mt-3 w-full  md:w-[40%] ">

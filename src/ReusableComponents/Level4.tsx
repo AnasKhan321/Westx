@@ -28,7 +28,7 @@ const getTwitterXLink  = async (username : string)  : Promise<TwitterLink> =>{
 
 }
 
-const Level4 = ({username}:{username:string}) => {
+const Level4 = ({username , isMyprofile}:{username:string  , isMyprofile : boolean}) => {
 
     const { data, isLoading } = useQuery({
         queryKey: [`TwitterLink:${username}`],
@@ -39,7 +39,7 @@ const Level4 = ({username}:{username:string}) => {
       });
 
   return (
-    <div className="flex items-center gap-x-2 mt-4 ml-1">
+    <div className={`flex items-center gap-x-2  ${isMyprofile ? "mt-2" : "mt-4"} ml-1 `}>
 
         {isLoading ? <div>Loading...</div> : <div>
 

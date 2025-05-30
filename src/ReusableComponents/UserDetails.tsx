@@ -433,7 +433,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
           {/* <Level4 username={profile.username} /> */}
 
           {profile?.level && parseInt(profile.level.toString().split("_")[1]) >= 4 && (
-            <Level4 username={profile.username} />
+            <Level4 username={profile.username}  isMyprofile={false}/>
           )}
 
 
