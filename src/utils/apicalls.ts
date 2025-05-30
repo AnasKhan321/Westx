@@ -220,3 +220,8 @@ export const getTrending = async() : Promise<TrendingRespnse> =>{
     const data = await res.json() ; 
     return  data  ;
 }
+
+export const GetLevel  = async (username : string) =>{
+    const {data}  = await axios.get(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getLevel/${username}`)
+    return data
+  }

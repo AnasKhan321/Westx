@@ -44,9 +44,9 @@ const Sidebar = () => {
             className= {`flex items-center space-x-3 pl-2  py-2 ${location.pathname == "/personas" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
           >
             {location.pathname == "/personas" ? (
-              <PiUserListFill size={26} />
+              <PiUsersThreeFill size={26} />
             ) : (
-              <PiUserList size={26} />
+              <PiUsersThree size={26} />
             )}
             <span className="font-medium  text-base  lg:text-xl font-roboto">Personas</span>
           </Link>
@@ -58,9 +58,9 @@ const Sidebar = () => {
             className= {`flex items-center space-x-3 pl-2  py-2  pr-3 ${location.pathname == "/my-personas" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
           >
             {location.pathname == "/my-personas" ? (
-              <PiUsersThreeFill size={26} />
+              <PiUserListFill size={26} />
             ) : (
-              <PiUsersThree size={26} />
+              <PiUserList size={26} />
             )}
               <span className="font-medium  text-base  lg:text-xl font-roboto">My Personas</span>
           </Link>
@@ -72,9 +72,9 @@ const Sidebar = () => {
             className= {`flex items-center w-full    space-x-3 pl-2  py-2 ${location.pathname == "/add-points" ? "bg-[#13161b]" : "bg-transparent"}  w-full   transition-all hover:text-territary`}
           >
             {location.pathname == "/add-points" ? (
-              <HiCurrencyDollar  size={30} />
+              <HiCurrencyDollar  size={26} />
             ) : (
-              <HiOutlineCurrencyDollar  size={30} />
+              <HiOutlineCurrencyDollar  size={26} />
             )}
 
             <span className="font-medium  text-base  lg:text-xl  font-roboto ">Points</span>

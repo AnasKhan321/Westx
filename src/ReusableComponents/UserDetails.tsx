@@ -24,6 +24,8 @@ import { useToken } from "../Context/TokenContext";
 import SafeImage from "./SafeImage";
 import UpdateUserModal from "./UpdateUserModel";
 
+import Level4 from "./Level4";
+
 interface Tweetcounts {
   success: boolean;
   data: number;
@@ -71,6 +73,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
 
   const [suserfollowing, setuserfollowing] = useState(0);
   const [suserfollower, setuserfollower] = useState(0);
@@ -426,6 +429,17 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
               • Joined {formatDateTime(profile.createdAt)}
             </span>
           </p>
+
+          {/* <Level4 username={profile.username} /> */}
+
+          {profile?.level && parseInt(profile.level.toString().split("_")[1]) >= 4 && (
+            <Level4 username={profile.username} />
+          )}
+
+
+
+
+
 
           <div className="flex justify-around gap-x-2 mt-4  w-full md:w-[35%]  ">
             <div className="text-center flex gapx-x-1 w-full   items-center">

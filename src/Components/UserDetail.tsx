@@ -19,9 +19,7 @@ export default function UserDetail() {
   const {user}  =useAuth() ; 
 
   const {data : userdata , isLoading : userLoading , error : usererror} = useQuery({queryKey : [`user:${username}`]  ,  queryFn : ()=> getUserbyUsername(username as string)  , 
-    staleTime: Infinity, 
-    refetchOnMount: false, 
-    refetchOnWindowFocus: false, 
+
    })
   return (
     <div>

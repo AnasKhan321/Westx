@@ -6,6 +6,7 @@ import UserReposts from "../ReusableComponents/UserReposts";
 import UserLikes from "../ReusableComponents/UserLikes";
 import UserReplies from "../ReusableComponents/UserReplies";
 import {
+  GetLevel,
   getUserFollowerbyuserid,
   getUserFollowinguserid,
   getUserPoints,
@@ -21,10 +22,15 @@ import UpdateUserModal from "../ReusableComponents/UpdateUserModel";
 import toast from "react-hot-toast";
 import { UpgradeModal } from "../ReusableComponents/UpgradeModal";
 import SafeImage from "../ReusableComponents/SafeImage";
+import Level4 from "../ReusableComponents/Level4";
+import { ColorRing } from "react-loader-spinner";
 interface Tweetcounts {
   success: boolean;
   data: number;
 }
+
+
+
 
 const GetTweetCount = async (userid: string) => {
   const { data } = await axios.get<Tweetcounts>(
@@ -53,6 +59,15 @@ const ProfilePage = ({ user }: { user: User }) => {
     queryKey: [`POINTS:${user?.username}`],
     queryFn: () => getUserPoints(user?.username as string),
   })
+
+  const {data : leveldata , isLoading : levelloading }  = useQuery({
+    queryKey : [`level:${user?.username}`],
+    queryFn : ()=> GetLevel(user?.username as string)
+  })
+
+
+
+
 
   const [isUpgrading, setIsUpgrading] = useState(false)
 
@@ -220,15 +235,24 @@ const ProfilePage = ({ user }: { user: User }) => {
 
                 </div> }
                   <div className="flex items-center mt-2">
-                  <div className={`px-2 py-1 rounded-full text-xs font-semibold ${user.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
-                      user.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
-                        user.level.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white' :
-                          user.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
-                            user.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
-                              user.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
+                  <div className={`px-2 py-1 rounded-full text-xs font-semibold ${leveldata?.data?.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
+                      leveldata?.data?.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
+                        leveldata?.data?.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white' :
+                          leveldata?.data?.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
+                            leveldata?.data?.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
+                              leveldata?.data?.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
                                 'bg-red-500 text-white'
                     }`}>
-                    {user.level.toString().split('_')[1]}
+                    {levelloading ?       <ColorRing
+                        visible={true}
+                        height="8"
+                        width="8"
+                        ariaLabel="color-ring-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="color-ring-wrapper"
+                        colors={["#9915eb"  ,  "#9915eb" , "#9915eb" , "#9915eb" , "#9915eb"]}
+                      />: leveldata?.data?.toString().split('_')[1]}
+                   
                   </div>
                 </div>
               </div>
@@ -240,6 +264,12 @@ const ProfilePage = ({ user }: { user: User }) => {
                   • Joined {formatDateTime(user.createdAt)}{" "}
                 </span>
               </p>
+
+
+              
+          {user?.level && parseInt(user.level.toString().split("_")[1]) >=4 && (
+            <Level4 username={user.username} />
+          )}
 
               <div className="flex justify-between gap-x-2 mt-3 w-full  md:w-[40%] ">
                 <div className="text-center flex gapx-x-1 w-full   items-center">

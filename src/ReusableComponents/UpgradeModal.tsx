@@ -6,9 +6,10 @@ import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useAuth } from "../Context/AuthContext";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useToken } from "../Context/TokenContext";
 import SafeImage from "./SafeImage";
+import { GetLevel } from "../utils/apicalls";
 
 interface ModalProps {
   isOpen: boolean;
@@ -19,12 +20,25 @@ interface ModalProps {
 
 export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProps) => {
   const [showAnimation, setShowAnimation] = useState(false);
-  const currentLevel = parseInt(profile.level.toString().split("_")[1]);
+  const [currentLevel, setCurrentLevel] = useState(0);
   const nextLevel = currentLevel + 1;
   const [isUpgrading, setIsUpgrading] = useState(false);
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const {handleTokenLaucnh } = useToken();
+
+
+  const {data : leveldata  }  = useQuery({
+    queryKey : [`level:${user?.username}`],
+    queryFn : ()=> GetLevel(user?.username as string)
+  })
+
+  useEffect(()=>{
+    if(leveldata){
+      setCurrentLevel(parseInt(leveldata?.data?.toString().split("_")[1]))
+    }
+  },[leveldata])
+
 
   // Get level descriptions based on the next level
   const getLevelDescription = (level: number) => {
@@ -158,11 +172,13 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
   
         }
   
-  
+        console.log(profile.username)
   
         onClose();
         queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
         queryClient.invalidateQueries({ queryKey: [`POINTS:${user?.username}`] });
+        queryClient.invalidateQueries({ queryKey: [`user:${profile.username}`] });
+        queryClient.invalidateQueries({ queryKey: [`level:${profile.username}`] });
       } else {
         toast.error(data2.error, {
           style: {
