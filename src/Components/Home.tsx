@@ -31,7 +31,7 @@ export default function Home() {
       <SEO title=" WestX -  Home" description="Home page" />
       <div className=" max-h-screen min-h-screen bg-primaryColor md:bg-[#0E1014] md:mt-[2vh]  md:border md:border-white/10  md:max-h-[98vh]  md:min-h-[98vh] md:rounded-l-2xl  overflow-y-scroll ">
         <div
-          className={`md:flex justify-between  w-full tablet:w-[49.8%]  hidden  backdrop-blur-xl border-b-2 border-[#1C2027]    rounded-l-2xl  absolute  z-10 bg-newcolor  transition-all duration-300 `}
+          className={`md:flex justify-between    bg-secondaryColor/20  w-full tablet:w-[49.8%]  hidden  backdrop-blur-xl border-b-2 border-[#1C2027]    rounded-l-2xl  absolute  z-10 bg-newcolor  transition-all duration-300 `}
         >
           
           {tabs.map((tab) => (

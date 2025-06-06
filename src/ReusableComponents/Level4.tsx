@@ -23,7 +23,6 @@ interface TwitterLink {
 const getTwitterXLink  = async (username : string)  : Promise<TwitterLink> =>{
 
     const {data}  = await axios.get(`${import.meta.env.VITE_PUBLIC_AI_URL}/api/user/getTwitterInfo/${username}`)
-    console.log(data)
     return data ; 
 
 }

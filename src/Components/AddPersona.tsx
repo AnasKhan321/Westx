@@ -9,13 +9,16 @@ import { useAuth } from '../Context/AuthContext';
 import { ColorRing } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
-
+import { FaPlus } from "react-icons/fa6";
+import { AnimatePresence, motion } from 'motion/react';
+import { IoMdClose } from 'react-icons/io';
 
 
 
 
 const AddPersona = () => {
     const [searchValue, setSearchValue] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
     const navigate = useNavigate();
     const [twitteruser, settwitteruser] = useState<TwitterUser | null>(null);
@@ -54,9 +57,11 @@ const AddPersona = () => {
     const { user } = useAuth();
 
 
-    const handleCreateUser = async () => {
+
+    const handleConfirmImport = async () => {
         if (twitteruser && !userLoading) {
             setuserLoading(true);
+            setShowModal(false);
 
             const { data } = await axios.post<CreateUserResponse>(
                 `${import.meta.env.VITE_PUBLIC_BACKEND_URL}/api/user/nonPremiumUser`,
@@ -75,16 +80,13 @@ const AddPersona = () => {
                         background: '#333',
                         color: '#fff',
                     },
-
                 });
                 queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });
                 queryClient.invalidateQueries({ queryKey: [`POINTS:${user?.username}`] });
                 navigate("/my-personas")
-
                 setIsCreated(true);
             }
             if (!data.success) {
-
                 toast.error(data.message, {
                     style: {
                         borderRadius: '20px',
@@ -95,6 +97,7 @@ const AddPersona = () => {
             }
         }
     };
+
     return (
         <div className="w-full min-h-screen max-h-screen md:min-h-[96vh] md:max-h-[96vh] border border-white/10 overflow-y-scroll md:my-[2vh] z-10 bg-primaryColor md:bg-secondaryColor rounded-l-2xl">
             <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
@@ -196,13 +199,21 @@ const AddPersona = () => {
                                                         </div>
                                                     </div>
 
-                                                    <button
+
+
+                                                    <button className='bg-gradient-to-r via-purple-600 from-purple-500 to-purple-700  transition-all rounded-full    text-white   px-2 py-1  md:text-sm  md:px-2 md:py-2  font-bold text-xs  hover:bg-gradient-to-b ' onClick={() => setShowModal(true)} disabled={isCreated}>
+
+                                                        <FaPlus height={25} width={25} className='text-white text-lg ' />
+
+                                                    </button>
+
+                                                    {/* <button
                                                         disabled={isCreated}
                                                         onClick={handleCreateUser}
                                                         className="  bg-gradient-to-r via-purple-600 from-purple-500 to-purple-700  transition-all rounded-full    text-white   px-2 py-1  md:text-sm  md:px-4 md:py-2  font-bold text-xs  hover:bg-gradient-to-b "
                                                     >
                                                         Import
-                                                    </button>
+                                                    </button> */}
                                                 </div>
                                             </div>
                                         )}
@@ -235,7 +246,140 @@ const AddPersona = () => {
                     </div>
                 )}
             </div>
+
+
+            <AnimatePresence>
+                {showModal && (
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setShowModal(false)}
+                            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 top-0"
+                        />
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.95, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="fixed max-h-[90vh] transform -translate-x-1/2 w-[100%]     mx-auto  xl:left-1/4 overflow-y-auto my-[3vh]  xl:w-[90%]   xl:max-w-2xl z-50 top-0"
+                        >
+
+                            <div className=" md:w-full min-h-[300px] bg-gradient-to-b from-secondaryColor to-secondaryColor/80 rounded-xl shadow-2xl border border-white/10">
+                                <div className="flex items-center justify-end cursor-pointer" onClick={() => setShowModal(false)}>
+                                    <IoMdClose className="text-white/40 text-2xl absolute top-2 right-8 md:right-2" />
+                                </div>
+
+                                <div className="p-6">
+                                    <h2 className="text-xl font-bold text-white mb-4">Import Persona</h2>
+
+                                    {/* Persona Info */}
+                                    <div className="flex items-center space-x-4 mb-6">
+                                        <div className="w-16 h-16 rounded-full overflow-hidden">
+                                            <img
+                                                src={twitteruser?.avatar ? formatTwitterAvatarUrl(twitteruser.avatar) : ''}
+                                                alt="Persona Avatar"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-white">{twitteruser?.name}</h3>
+                                            <p className="text-gray-400">@{twitteruser?.profile}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Import Cost */}
+                                    <div className="bg-white/5 rounded-lg p-4 mb-6">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-gray-300">Import Cost:</span>
+                                            <span className="text-purple-400 font-bold">200 Points</span>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    {/* Benefits Section */}
+                                    <div className="space-y-3">
+                                        <h4 className="text-white font-semibold">Benefits:</h4>
+                                        <ul className="space-y-2 text-gray-300">
+                                            <li className="flex items-center space-x-2">
+                                                <span className="text-purple-400">•</span>
+                                                <span>Full ownership rights of the persona</span>
+                                            </li>
+                                            <li className="flex items-center space-x-2">
+                                                <span className="text-purple-400">•</span>
+                                                <span>Earn 0.5% transaction fees on all token transactions</span>
+                                            </li>
+                                            <li className="flex items-center space-x-2">
+                                                <span className="text-purple-400">•</span>
+                                                <span>Level up your persona from Level 1 to 6</span>
+                                            </li>
+                                            <li className="flex items-center space-x-2">
+                                                <span className="text-purple-400">•</span>
+                                                <span>Get an X (Twitter) account at Level 4</span>
+                                            </li>
+                                            <li className="flex items-center space-x-2">
+                                                <span className="text-purple-400">•</span>
+                                                <span>Launch persona as token at Level 6</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+
+
+
+
+                                    <div className="rounded-lg  mt-6">
+                                        <h4 className="text-white font-semibold mb-3">Ownership Rights</h4>
+                                        <div className="space-y-2">
+                                            <p className="text-gray-300 text-sm  ml-1">
+                                                When the Twitter user logs into WestX, they can:
+                                            </p>
+                                            <ul className="space-y-2 text-gray-300">
+                                                <li className="flex items-center space-x-2">
+                                                    <span className="text-purple-400">•</span>
+                                                    <span>Claim ownership of their persona</span>
+                                                </li>
+                                                <li className="flex items-center space-x-2">
+                                                    <span className="text-purple-400">•</span>
+                                                    <span>Pay you points based on the persona's current level</span>
+                                                </li>
+                                                <li className="flex items-center space-x-2">
+                                                    <span className="text-purple-400">•</span>
+                                                    <span>Take full control of their persona's activities</span>
+                                                </li>
+                                            </ul>
+                                            <p className="text-gray-400 text-sm mt-2 italic">
+                                                Note: You'll receive points when ownership is claimed, based on the level you've upgraded the persona to.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-8">
+                                        <button
+                                            onClick={handleConfirmImport}
+                                            disabled={userLoading}
+                                            className="w-full bg-gradient-to-r from-purple-500 to-purple-700 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+                                        >
+                                            {userLoading ? 'Importing...' : 'Confirm Import'}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
+
+
+
         </div>
+
+
     );
 };
 

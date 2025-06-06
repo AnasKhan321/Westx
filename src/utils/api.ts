@@ -6,7 +6,7 @@ export const api = {
   
   prepareLaunchTransaction: async (formData: FormData) => {
     try {
-      console.log(formData);
+  
       const response = await axios.post(
         `${API_URL}/transactions/prepare-launch-transaction`, 
         formData,

@@ -265,6 +265,8 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
   const handleClick = () => {
     navigate(-1);
   };
+
+  
   return (
     <div className="w-ful border border-white/10 h-screen   md:min-h-[98vh]  overflow-y-scroll  md:max-h-[98vh]  md:mt-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  md:rounded-l-xl overflow-hidden  ">
       <UpdateUserModal isUpdating={isUpdating} initialData={{ name: profile.name, profilePhotoUrl: profile.photoURL as string, coverPhotoUrl: profile.coverPhotoURL as string, bio: profile.bio }} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />

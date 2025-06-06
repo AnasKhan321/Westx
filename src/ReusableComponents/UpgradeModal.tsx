@@ -172,7 +172,6 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
   
         }
   
-        console.log(profile.username)
   
         onClose();
         queryClient.invalidateQueries({ queryKey: [`CreatedUser:${user?.username}`] });

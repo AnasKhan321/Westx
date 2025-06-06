@@ -49,7 +49,7 @@ const TweetCardBookmark = ({ tweet }: { tweet: SupabaseTweet }) => {
             <Link to={`/user/${tweet.User.username}`}>
               {" "}
               <span className="text-[12px]  text-gray-400 md:text-base ">
-                {tweet.User.username} ·{" "}
+                @{tweet.User.username} ·{" "}
               </span>
               <span className="text-[12px] text-gray-400  md:text-base ">
                 {" "}

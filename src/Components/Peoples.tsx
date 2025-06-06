@@ -29,7 +29,7 @@ export default function Peoples(){
         <div className=" max-h-screen md:max-h-[98vh] border border-white/10 mb-16 xl:mb-0   md:rounded-l-2xl md:mt-[2vh] overflow-y-scroll bg-primaryColor    w-full md:bg-[#0E1014] min-h-screen  md:min-h-[96vh]">
 
     
-          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl   bg-newcolor w-full  md:w-[49.8%] rounded-2xl font-bold   "> 
+          <div className="flex absolute p-4 items-center space-x-2  backdrop-blur-xl  bg-secondaryColor/20  w-full  md:w-[49.8%] rounded-2xl font-bold   "> 
             <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick}/> 
             <span>Personas</span>
            </div>
