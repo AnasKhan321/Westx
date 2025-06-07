@@ -241,7 +241,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
       toast.error("Profile update failed");
     }
     setIsUpdating(false);
-    setIsEditProfile(false);
+     setIsEditProfile(false);
 
 
 
@@ -334,18 +334,21 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
               </svg>
 
             </div>}
-            <div className="flex items-center ">
-              <div className={`px-2 py-1 rounded-full text-xs font-semibold ${profile.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white' :
-                  profile.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white' :
-                    profile.level.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white' :
-                      profile.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white' :
-                        profile.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black' :
-                          profile.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white' :
-                            'bg-red-500 text-white'
+            <Link to={`/level-explain`} className="flex items-center relative group">
+              <div className={`px-2 py-1 rounded-full text-xs font-semibold ${profile.level.toString() === 'LEVEL_0' ? 'bg-gray-500 text-white cursor-pointer hover:bg-gray-600' :
+                  profile.level.toString() === 'LEVEL_1' ? 'bg-green-500 text-white cursor-pointer hover:bg-green-600' :
+                    profile.level.toString() === 'LEVEL_2' ? 'bg-blue-500 text-white cursor-pointer hover:bg-blue-600' :
+                      profile.level.toString() === 'LEVEL_3' ? 'bg-purple-500 text-white cursor-pointer hover:bg-purple-600' :
+                        profile.level.toString() === 'LEVEL_4' ? 'bg-yellow-500 text-black cursor-pointer hover:bg-yellow-600' :
+                          profile.level.toString() === 'LEVEL_5' ? 'bg-orange-500 text-white cursor-pointer hover:bg-orange-600' :
+                            'bg-red-500 text-white cursor-pointer hover:bg-red-600'
                 }`}>
                 {profile.level.toString().split('_')[1]}
               </div>
-            </div>
+              <div className="absolute font-roboto hidden group-hover:block bg-black/90 text-white text-xs rounded px-2 py-1 top-1/2 -translate-y-1/2 left-full ml-2 whitespace-nowrap">
+                Persona's Level
+              </div>
+            </Link>
 
             <div className="flex items-center space-x-4    ">
               {isFollow ? (

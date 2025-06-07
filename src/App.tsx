@@ -39,6 +39,7 @@ import MyPersonaWrapper from "./Components/MyPersonaWrapper";
 const queryClient = new QueryClient();
 import AddPoints from "./Components/AddPoints";
 import Sessionid from "./Components/Sessionid";
+import LevelExplain from "./Components/LevelExplain";
 function AppRoutes() {
   const location = useLocation();
   const noLayoutRoutes = ["/login", "/chat/:username"]; // Define paths that don't need MainLayout
@@ -83,6 +84,11 @@ function AppRoutes() {
               path="/tweet/:id"
               element={<TweetDetail />}
               key={"TweetDetail"}
+            />
+            <Route
+              path="/level-explain"
+              element={<LevelExplain />}
+              key={"LevelExplain"}
             />
             <Route
               path="/cookie-policy"

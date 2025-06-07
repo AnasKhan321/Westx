@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { Suspense, useEffect, useRef } from 'react'
 import { useAuth } from '../Context/AuthContext'
-import { BiRepost } from 'react-icons/bi'
+
 import { FaUserFriends, FaCompass } from 'react-icons/fa'
 import TweetSkeleton, { TwitterSkeletonComponent } from '../ReusableComponents/TweetSkeleton'
 import Loader2 from '../ReusableComponents/Loader2'
@@ -21,7 +21,7 @@ const fetchTweets = async ({ pageParam = 1, userid }: { pageParam: number, useri
   const { data } = await axios.get<TweetResponse>(
     `${import.meta.env.VITE_PUBLIC_AI_URL}/api/supabase/followingtweet/${userid}/${pageParam}`
   )
-
+  console.log(data)
   return {
     data: data.data,
     nextCursor: data.data.length > 0 ? pageParam + 1 : undefined, // Stop pagination when no more data
@@ -126,17 +126,10 @@ function FollowingTweets() {
 
                 }
               >
-                {tweet.tweettype === "REPOST" ? (
-                  <>
-                    <div className="flex items-center pl-8 py-2 space-x-2 text-gray-500 font-bold">
-                      <BiRepost className="text-xl" />
-                      <span className="text-xs">{tweet.User.name} reposted</span>
-                    </div>
-                    <TwetCARD tweet={tweet.originalTweet as unknown as SupabaseTweet} isBookmark={false} />
-                  </>
-                ) : (
+                
+                 
                   <TwetCARD tweet={tweet} isBookmark={false} />
-                )}
+               
               </Suspense>
             ))}
           </React.Fragment>
