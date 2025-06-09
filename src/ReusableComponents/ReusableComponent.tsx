@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { LuSend } from "react-icons/lu"
 import { ColorRing } from "react-loader-spinner";
+import SafeImage from "./SafeImage";
 type ReplyBoxProps = {
   tweetid: string;
 };
@@ -47,7 +48,7 @@ const ReplyBox: React.FC<ReplyBoxProps> = ({ tweetid }) => {
     <div className=" w-full  xl:w-[96%]  bg-newcolor rounded-lg xl:border-2 xl:border-[#13161B] mx-auto  my-4  ">
       <div className="p-4  w-[98%] md:w-[98%]  mx-auto  grid grid-cols-12 gap-x-3  justify-center items-center">
 
-      <img
+      <SafeImage
           src={user?.photoURL}
           alt={user?.username}
           width={48}

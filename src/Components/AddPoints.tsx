@@ -285,9 +285,9 @@ const AddPointsWrapper = () => {
     navigate(-1);
   }
   return (
-    <div className=' h-screen bg-primaryColor md:h-[98vh] md:mt-[2vh] w-full md:bg-secondaryColor border border-white/10 rounded-l-lg  overflow-auto'>
+    <div className=' h-screen bg-primaryColor tablet:h-[98vh] tablet:mt-[2vh] w-full tablet:bg-secondaryColor border border-white/10 rounded-l-lg  overflow-auto'>
 
-      <div className="flex absolute p-4   items-center space-x-2  backdrop-blur-xl   bg-[#0C0E12]  w-full  md:w-[49.8%] rounded-l-2xl font-bold   ">
+      <div className="flex absolute p-4   items-center space-x-2  backdrop-blur-xl   bg-[#0C0E12]  w-full  tablet:w-[49.8%] rounded-l-2xl font-bold   ">
         <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick} />
         <span>Add Points</span>
       </div>

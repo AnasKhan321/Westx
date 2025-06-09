@@ -267,9 +267,9 @@ export const UpgradeModal = ({ isOpen, onClose, profile ,isProfile  }: ModalProp
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed max-h-[90vh] md:left-1/4 transform -translate-x-1/2 overflow-y-auto my-[3vh] w-full md:w-[90%] max-w-[28rem] md:max-w-2xl z-50 top-0"
+            className="fixed max-h-[90vh]  left-[2vw]  md:left-1/4 transform -translate-x-1/2 overflow-y-auto my-[3vh] w-full tablet:w-[90%] max-w-[32rem] xl:max-w-2xl z-50 top-0"
           >
-            <div className="w-[95%] md:w-full min-h-[300px] bg-gradient-to-b from-secondaryColor to-secondaryColor/80 rounded-xl shadow-2xl border border-white/10">
+            <div className="w-[98%] md:w-full  tablet:w-[99%] min-h-[300px] bg-gradient-to-b from-secondaryColor to-secondaryColor/80 rounded-xl shadow-2xl border border-white/10">
               <div className="flex items-center justify-end cursor-pointer" onClick={onClose}>
                 <IoMdClose className="text-white/40 text-2xl absolute top-2 right-8 md:right-2" />
               </div>

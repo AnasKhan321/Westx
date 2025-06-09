@@ -99,7 +99,7 @@ const AddPersona = () => {
     };
 
     return (
-        <div className="w-full min-h-screen max-h-screen md:min-h-[96vh] md:max-h-[96vh] border border-white/10 overflow-y-scroll md:my-[2vh] z-10 bg-primaryColor md:bg-secondaryColor rounded-l-2xl">
+        <div className="w-full min-h-screen max-h-screen tablet:min-h-[96vh] tablet:max-h-[96vh] border border-white/10 overflow-y-scroll tablet:my-[2vh] z-10 bg-primaryColor tablet:bg-secondaryColor rounded-l-2xl">
             <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
                 <IoCaretBack
                     className="text-xl cursor-pointer"
@@ -290,18 +290,7 @@ const AddPersona = () => {
                                         </div>
                                     </div>
 
-                                    {/* Import Cost */}
-                                    <div className="bg-white/5 rounded-lg p-4 mb-6">
-                                        <div className="flex items-center justify-between">
-                                            <span className="text-gray-300">Import Cost:</span>
-                                            <span className="text-purple-400 font-bold">200 Points</span>
-                                        </div>
-                                    </div>
 
-
-
-
-                                    {/* Benefits Section */}
                                     <div className="space-y-3">
                                         <h4 className="text-white font-semibold">Benefits:</h4>
                                         <ul className="space-y-2 text-gray-300">

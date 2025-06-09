@@ -31,7 +31,7 @@ const HorizontalBar = () => {
             to="/personas"
             className="flex items-center space-x-3 transition-all hover:text-territary"
           >
-            {location.pathname === "/personas" ? <PiUserListFill size={25} /> : <PiUserList size={25} />}
+            {location.pathname === "/personas" ? <PiUsersThreeFill size={25} /> : <PiUsersThree size={25} />}
           </Link>
 
 
@@ -49,9 +49,9 @@ const HorizontalBar = () => {
             className="flex items-center space-x-3 transition-all hover:text-territary"
           >
             {location.pathname == "/my-personas" ? (
-              <PiUsersThreeFill size={24} />
+              <PiUserListFill size={24} />
             ) : (
-              <PiUsersThree size={24} />
+              <PiUserList size={24} />
             )}
           </Link>
 

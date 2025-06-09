@@ -11,7 +11,7 @@ export default {
         secondary: 'white'  , 
         borderColor : "#2e2e2d"  , 
         territary : "#9915eb",
-        primaryColor : "#0A0A0A" , 
+        primaryColor : "#0E1014" , 
         secondaryColor : "#0E1014"  , 
         newcolor : "#0C0E12",
         newcolor2 : "#0E1014"

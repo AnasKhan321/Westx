@@ -243,9 +243,6 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
     setIsUpdating(false);
      setIsEditProfile(false);
 
-
-
-
   };
 
   useEffect(() => {
@@ -268,7 +265,7 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
 
   
   return (
-    <div className="w-ful border border-white/10 h-screen   md:min-h-[98vh]  overflow-y-scroll  md:max-h-[98vh]  md:mt-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  md:rounded-l-xl overflow-hidden  ">
+    <div className="w-full border border-white/10 h-screen   tablet:min-h-[98vh]  overflow-y-scroll  tablet:max-h-[98vh]  tablet:mt-[2vh]  mx-auto bg-primaryColor md:bg-secondaryColor text-white  tablet:rounded-l-xl overflow-hidden  ">
       <UpdateUserModal isUpdating={isUpdating} initialData={{ name: profile.name, profilePhotoUrl: profile.photoURL as string, coverPhotoUrl: profile.coverPhotoURL as string, bio: profile.bio }} isOpen={isEditProfile} onClose={() => setIsEditProfile(false)} onUpdate={handleUpdate} />
 
       <div className="">
@@ -435,7 +432,6 @@ const Profile: React.FC<{ profile: User2 }> = ({ profile }) => {
             </span>
           </p>
 
-          {/* <Level4 username={profile.username} /> */}
 
           {profile?.level && parseInt(profile.level.toString().split("_")[1]) >= 4 && (
             <Level4 username={profile.username}  isMyprofile={false}/>

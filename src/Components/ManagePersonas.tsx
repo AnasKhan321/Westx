@@ -30,10 +30,10 @@ const ManagePersonas = () => {
         navigate("/")
     }
     return (
-        <div className="md:min-h-[98vh] min-h-screen max-h-screen mb-16 xl:mb-0  md:max-h-[98vh]  md:mt-[2vh] bg-primaryColor md:bg-newcolor2 overflow-y-scroll rounded-l-xl border-2  border-white/10 ">
+        <div className="tablet:min-h-[98vh] min-h-screen max-h-screen mb-16 xl:mb-0  tablet:max-h-[98vh]  tablet:mt-[2vh] bg-primaryColor md:bg-newcolor2 overflow-y-scroll rounded-l-xl tablet:border-2  border-white/10 ">
             <SEO title={`Manage Personas - ${user?.username} `} description={"Manage Personas page where you can manage your personas"} />
 
-            <div className="flex  justify-between absolute p-4 items-center space-x-2  backdrop-blur-xl  bg-secondaryColor/20  w-full  md:w-[49.8%] rounded-2xl font-bold   ">
+            <div className="flex  justify-between absolute p-4 items-center space-x-2  backdrop-blur-xl  bg-secondaryColor/20  w-full tablet:w-[49.8%]  tab:w-full  rounded-2xl font-bold   ">
 
                 <div className="flex items-center space-x-2">
                     <IoCaretBack className="text-xl cursor-pointer" onClick={handleClick} />

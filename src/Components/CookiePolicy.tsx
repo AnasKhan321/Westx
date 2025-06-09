@@ -99,7 +99,7 @@ const CookiePolicy = () => {
               <a href="mailto:contact@westx.com" className="flex items-center gap-2 hover:text-purple-400 transition-colors">
                 <span>📧</span> westxai@gmail.com
               </a>
-              <a href="https://westx.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-purple-400 transition-colors">
+              <a href="https://westx.xyz" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-purple-400 transition-colors">
                 <span>🌐</span> www.westx.xyz
               </a>
             </div>

@@ -55,7 +55,7 @@ export default function Home() {
             <div className="relative tablet:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full  bg-black text-white px-4 py-4 mt-5  rounded-lg flex justify-between items-center"
+                className="w-full  bg-newcolor2 text-white px-4 py-4 mt-5  rounded-lg flex justify-between items-center"
               >
                 {activeTab}
                 <span className="ml-2">&#9662;</span> {/* Down arrow */}
@@ -63,7 +63,7 @@ export default function Home() {
 
          
               {isOpen && (
-                <div className="absolute z-10 left-0 right-0 mt-2 bg-black shadow-lg rounded-lg border">
+                <div className="absolute z-10 left-0 right-0 mt-2 bg-newcolor2 shadow-lg rounded-lg border border-white/10">
                   {tabs.map((tab) => (
                     <button
                       key={tab}
@@ -71,7 +71,7 @@ export default function Home() {
                         setActiveTab(tab);
                         setIsOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2 bg-black hover:bg-secondaryColor"
+                      className="w-full text-left px-4 py-2 bg-newcolor2 hover:bg-secondaryColor"
                     > 
                       {tab}
                     </button>

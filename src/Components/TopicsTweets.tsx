@@ -110,9 +110,9 @@ const TopicsTweets = () => {
 
     return (
 
-        <div className="max-h-screen min-h-screen bg-primaryColor md:bg-secondaryColor md:mt-[2vh]  md:border md:border-white/10  md:max-h-[98vh]  md:min-h-[98vh]  md:rounded-l-2xl overflow-y-scroll ">
+        <div className="max-h-screen min-h-screen bg-primaryColor tablet:bg-secondaryColor tablet:mt-[2vh]  tablet:border tablet:border-white/10  tablet:max-h-[98vh]  tablet:min-h-[98vh]  tablet:rounded-l-2xl overflow-y-scroll ">
 
-            <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
+            <div className="flex   absolute p-4 items-center space-x-2   backdrop-blur-xl     bg-secondaryColor/20 w-full  tablet:w-[49.8%]  md:rounded-xl font-bold   ">
                 <IoCaretBack
                     className="text-xl cursor-pointer"
                     onClick={handleClick}

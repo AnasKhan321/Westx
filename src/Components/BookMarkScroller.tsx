@@ -95,8 +95,8 @@ function BookMarks() {
   if (status === "error") return <p className="font-bold text-center mt-5">Internal Server Error Try Again</p>;
   if (status == "pending")
     return (
-      <div className="w-full min-h-screen max-h-screen   md:min-h-[98vh] md:max-h-[98vh] overflow-y-scroll md:mt-[2vh] z-10    bg-primaryColor md:bg-secondaryColor rounded-l-2xl border-white/10 border-2 ">
-        <div className="flex  absolute p-4 items-center bg-secondaryColor/20 space-x-2 backdrop-blur-xl z-10  w-full  md:w-[49.9%] md:rounded-xl font-bold   ">
+      <div className="w-full min-h-screen max-h-screen   tablet:min-h-[98vh] tablet:max-h-[98vh] overflow-y-scroll tablet:mt-[2vh] z-10    bg-primaryColor tablet:bg-secondaryColor rounded-l-2xl border-white/10 border-2 ">
+        <div className="flex  absolute p-4 items-center bg-secondaryColor/20 space-x-2 backdrop-blur-xl z-10  w-full  tablet:w-[49.9%] md:rounded-xl font-bold   ">
           <IoCaretBack
             className="text-xl cursor-pointer"
             onClick={handleClick}
@@ -112,14 +112,15 @@ function BookMarks() {
   return (
     <>
     <SEO title={ `Bookmarks - ${user?.username} `} description={"Bookmarks page where you can see all your bookmarked tweets"} />
-      <div className="w-full min-h-screen max-h-screen md:min-h-[98vh] md:max-h-[98vh] overflow-y-scroll md:mt-[2vh]  border border-white/10   bg-primaryColor  md:bg-newcolor2 rounded-l-xl ">
-        <div className="flex absolute p-4 items-center space-x-2   backdrop-blur-xl     w-full  md:w-[49.8%]  md:rounded-xl font-bold   ">
+      <div className="w-full min-h-screen max-h-screen tablet:min-h-[98vh] tablet:max-h-[98vh] overflow-y-scroll tablet:mt-[2vh]  border border-white/10   bg-primaryColor  md:bg-newcolor2 rounded-l-xl ">
+        <div className="flex absolute p-4 items-center space-x-2   backdrop-blur-xl     w-full  tablet:w-[49.8%]  md:rounded-xl font-bold   ">
           <IoCaretBack
             className="text-xl cursor-pointer"
             onClick={handleClick}
           />
           <span>Bookmarks</span>
         </div>
+
 
 
 

@@ -91,7 +91,7 @@ const Aiworld = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen max-h-screen  bg-primaryColor  md:min-h-[96vh] md:max-h-[96vh] md:my-[2vh]  md:rounded-2xl  md:bg-secondaryColor  ">
+    <div className="w-full h-screen max-h-screen  bg-primaryColor  tablet:min-h-[96vh] tablet:max-h-[96vh] tablet:my-[2vh]  tablet:rounded-2xl  tablet:bg-secondaryColor  ">
             <SEO title={ "AiWorld - "} description={"An ai world page where you can import any user from twitter"} />
       <div className="">
         <div className="w-[90%] py-4   mx-auto">

@@ -93,7 +93,7 @@ const UserReplies = ({ user }: { user : User2 }) => {
     <div>
       <>
         {data?.pages?.length === 0 || data?.pages?.every(page => page?.data?.length === 0) ? (
-          <p className="text-center text-gray-200 my-4 font-bold text-xl">
+          <p className="text-center text-gray-200 my-4 font-bold text-xl mt-10">
             No tweets to show.
           </p>
         ) : (

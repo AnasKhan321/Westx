@@ -165,7 +165,7 @@ const ProfilePage = ({ user }: { user: User }) => {
   return (
     <>
       {user && (
-        <div className="w-full   md:min-h-[98vh]  border-white/10   overflow-y-scroll  md:max-h-[98vh]  md:mt-[2vh]  mx-auto bg-primaryColor md:bg-newcolor2 text-white rounded-l-xl overflow-hidden  border-2 border-[#13181b]  ">
+        <div className="w-full min-h-[98vh]  tablet:min-h-[98vh]  border-white/10   overflow-y-scroll    tablet:mt-[2vh]  mx-auto bg-primaryColor md:bg-newcolor2 text-white tablet:rounded-l-xl overflow-hidden  border-2 border-[#13181b]  ">
           {/* Cover Photo */}
 
           <UpgradeModal isOpen={isUpgrading} onClose={() => setIsUpgrading(false)} profile={user} isProfile={true} />
