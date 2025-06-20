@@ -44,16 +44,7 @@ const HorizontalBar = () => {
           </Link>
 
 
-          <Link
-            to="/my-personas"
-            className="flex items-center space-x-3 transition-all hover:text-territary"
-          >
-            {location.pathname == "/my-personas" ? (
-              <PiUserListFill size={24} />
-            ) : (
-              <PiUserList size={24} />
-            )}
-          </Link>
+
 
           <Link
             to="/bookmark"

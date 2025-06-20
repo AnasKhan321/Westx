@@ -54,7 +54,7 @@ const ManagePersonas = () => {
 
                 <div className="mt-10"></div>
 
-                {user?.username && <GetUsers username={user.username} />}
+                {user?.username && <GetUsers username={user.username} ismyprofile={false} />}
 
             </div>
 
@@ -64,7 +64,7 @@ const ManagePersonas = () => {
 
 
 
-const GetUsers = ({ username }: { username: string }) => {
+export const GetUsers = ({ username  , ismyprofile = false}: { username: string , ismyprofile: boolean }) => {
     const { data, isLoading, error } = useQuery({
         queryKey: [`CreatedUser:${username}`],
         queryFn: () => CreatedUser(username),
@@ -79,12 +79,12 @@ const GetUsers = ({ username }: { username: string }) => {
 
                 {data.map((user, index) => {
                     return (
-                        <UserCard key={index} Profile={user} />
+                        <UserCard key={index} Profile={user} ismyprofile={ismyprofile} />
                     )
                 })}
 
 
-                {data.length === 0 && <NoUserfound />}
+                {data.length === 0 && <NoUserfound ismyprofile={ismyprofile} />}
             </div>}
         </div>
     )
@@ -92,7 +92,7 @@ const GetUsers = ({ username }: { username: string }) => {
 
 
 
-const UserCard = ({ Profile }: { Profile: User }) => {
+const UserCard = ({ Profile , ismyprofile = false}: { Profile: User , ismyprofile: boolean }) => {
     const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
     const handleLevelup = () => {
@@ -113,7 +113,7 @@ const UserCard = ({ Profile }: { Profile: User }) => {
 
 
     return (
-        <motion.div initial={{ opacity: 0.5, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex items-center  py-6  bg-newcolor  border-2  my-4   text-white  rounded-lg w-full px-2  border-[#13161B]    font-roboto">
+        <motion.div initial={{ opacity: 0.5, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className={`flex items-center ${ismyprofile? "w-[93%]  mx-auto" : "w-full"}  py-6  bg-newcolor  border-2  my-4   text-white  rounded-lg  px-2  border-[#13161B]    font-roboto`}>
             {/* Avatar */}
             <Link to={`/user/${Profile.username}`} className="w-10 h-10 rounded-full overflow-hidden bg-gray-700 mr-4">
                 <SafeImage
@@ -163,9 +163,9 @@ const UserCard = ({ Profile }: { Profile: User }) => {
 }
 
 
-const NoUserfound = () => {
+const NoUserfound = ({ismyprofile = false}: {ismyprofile: boolean}) => {
     return (
-        <div className=" w-[70%] md:w-[50%] mx-auto h-[70vh]  my-auto flex flex-col items-center justify-center">
+        <div className={` w-[70%] md:w-[50%] mx-auto h-[70vh]  my-auto flex flex-col items-center ${ismyprofile? "mt-10" : ""}   ${ismyprofile ? "justify-start" : "justify-center"}`}>
 
             <div className="flex flex-col items-center justify-center">
                 <svg width="49" height="48" viewBox="0 0 49 48" fill="none" xmlns="http://www.w3.org/2000/svg">

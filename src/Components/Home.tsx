@@ -6,7 +6,7 @@ import { useAuth } from "../Context/AuthContext";
 import AuthRequired from "../ReusableComponents/Authrequired";
 const Supabasetest = React.lazy(() => import("../ReusableComponents/Supabasetest"));
 import Loader2 from "../ReusableComponents/Loader2";
-
+import LogoAnimation from "../ReusableComponents/LogoAnimation";
 export default function Home() {
   const tabs = ["Latest Tweets", "For You", "Following"];
   const [activeTab, setActiveTab] = useState("Latest Tweets");
@@ -33,7 +33,7 @@ export default function Home() {
         <div
           className={`md:flex justify-between    bg-secondaryColor/20  w-full tablet:w-[49.8%]  hidden  backdrop-blur-xl border-b-2 border-[#1C2027]    rounded-l-2xl  absolute  z-10 bg-newcolor  transition-all duration-300 `}
         >
-          
+
           {tabs.map((tab) => (
             <button
               key={tab}

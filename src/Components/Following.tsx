@@ -17,6 +17,7 @@ const getUserFollowing = async ({ userid }: { userid: string }): Promise<Followi
   return data.data;
 }
 
+
 const Following = () => {
   const { username } = useParams();
   const navigate = useNavigate()

@@ -18,11 +18,7 @@ const AuthRequired = ({isHome = false  , description = "Please sign in to access
           animate={{ scale: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <img
-            src="/logo-round.png"
-            alt="WestX Logo"
-            className="w-24 h-24 rounded-full mb-6"
-          />
+ 
     
         </motion.div>
 

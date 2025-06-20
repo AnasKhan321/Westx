@@ -169,9 +169,9 @@ const PersonaChat = () => {
           <div className="   tablet:col-span-3">
             <Link to={"/"}>
               <img
-                src="/logo-round.png" // Replace with the profile image path
+                src="/X.png" // Replace with the profile image path
                 alt="WestX Logo"
-                className="w-16 h-16 rounded-full m-4 tablet:block hidden "
+                className="h-8 m-4 mt-8 ml-8 tablet:block hidden "
               />{" "}
             </Link>
           </div>

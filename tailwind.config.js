@@ -18,7 +18,8 @@ export default {
       },
       fontFamily: {
         roboto: ['roboto', 'sans-serif'],
-        poppins : ['poppins'  , 'sans-serif' ]
+        poppins : ['poppins'  , 'sans-serif' ],
+        akira: ['akira', 'sans-serif']
       },
       gridTemplateColumns: {
         14: "repeat(14, minmax(0, 1fr))", 

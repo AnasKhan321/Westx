@@ -49,9 +49,9 @@ const Login: React.FC = () => {
       <div className=" rounded-t-3xl absolute top-[48vh] md:p-0 p-8    h-[52vh] md:relative md:top-0 bg-newcolor w-full md:rounded-t-none  md:w-[50%] md:h-screen ">
         <div className=" w-[85%] md:w-[60%]  mx-auto justify-start  flex flex-col md:justify-center h-[90vh]">
           <img
-            src="/logo-round.png" // Replace with the profile image path
+            src="/X.png" // Replace with the profile image path
             alt="Profile Logo"
-            className=" hidden md:block md:w-32  md:h-32 rounded-full my-4 "
+            className=" hidden md:block md:w-[50px]  md:h-[50px]  my-4  "
           />
 
           <h2 className="text-white text-3xl  font-bold ">Welcome to  <span className="text-purple-400">   <ReactTyped strings={['WestX']} typeSpeed={40} />   </span>  </h2>

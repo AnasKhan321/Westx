@@ -24,7 +24,7 @@ import { UpgradeModal } from "../ReusableComponents/UpgradeModal";
 import SafeImage from "../ReusableComponents/SafeImage";
 import Level4 from "../ReusableComponents/Level4";
 import { ColorRing } from "react-loader-spinner";
-
+import { GetUsers } from "./ManagePersonas";
 interface Tweetcounts {
   success: boolean;
   data: number;
@@ -40,8 +40,8 @@ const GetTweetCount = async (userid: string) => {
   return data;
 };
 const ProfilePage = ({ user }: { user: User }) => {
-  const tabs = ["Posts", "Replies", "Likes", "Repost"];
-  const [activeTab, setActiveTab] = useState("Posts");
+  const tabs = [ "Personas", "Posts", "Replies", "Likes", "Repost"];
+  const [activeTab, setActiveTab] = useState("Personas");
 
   const { handleLogout } = useAuth();
 
@@ -340,8 +340,8 @@ const ProfilePage = ({ user }: { user: User }) => {
                   key={tab}
                   onClick={() => setActiveTab(tab)}
                   className={` ${activeTab === tab
-                    ? " text-white font-bold border-purple-600 border-b-4 transition-all  "
-                    : " py-2 text-white/60 hover:text-white   transition-all"
+                    ? " text-white font-bold border-purple-600 border-b-4 transition-all  text-xs md:text-base  "
+                    : " py-2 text-white/60 hover:text-white   transition-all   text-xs md:text-base "
                     }`}
                 >
                   {tab}
@@ -351,6 +351,10 @@ const ProfilePage = ({ user }: { user: User }) => {
           </div>
 
           <div className=" text-white">
+
+            {activeTab == "Personas" && (
+              <GetUsers username={user.username} ismyprofile={true} />
+            )}
             {activeTab == "Posts" && (
               <>
                 <UserTweets userId={user.id} />

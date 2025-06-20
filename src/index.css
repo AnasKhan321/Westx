@@ -42,3 +42,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'akira';
+  src: url('/src/assets/fonts/Akira.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}

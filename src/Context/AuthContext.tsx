@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { auth, twitterProvider } from "../firebaseF/firebaseConfig";
 import { User } from "../utils/type";
 import toast from "react-hot-toast";
-import WestXLoader from "../ReusableComponents/WestXLoader";
+import LogoAnimation from "../ReusableComponents/LogoAnimation";
 
 function removeSize(url: string): string {
   return url.replace(/_\w+\./g, ".");
@@ -54,17 +54,25 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         if (data.success) {
 
           setUser(data.data);
-          setIsLoading(false);
-          setIsAuthenticated(true)
-          if (isLoading == false) {
-            navigate("/")
-            setIsAuthenticated(true)
 
-          }
+          setTimeout(() => {
+            setIsLoading(false);
+            setIsAuthenticated(true)
+          }, 3500);
+
+
+      
+
+            
         } else {
-          setIsLoading(false);
-          navigate("/login")
-          setIsAuthenticated(false)
+
+          setTimeout(() => {
+            setIsLoading(false);
+            navigate("/login")
+            setIsAuthenticated(false)
+          }, 3500);
+          
+
         }
 
 
@@ -72,8 +80,11 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
 
       } else {
-        setIsLoading(false);
-        setIsAuthenticated(false)
+
+        setTimeout(() => {
+          setIsLoading(false);
+          setIsAuthenticated(false)
+        }, 3000);
 
       }
     });
@@ -166,7 +177,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   if (isLoading) {
     return (
 
-      <WestXLoader />
+      <LogoAnimation />
     );
   }
 
