@@ -58,7 +58,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
           setTimeout(() => {
             setIsLoading(false);
             setIsAuthenticated(true)
-          }, 3500);
+          }, 2500);
 
 
       
@@ -70,7 +70,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
             setIsLoading(false);
             navigate("/login")
             setIsAuthenticated(false)
-          }, 3500);
+          }, 2500);
           
 
         }
