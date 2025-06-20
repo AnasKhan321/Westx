@@ -6,7 +6,6 @@ import { useAuth } from "../Context/AuthContext";
 import AuthRequired from "../ReusableComponents/Authrequired";
 const Supabasetest = React.lazy(() => import("../ReusableComponents/Supabasetest"));
 import Loader2 from "../ReusableComponents/Loader2";
-import LogoAnimation from "../ReusableComponents/LogoAnimation";
 export default function Home() {
   const tabs = ["Latest Tweets", "For You", "Following"];
   const [activeTab, setActiveTab] = useState("Latest Tweets");
